@@ -18,6 +18,7 @@ for (i in seq(length(file.dir))) {
          as.data.table(read_sas(paste0(path.name,file.dir[i]))))
 }
 
+PEN_SITE <- "222" # Pennsylvanian site
 
 # Keys for variables:
 # site_id = "222" --> Pennsylvanian site
@@ -39,4 +40,129 @@ for (i in seq(length(file.dir))) {
 # 4. Create ego, alter, and ego-network indicating variables
 # 5. Define the composite outcome of `any risky behavior`. Either 6 or 12 months to follow-up.
 # 6. Define the sensitivity probabilities for alter-ego and ego-ego edges.
+
+
+
+# Get covariates ----------------------------------------------------------
+
+dm_pen <- dm[dm$site_id == PEN_SITE]
+
+length(unique(dm_pen$NKID))
+dm_pen[, is_ego := dm_pen$MRID == "0"]
+table(dm_pen$is_ego)
+
+# Save only Pennsylvanian site data
+ra_pen <- ra[ra$site_id == PEN_SITE]
+ra_pen$visnum <- as.numeric(ra_pen$visnum)
+ra_pen$studyday <- as.numeric(ra_pen$studyday)
+ra_pen$visit <- as.character(ra_pen$visit)
+
+# Save 6-month follow-up data 
+ra_pen_6_month <- ra_pen[
+  # visnum %in% c(3,6) & !is.na(studyday),
+  visnum == 6 & !is.na(studyday),
+  .SD[which.min(studyday)],
+  by = uid
+]
+
+# save subset of ra_pen of unit with 6-month followup data
+uid_6_month <- unique(ra_pen_6_month$uid)
+ra_pen_sub <- ra_pen[ra_pen$uid %in% uid_6_month, ]
+dm_sub <- dm_pen[dm_pen$uid %in% uid_6_month, ]
+
+table(dm_sub$is_ego)
+hist(table(dm_sub$NKID))
+mean(table(dm_sub$NKID))
+
+###
+# Define injection risk behavior variables --> the outcome!
+###
+
+# shared rinse water
+unique(ra_pen_6_month$RA3nwatr)
+table(!ra_pen_6_month$RA3nwatr %in% c("0",""))
+# shared cooker
+unique(ra_pen_6_month$RA3ncook)
+table(!ra_pen_6_month$RA3ncook %in% c("0",""))
+# shared cotton
+unique(ra_pen_6_month$RA3ncotn)
+table(!ra_pen_6_month$RA3ncotn %in% c("0",""))
+# front and back loading
+unique(ra_pen_6_month$RA3nload)
+table(!ra_pen_6_month$RA3nload %in% c("0",""))
+# used discarded needle
+unique(ra_pen_6_month$RA3nndl)
+table(!ra_pen_6_month$RA3nndl %in% c("0",""))
+# injecting in a shooting gallery/public space
+table(ra_pen_6_month$RA4othrs == "Yes")
+# injecting with people you don't know well
+table(!ra_pen_6_month$RA4dkwel %in% c("","rarely or never"))
+
+# injection_risk_behavior is the union of all above binary variables (at least one risky behavior)
+# TODO: define it
+risk_vars <- c("")
+
+###
+# Covariates:
+###
+
+# TODO: create covariates matrix
+
+# Sex
+table(dm_sub$DM1sex)
+
+# Age
+summary(as.numeric(dm_sub$age))
+hist(as.numeric(dm_sub$age))
+
+# is_white
+table(dm_sub$DM1white == "X")
+# is_hispanic
+table(dm_sub$DM1latin == "Yes")
+
+# martial status (NOT USED)
+table(dm_sub$DM2marit)
+
+# education level (NOT USED)
+table(dm_sub$DM2educ)
+
+
+
+# FROM RA DATA:
+# Any injection risky behavior at baseline (yes or no)
+
+# injected daily in the last month (yes or no)
+
+# alcohol use (got drunk or no)
+
+# injected heroin and cocaine (yes and no)
+
+# network-level average age
+
+# network-level prevalence of nonwhite race
+
+# network-level prevalence of any injection risky behavior
+
+# network-level prevalence of cocaine use
+
+# network-level prevalence of injected heroin and cocaine
+
+
+###
+# Treatment
+###
+
+# TODO: define binary variable if ego is randomized to educational intervention
+
+
+
+# Network summary data
+ns_pen <- ns[ns$site_id == PEN_SITE]
+ns_pen_sub <- ns_pen[ns_pen$uid %in% uid_6_month, ]
+ns_pen_sub[visnum=="0", .N]
+hist(ns_pen_sub[visnum=="0", as.numeric(NSnetsz)])
+hist(ns_pen_sub[visnum=="0", as.numeric(NScards)])
+mean(ns_pen_sub[visnum=="0", as.numeric(NSnetsz)])
+mean(ns_pen_sub[visnum=="0", as.numeric(NScards)])
+
 
