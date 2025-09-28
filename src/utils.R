@@ -9,6 +9,21 @@
 #' @return A data frame containing the results of the sensitivity analysis.
 
 
+# TODO: Think about the general structure of functions:
+# 1. Functions that compute estimates of IE and DE given pi (and kappa) values
+# 2. Functions that compute pi values given sensitivity parameters
+# 2a. Homogeneous probs
+# 2b. Homogeneous number of edges
+# 2c. Heterogeneous probs of edges
+# 2d. Heterogeneous number of edges
+# 3. Function in 1+2 should be efficent enough to run with bootstrap iterations
+# 4. Wrapper function that either do 
+# 4a. Sensitivty analysis for a grid of rho and kappa values (bias-corrected estimates and their associated CI)
+# 4b. PBA that takes a prior distribution over rho and kappa and returns a single bias-corrected estimate
+# 5. Wrapper function for IE and DE that take as input all the relevant requests and return the relevant result
+
+### We focus only on identification of IE and DE and not the DE bounds!!! ###
+
 # Libraries ---------------------------------------------------------------
 
 library(data.table)
