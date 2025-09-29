@@ -27,18 +27,38 @@
 # Libraries ---------------------------------------------------------------
 
 library(data.table)
+library(proxy)
 
 # General functions -------------------------------------------------------
 
-dist_euclid <- function(X_e, X_a = NULL){
-  # Euclidean distance
-  if (is.null(X_a)) {X_a <- X_e}
-  EE <- rowSums(X_e^2) # length n_e
-  AA <- rowSums(X_a^2) # length n_a
-  DD_ <- -2 * X_e %*% t(X_a) + outer(EE, AA, `+`)
-  DD_[DD_ < 0] <- 0 # numerical stability
-  return(sqrt(DD_))
-  # return(as.matrix(dist(X)))
+dist_lp_norm <- function(X_e, X_a = NULL, p){
+  # L_p Norm distance
+  
+  # --- ONE MATRIX (output dim: n_e x n_e) ---
+  if (is.null(X_a)) {
+    method <- if (is.infinite(p)) "maximum" else
+      if (p == 2) "euclidean" else
+        if (p == 1) "manhattan" else "minkowski"
+    return(as.matrix(stats::dist(X_e,
+                                 method = method,
+                                 p = if (method == "minkowski") p else 2)))
+  }
+  
+  # --- TWO MATRICES (output dim: n_e x n_a) ---
+  lp_fun <- function(a, b, p) {
+    if (is.infinite(p)) max(abs(a - b)) else (sum(abs(a - b)^p))^(1 / p)
+  }
+  return(as.matrix(proxy::dist(X_e, X_a, method = lp_fun, p = p)))
+  
+  
+  
+  # if (is.null(X_a)) {X_a <- X_e}
+  # EE <- rowSums(X_e^2) # length n_e
+  # AA <- rowSums(X_a^2) # length n_a
+  # DD_ <- -2 * X_e %*% t(X_a) + outer(EE, AA, `+`)
+  # DD_[DD_ < 0] <- 0 # numerical stability
+  # return(sqrt(DD_))
+  # # return(as.matrix(dist(X)))
 }
 
 dist_inner_cosine <- function(X_e, X_a = NULL, dist){
@@ -73,14 +93,39 @@ dist_inner_cosine <- function(X_e, X_a = NULL, dist){
   stop("Invalid distance metric specified.")
 }
 
-dist_func <- function(X_e, X_a = NULL, dist){
-  if(dist == "euclid"){
-    return(dist_euclid(X_e, X_a))
+dist_func <- function(X_e, X_a = NULL, dist = "norm", p = 1){
+  stopifnot(is.matrix(X_e))
+  if (!is.null(X_a)) stopifnot(is.matrix(X_a), ncol(X_a) == ncol(X_e))
+  if (!(is.infinite(p) || (is.numeric(p) && p >= 1)))
+    stop("p must be >= 1 or Inf (unweighted).")
+  
+  if(dist == "norm"){
+    return(dist_lp_norm(X_e, X_a, p))
   }
   if(dist %in% c("cosine","inner")){
     return(dist_inner_cosine(X_e, X_a, dist))
   }
   stop("Invalid distance metric specified.")
+}
+
+
+get_dist_matrix <- function(X_e,
+                            X_a = NULL,
+                            dist = "norm",
+                            p = 1){
+  
+  if (!dist %in% c("norm","cosine","inner")){
+    stop(paste0("Type=", dist, " of covariates distance is not supported."))
+  }
+  n_e <- nrow(X_e)
+  if(is.null(X_a)){n_a <- n_e}
+  else{n_a <- nrow(X_a)}
+  # Build the n_e x n_a distance matrix
+  # Note that when X_a=NULL, this is the n_e x n_e distance matrix (with 0 diagonal)
+  # and when X_a is given, this is the n_e x n_a distance matrix
+  # with no restriction on the diagonal
+  D <- dist_func(X_e, X_a, dist, p)
+  return(D)
 }
 
 # Sensitivity parameter ----------------------------------------------------
@@ -108,7 +153,9 @@ pi_a_homo <- function(rho,
   return(pi_a)
 }
 
+
 .col_logsumexp <- function(L){
+  # Helper function to compute the column-wise LogSumExp of matrix L
   # L is either n_e x n_e or n_e x n_a
   col_max <- apply(L, 2, max, na.rm=TRUE)
   Lc <- sweep(L, 2, m, "-")
@@ -119,32 +166,16 @@ pi_a_homo <- function(rho,
   return(logsumexp)
 }
 
-get_dist_matrix <- function(X_e,
-                            X_a = NULL,
-                            dist = "euclid"){
-  
-  if (!dist %in% c("euclid","cosine","inner")){
-    stop(paste0("Type=", dist, " of covariates distance is not supported."))
-  }
-  n_e <- nrow(X_e)
-  if(is.null(X_a)){n_a <- n_e}
-  else{n_a <- nrow(X_a)}
-  # Build the n_e x n_a distance matrix
-  # Note that when X_a=NULL, this is the n_e x n_e distance matrix (with 0 diagonal)
-  # and when X_a is given, this is the n_e x n_a distance matrix
-  # with no restriction on the diagonal
-  D <- dist_func(X_e, X_a, dist)
-  # dimnames(D) <- list(ego = seq_len(n_e), alter = seq_len(n_a))
-  return(D)
-}
-
 hetero_pi_weight_from_dist_ <- function(D, 
                                         gamma = 1,
                                         self_zero = FALSE){
   # D: n x m (or n x n) distance matrix
   # gamma: scalar "temperature" (often negative for distances)
   # If self_zero=TRUE and D is square, force P[ii] = 0 (excluded in the softmax)
+
   L <- gamma * D
+  weights <- exp(L)
+  
   L[is.na(L)] <- -Inf # exclude missing distances
   # For ego-ego distance, make the diagonal -inf -> prob = 0
   if (self_zero && nrow(D) == ncol(D)) diag(L) <- -Inf  # exclude self
@@ -157,9 +188,18 @@ hetero_pi_weight_from_dist_ <- function(D,
   prob <- exp(log_prob)
   prob[!is.finite(prob)] <- 0
   
-  return(list(log_prob = log_prob,
+  return(list(weights = weights,
               prob = prob))
 }
+
+# TODO: continue here. I have function that computes the weights W and probs matrix P
+# This for one gamma value.
+# Can compute for multiple using apply function
+# Given a list of these W and P matrices, and point estimate µ..,
+# I can compute the IE and DE estimates for each gamma value very fast
+# Repeat this process using non-parameteric bootstrap 
+# For PBA, we can do similar process, but in the end take an average over gamma values
+
 
 
 hetero_pi <- function(X_1,
