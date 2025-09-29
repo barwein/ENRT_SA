@@ -30,39 +30,55 @@ library(data.table)
 
 # General functions -------------------------------------------------------
 
-dist_euclid <- function(X_1, X_2){
-  # Euclidean fast-path: sqrt( ||X_1||^2 + ||X_2||^2 - 2 X_1·X_2 )
-  AA <- rowSums(X_1^2) # length n_1
-  EE <- rowSums(X_2^2) # length n_2
-  D2 <- outer(AA, EE, `+`) - 2 * (X_1 %*% t(X_2))
-  DD  <- sqrt(pmax(D2, 0)) # numeric safety
-  return(DD)
+dist_euclid <- function(X_e, X_a = NULL){
+  # Euclidean distance
+  if (is.null(X_a)) {X_a <- X_e}
+  EE <- rowSums(X_e^2) # length n_e
+  AA <- rowSums(X_a^2) # length n_a
+  DD_ <- -2 * X_e %*% t(X_a) + outer(EE, AA, `+`)
+  DD_[DD_ < 0] <- 0 # numerical stability
+  return(sqrt(DD_))
+  # return(as.matrix(dist(X)))
 }
 
-dist_cosine <- function(X_1, X_2){
-  # Cosine fast-path: (X_1·X_1) / (||X_2|| ||X_2||)
-  AA <- sqrt(rowSums(X_1^2)) # length n_1
-  EE <- sqrt(rowSums(X_2^2)) # length n_2
-  DD_ <- X_1 %*% t(X_2) / outer(AA, EE, `*`)
-  DD <- 1 - DD_
-  return(DD)
+dist_inner_cosine <- function(X_e, X_a = NULL, dist){
+  # Inner product: X_i^TX_j
+  # And possible Cosine distance: 1 - (X_i^TX_j) / (||X_i|| ||X_j||)
+  center <- FALSE
+  if (is.null(X_a)) {
+    X_a <- X_e
+    center <- TRUE
+  }
+  inner_prod <- X_e %*% t(X_a)
+  # Center the inner product matrix by removing the diagonal
+  if (center){
+    inner_prod_centered <- inner_prod - diag(diag(inner_prod))
+  } else {
+    inner_prod_centered <- inner_prod
+  }
+  # Return the appropriate distance metric
+  if (dist == "inner"){
+    return(inner_prod_centered)
+  }
+  if (dist == "cosine"){
+    norms_e <- sqrt(rowSums(X_e^2)) # length n_e
+    norms_a <- sqrt(rowSums(X_a^2)) # length n_a
+    denom <- outer(norms_e, norms_a)
+    # To avoid division by zero, set zero norms to a small value
+    denom[denom == 0] <- .Machine$double.eps
+    return(1 - inner_prod / denom)
+    # return(1 - inner_prod_centered / denom)
+    # return(inner_prod_centered / outer(norms, norms))
+  }
+  stop("Invalid distance metric specified.")
 }
 
-dist_inner <- function(X_1, X_2){
-  # Inner product: X_1·X_2
-  DD <- X_1 %*% t(X_2)
-  return(DD)
-}
-
-dist_func <- function(X_1, X_2, dist){
+dist_func <- function(X_e, X_a = NULL, dist){
   if(dist == "euclid"){
-    return(dist_euclid(X_1, X_2))
+    return(dist_euclid(X_e, X_a))
   }
-  if(dist == "cosine"){
-    return(dist_cosine(X_1, X_2))
-  }
-  if(dist == "inner"){
-    return(dist_inner(X_1, X_2))
+  if(dist %in% c("cosine","inner")){
+    return(dist_inner_cosine(X_e, X_a, dist))
   }
   stop("Invalid distance metric specified.")
 }
@@ -79,7 +95,7 @@ pi_a_homo <- function(rho,
   if(rho <= 1 && rho >= 0 && !is.integer(rho)){
     rho_ij <- rho
   }
-  if (rho >= 1 && is.integer(rho)){
+  else if (rho >= 1 && is.integer(rho)){
     rho_ij <- rho / (n_a*(n_e-1))
   }
   else{
@@ -92,80 +108,57 @@ pi_a_homo <- function(rho,
   return(pi_a)
 }
 
-get_dist_matrix <- function(X_1,
-                            X_2,
-                            egonet_index,
+.col_logsumexp <- function(L){
+  # L is either n_e x n_e or n_e x n_a
+  col_max <- apply(L, 2, max, na.rm=TRUE)
+  Lc <- sweep(L, 2, m, "-")
+  Lc[!is.finite(Lc)] <- -Inf                   # handles -Inf - (-Inf) = NaN
+  S  <- colSums(exp(Lc))
+  logsumexp <- col_max + log(S)
+  logsumexp[!is.finite(col_max)] <- -Inf
+  return(logsumexp)
+}
+
+get_dist_matrix <- function(X_e,
+                            X_a = NULL,
                             dist = "euclid"){
   
   if (!dist %in% c("euclid","cosine","inner")){
     stop(paste0("Type=", dist, " of covariates distance is not supported."))
   }
-  
-  X_1 <- as.matrix(X_1)
-  X_2 <- as.matrix(X_2)
-  
-  n_1 <- nrow(X_1)
-  n_2 <- nrow(X_2)
-  
-  # Build the n_1 x n_2 distance matrix
-  D <- dist_func(X_1, X_2, dist)
-  # Enforce the convention: own-ego distance is 0
-  D[cbind(seq_len(n_1), egonet_index)] <- 0
-  dimnames(D) <- list(alter = seq_len(n_a), ego = seq_len(n_e))
-  
+  n_e <- nrow(X_e)
+  if(is.null(X_a)){n_a <- n_e}
+  else{n_a <- nrow(X_a)}
+  # Build the n_e x n_a distance matrix
+  # Note that when X_a=NULL, this is the n_e x n_e distance matrix (with 0 diagonal)
+  # and when X_a is given, this is the n_e x n_a distance matrix
+  # with no restriction on the diagonal
+  D <- dist_func(X_e, X_a, dist)
+  # dimnames(D) <- list(ego = seq_len(n_e), alter = seq_len(n_a))
   return(D)
 }
 
-hetero_pi_weight_matrix_ <- function(X_1,
-                                     X_2,
-                                     egonet_index,
-                                     dist = "euclid",
-                                     gamma = 1){
-  # input checks
-  X_1 <- as.matrix(X_1)
-  X_2 <- as.matrix(X_2)
+hetero_pi_weight_from_dist_ <- function(D, 
+                                        gamma = 1,
+                                        self_zero = FALSE){
+  # D: n x m (or n x n) distance matrix
+  # gamma: scalar "temperature" (often negative for distances)
+  # If self_zero=TRUE and D is square, force P[ii] = 0 (excluded in the softmax)
+  L <- gamma * D
+  L[is.na(L)] <- -Inf # exclude missing distances
+  # For ego-ego distance, make the diagonal -inf -> prob = 0
+  if (self_zero && nrow(D) == ncol(D)) diag(L) <- -Inf  # exclude self
   
-  if (ncol(X_1) != ncol(X_2)){
-    stop("X matrices must have the same number of columns.")
-  }
-  n_1 <- nrow(x_alters); n_2 <- nrow(x_egos)
+  # Compute probs matrix via softmax (by column) and LogSumExp trick 
+  lse <- .col_logsumexp(L)
+  log_prob <- sweep(L, 2, lse, "-") # log-softmax by column
+  log_prob[, is.infinite(lse)] <- -Inf # if all -Inf in col, set all probs to 0
   
-  if (length(egonet_index) != n_1){
-    stop("egonet_index must have length nrow(X_1).")
-  }
-  if (any(is.na(egonet_index)) || any(egonet_index < 1) || any(egonet_index > n_2)){
-    stop("egonet_index entries must be integers in 1,...,nrow(X_2).")
-  }
+  prob <- exp(log_prob)
+  prob[!is.finite(prob)] <- 0
   
-  if (gamma <= 0){
-    stop("gamma value must be larger than zero.")
-  }
-  
-  # Get distances
-  D <- get_dist_matrix(X_1,
-                       X_2,
-                       egonet_index,
-                       dist)
-  
-  # ensure valid interpretation of 'gamma' parameter
-  gamma_ <- ifelse(dist %in% c("euclid", "cosine"),
-                   -gamma,
-                   gamma )
-  
-  # Convert distances to weights ensuring numerical stability
-  L <- gamma_ * D
-  # own ego should NOT receive weight -> set to -Inf before exp
-  L[cbind(seq_len(nrow(D)), egonet_index)] <- -Inf
-  # Normalize weights by subtracting the row max (e.g., each alter max weight)
-  row_max <- apply(L, 1, max)
-  Lc <- sweep(L, 1, row_max, "-")
-  W <- exp(Lc)
-  W[!is.finite(W)] <- 0 # turns -Inf to 0
-  
-  if (dim(W)[1] != n_1 || dim(W)[2] != n_2){
-    stop("Error: invalid dimensions of the weights matrix.")
-  }
-  return(W)
+  return(list(log_prob = log_prob,
+              prob = prob))
 }
 
 
