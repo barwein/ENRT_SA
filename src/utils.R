@@ -117,70 +117,109 @@ get_dist_matrix <- function(X_e,
   if (!dist %in% c("norm","cosine","inner")){
     stop(paste0("Type=", dist, " of covariates distance is not supported."))
   }
-  n_e <- nrow(X_e)
-  if(is.null(X_a)){n_a <- n_e}
-  else{n_a <- nrow(X_a)}
   # Build the n_e x n_a distance matrix
   # Note that when X_a=NULL, this is the n_e x n_e distance matrix (with 0 diagonal)
   # and when X_a is given, this is the n_e x n_a distance matrix
   # with no restriction on the diagonal
-  D <- dist_func(X_e, X_a, dist, p)
-  return(D)
+  return(dist_func(X_e, X_a, dist, p))
 }
 
-# Sensitivity parameter ----------------------------------------------------
+# Sensitivity parameters (edges probs) ----------------------------------------------------
 
-pi_a_homo <- function(rho,
-                      n_a,
-                      n_e,
-                      pz){
+pi_homo <- function(rho_vec = NULL,
+                    m_vec = NULL,
+                    n_e,
+                    n_a = NULL,
+                    type,
+                    pz = 0.5
+                    ){
   
-  # edge prob with homogeneous prob or number of missing edges
-  rho_ij <- 0
-  if(rho <= 1 && rho >= 0 && !is.integer(rho)){
-    rho_ij <- rho
+  # Assert that 'type' in c("ego","alter")
+  if (!type %in% c("ego","alter")){
+    stop("Invalid prob type; 'type' should be one of 'ego' or 'alter'")
   }
-  else if (rho >= 1 && is.integer(rho)){
-    rho_ij <- rho / (n_a*(n_e-1))
+  # Edges prob with homogeneous prob or number of missing edges
+  # If rho is a probability (Homogeneous probs case)
+  # if(rho <= 1 && rho >= 0 && !is.integer(rho)){
+  if(!is.null(rho_vec)){
+    rho_ij_vec <- rho_vec
+  } else if (!is.null(m_vec)){
+  # If rho is an integer (Homogeneous number of missing edges case)
+    if(any(m_vec < 0)){
+      stop("All values in 'm_vec' must be non-negative.")
+    }
+    rho_ij_vec <- lapply(m_vec,
+                         function(m){
+                           ifelse(type == "ego",
+                                   m / choose(n_e, 2),
+                                   m / (n_a*(n_e-1)))
+                       })
+  } else{
+    stop("Invalid inputs. One of 'rho_vec' or 'm_vec' should be supplied.")
   }
-  else{
-    stop("Invalid rho value. rho should be either a probability or an integer.")
+  # Prob unit is not exposed to additional treated ego
+  # p_not_expos <- (1 - pz*rho_ij)^(n_e-1)
+  # pi_ <- ifelse(type == "ego",
+  #               1 - p_not_expos,
+  #               pz + (1 - pz)*(1 - p_not_expos))
+  # return(pi_)
+  pi_list <- lapply(rho_ij_vec, function(rho_ij){
+    p_not_expos <- (1 - pz*rho_ij)^(n_e-1)
+    if (type == "ego"){
+      1 - p_not_expos
+    } else {
+      pz + (1 - pz)*(1 - p_not_expos)
+    }
+  })
+  if (!is.null(rho_vec)){
+    names(pi_list) <- paste0("rho=", rho_vec)
+  } else {
+    names(pi_list) <- paste0("m=", m_vec)
   }
-  # Prob an alter is not exposed to additional treated ego
-  p_not_expos <- (1 - pz*rho_ij)^(n_e-1)
-  # Prob an alter is exposed
-  pi_a <- pz + (1 - pz)*(1 - p_not_expos)
-  return(pi_a)
+  return(pi_list)
 }
 
 
 .col_logsumexp <- function(L){
   # Helper function to compute the column-wise LogSumExp of matrix L
   # L is either n_e x n_e or n_e x n_a
-  col_max <- apply(L, 2, max, na.rm=TRUE)
-  Lc <- sweep(L, 2, m, "-")
-  Lc[!is.finite(Lc)] <- -Inf                   # handles -Inf - (-Inf) = NaN
-  S  <- colSums(exp(Lc))
-  logsumexp <- col_max + log(S)
+  # Were doing Softmax by column in L
+  # For one column X: LSE(X) = log(sum(exp(X))) = max(X) + log(sum(exp(X - max(X))))
+  # This is more numerically stable
+  col_max <- apply(L, 2, max, na.rm=TRUE) # max by column
+  Lc <- sweep(L, 2, col_max, "-") # X - max(X)
+  Lc[!is.finite(Lc)] <- -Inf 
+  S  <- colSums(exp(Lc)) # sum(exp(X - max(X)))
+  logsumexp <- col_max + log(S) # max(X) + log(sum(exp(X - max(X))))
   logsumexp[!is.finite(col_max)] <- -Inf
   return(logsumexp)
 }
 
 hetero_pi_weight_from_dist_ <- function(D, 
-                                        gamma = 1,
-                                        self_zero = FALSE){
-  # D: n x m (or n x n) distance matrix
-  # gamma: scalar "temperature" (often negative for distances)
+                                        gamma = -1,
+                                        ego_index = NULL
+                                        ){
+  # D: n_e x n_a (or n_e x n_e) distances matrix
+  # gamma: scalar "temperature" (negative for distances; positive for inner prod)
   # If self_zero=TRUE and D is square, force P[ii] = 0 (excluded in the softmax)
 
   L <- gamma * D
-  weights <- exp(L)
-  
   L[is.na(L)] <- -Inf # exclude missing distances
   # For ego-ego distance, make the diagonal -inf -> prob = 0
-  if (self_zero && nrow(D) == ncol(D)) diag(L) <- -Inf  # exclude self
+  if (!is.null(ego_index)){
+    L[cbind(ego_index, seq_along(ego_index))] <- -Inf
+  } 
+  if (is.null(ego_index) && nrow(D) == ncol(D)){
+    diag(L) <- -Inf  # exclude self distances in ego-ego case
+  } 
   
-  # Compute probs matrix via softmax (by column) and LogSumExp trick 
+  # Weights matrix: W_ij = exp(gamma * d_ij)
+  # Required for Heterogeneous number of missing edges case
+  weights <- exp(L)
+  
+  # Probs will be computed via Softmax by columns of W
+  # We use LogSumExp trick for numerical stability
+  # P_ij = exp(gamma*D_ij - LSE(D_j))
   lse <- .col_logsumexp(L)
   log_prob <- sweep(L, 2, lse, "-") # log-softmax by column
   log_prob[, is.infinite(lse)] <- -Inf # if all -Inf in col, set all probs to 0
@@ -200,93 +239,94 @@ hetero_pi_weight_from_dist_ <- function(D,
 # Repeat this process using non-parameteric bootstrap 
 # For PBA, we can do similar process, but in the end take an average over gamma values
 
-
-
-hetero_pi <- function(X_1,
-                      X_2,
-                      egonet_index,
-                      rho,
-                      dist = "euclid",
-                      type = "number",
-                      gamma = 1,
-                      pz = 0.5){
+pi_hetero <- function(X_e,
+                      X_a = NULL,
+                      m_vec = NULL,
+                      gamma = -1,
+                      dist = "norm",
+                      ego_index = NULL,
+                      pz = 0.5,
+                      p = 1){
   #' @title Heterogeneous pi values
   #' 
   
-  X_1 <- as.matrix(X_1)
-  X_2 <- as.matrix(X_2)
   
-  # input checks
-  hetero_pi_input_check_(X_1, 
-                         X_2,
-                         egonet_index,
-                         rho, 
-                         dist, 
-                         type, 
-                         gamma)
+  type_ <- ifelse(is.null(X_a), "ego", "alter")
   
-  # get weights matrix 
-  W <- hetero_pi_weight_matrix_(X_1,
-                                X_2,
-                                egonet_index,
-                                dist,
-                                gamma)
-  
-  # Get normalized weights
-  if (type == "number"){
-    # number of missing edges
-    rho_ve <- rowSums(W) / (ncol(X_2) - 1)
-  } else if (type == "prob"){
-    # probability of missing edges
-    pi_vec <- rowSums(W) / ncol(X_2)
+  if (type_ == "alter" && ncol(X_e) != ncol(X_a)){
+    stop("X_e and X_a must have the same number of columns.")
   }
   
-  # TODO: think on to design this function.
-  # In both 'prob' and 'number' scenarios, I need to compute the weights matrix W once
-  # However, in each scenario, the 'm' or 'gamma' grids change the way I compute the 'pi' probs
-  # Take this into consideration when modifiying it.
+  if (!is.null(m_vec) && length(gamma) > 1){
+    stop("When 'm_vec' is given, 'gamma' must be a scalar.")
+  }
   
+  if (!is.null(m_vec) && any(m_vec < 0)){
+    stop("All values in 'm_vec' must be non-negative.")
+  }
+  
+  # Distance matrix
+  D <- get_dist_matrix(X_e, X_a, dist, p)
+  # TODO: in the "alter" type case, need to convert D_ij = - Inf 
+  # for each ego i that its alter j is in its ego-network (e(j)=i).
+  # Should take an input vector of length n_a such that e_vec[j] = i
+  # where i will be value in (1,...,n_e) corresponding to the row of ego e(j).
+  
+  # get weights and probs matrices (for each gamma value)
+  W_P_list <- lapply(gamma, function(g){
+    hetero_pi_weight_from_dist_(D, 
+                                g, 
+                                ego_index)
+  })
+    
+  if(is.null(m_vec)){
+    # Heterogeneous probs case. 
+    pi_by_gamma <- lapply(W_P_list, function(wp){
+      P <- wp$prob
+      p_exposed <- 1 - apply(pz*P, 2, function(x) prod(1 - x))
+      if (type_ == "ego"){
+        p_exposed
+      } else {
+        pz + (1 - pz)*p_exposed
+      }
+    })
+    names(pi_by_gamma) <- paste0("gamma=", gamma)
+    if (length(pi_by_gamma) == 1){
+      return(pi_by_gamma[[1]])
+    } else {
+      return(pi_by_gamma)
+    }
+  } else{
+    # Heterogeneous number of missing edges case
+    # Compute all 'pi' probs by all 'm_vec' values at once
+    W <- W_P_list[[1]]$weights
+    W_sum <- ifelse(type_ == "ego",
+                    sum(W[lower.tri(W)]),
+                    sum(W))
+    
+    rho_by_m <- lapply(m_vec, function(m){m*W / W_sum})
+    names(rho_by_m) <- paste0("m=", m_vec)
+    
+    # rho_ij <- missing_num*W / W_sum
+    if (type_ == "ego"){
+      # rho_ij <- rho_ij - diag(diag(rho_ij)) # force diagonal to 0
+      rho_by_m <- lapply(rho_by_m, function(rho_mat){
+        rho_mat - diag(diag(rho_mat))
+      })
+    }
+    # Compute pi probs for each m
+    pi_by_m <- lapply(rho_by_m, function(rho_ij){
+      p_exposed <- 1 - apply(pz*rho_ij, 2, function(x) prod(1 - x))
+      if (type_ == "ego"){
+        p_exposed
+      } else {
+        pz + (1 - pz)*p_exposed
+      }
+    })
+    return(pi_by_m)
+  }
 }
 
-hetero_pi_input_check_ <- function(X_1,
-                                   X_2,
-                                   egonet_index,
-                                   rho,
-                                   dist = "euclid",
-                                   type = "number",
-                                   gamma = 1){
-  # input checks
-  
-  if (ncol(X_1) != ncol(X_2)){
-    stop("X matrices must have the same number of columns.")
-  }
-  n_1 <- nrow(X_1); n_2 <- nrow(X_2)
-  
-  if (length(egonet_index) != n_1){
-    stop("egonet_index must have length nrow(X_1).")
-  }
-  if (any(is.na(egonet_index)) || any(egonet_index < 1) || any(egonet_index > n_2)){
-    stop("egonet_index entries must be integers in 1,...,nrow(X_2).")
-  }
-  
-  if (!type %in% c("number","prob")){
-    stop("type must be either 'number' or 'prob'.")
-  }
-  
-  if(!is.integer(rho) && type == "number"){
-    stop("Invalid rho and 'type' combination.")
-  }
-  if(rho <= 1 && rho >= 0 && type == "number"){
-    stop("Invalid rho and 'type' combination.")
-  }
-  if(is.integer(rho) && type == "prob"){
-    stop("Invalid rho and 'type' combination.")
-  }
-  
-  if (gamma <= 0){
-    stop("gamma value must be larger than zero.")
-  }
-}
 
 # Indirect effects --------------------------------------------------------
 
@@ -315,6 +355,7 @@ ie_pi_point_ <- function(esti_mat,
 ie_pi_homo_point_grid_ <- function(esti_mat,
                                    pi_list,
                                    pz){
+
   
   esti_mat <- as.matrix(esti_mat)
   # check if all estimates vec have the same length
@@ -332,5 +373,4 @@ ie_pi_homo_point_grid_ <- function(esti_mat,
 }
 
 # Direct effects ----------------------------------------------------------
-
 
