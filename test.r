@@ -96,7 +96,7 @@ ie_hetero_num <- ie_pi_homo_point_grid_(mu_01 =  mu_01,
 ui_egos <- runif(n_e)
 mu_10 <- 1 / (1 + exp(-(ui_egos + 0.5)))
 mu_00 <- 1 / (1 + exp(-(ui_egos + 0.1)))
-mu_01 <- 1 / (1 + exp(-(ui_egos + 0.25)))
+mu_01 <- 1 / (1 + exp(-(ui_egos + 0.8)))
 
 kappa_vec <- seq(1, 1.25, 0.025)
 
