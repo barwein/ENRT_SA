@@ -10,8 +10,6 @@
 
 source("src/utils.R")
 
-
-
 # Wrapper of pi probs -----------------------------------------------------
 
 # TODO: create a wrapper that takes data and specifications and calls the relevant function
@@ -67,9 +65,11 @@ pi_homo <- function(rho_vec = NULL,
     }
   })
   if (!is.null(rho_vec)){
-    names(pi_list) <- paste0("rho=", rho_vec)
+    # names(pi_list) <- paste0("rho=", rho_vec)
+    names(pi_list) <- rho_vec
   } else {
-    names(pi_list) <- paste0("m=", m_vec)
+    # names(pi_list) <- paste0("m=", m_vec)
+    names(pi_list) <- m_vec
   }
   return(pi_list)
 }
@@ -128,7 +128,8 @@ pi_hetero <- function(X_e,
         pz + (1 - pz)*p_exposed
       }
     })
-    names(pi_by_gamma) <- paste0("gamma=", gamma)
+    # names(pi_by_gamma) <- paste0("gamma=", gamma)
+    names(pi_by_gamma) <- gamma
     if (length(pi_by_gamma) == 1){
       return(pi_by_gamma[[1]])
     } else {
@@ -143,7 +144,8 @@ pi_hetero <- function(X_e,
                     sum(W))
     
     rho_by_m <- lapply(m_vec, function(m){m*W / W_sum})
-    names(rho_by_m) <- paste0("m=", m_vec)
+    # names(rho_by_m) <- paste0("m=", m_vec)
+    names(rho_by_m) <- m_vec
     
     # rho_ij <- missing_num*W / W_sum
     if (type_ == "ego"){
