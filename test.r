@@ -1,6 +1,7 @@
 
 source("src/sensitivity_params.r")
 source("src/bias_adjustment.r")
+source("outcomes_models.R")
 
 n_e <- 100
 n_a <- 200
@@ -10,6 +11,16 @@ X_e <- matrix(rbinom(n=n_e*3, size = 1, prob = 0.4), nrow=n_e, ncol = 3)
 X_a <- matrix(rbinom(n=n_a*3, size = 1, prob = 0.3), nrow = n_a, ncol = 3)
 
 ego_index <- rep(seq(n_e), each = 2)
+
+Z_e <- rbinom(n_e, 1, pz)
+F_a <- Z_e[ego_index]
+
+
+probs_ego <- 1 / (1 + exp(-(-1 + Z_e*2 + X_e %*% c(0.5, -1, -0.3))))
+Y_e <- rbinom(n_e, 1, probs_ego)
+
+probs_alters <- 1 / (1 + exp(-(-1 + F_a*1.5 + X_a %*% c(0.5, -1, -0.3))))
+Y_a <- rbinom(n_a, 1, probs_alters)
 
 rho_vec <- seq(1e-3,1e-2, 1e-3)
 m_vec_ee <- seq(1,20,2)
@@ -98,7 +109,8 @@ mu_10 <- 1 / (1 + exp(-(ui_egos + 0.5)))
 mu_00 <- 1 / (1 + exp(-(ui_egos + 0.1)))
 mu_01 <- 1 / (1 + exp(-(ui_egos + 0.8)))
 
-kappa_vec <- seq(1, 1.25, 0.025)
+# kappa_vec <- seq(1, 1.25, 0.025)
+kappa_vec <- seq(0.5, 1, 0.05)
 
 de_hetero_num <- de_grid_multi_pi_kappa(mu_10 = mu_10,
                                         mu_00 = mu_00,
@@ -112,4 +124,39 @@ de_homo_num <- de_grid_multi_pi_kappa(mu_10 = mu_10,
                                         pi_list = pi_num_homo_ee, 
                                         kappa_vec = kappa_vec)
 
+
+
+# TEST OUTCOME MODEL
+
+frmal_alter <- as.formula(Y ~ F + X1 + X2 + X3)
+preds_alters <- reg_func_alters(
+  Y_a = Y_a,
+  X_a = X_a,
+  F_a = F_a,
+  X_e = X_e,
+  reg_model = glm,
+  formula = frmal_alter,
+  family = binomial(link = "logit") # Additional arg for glm
+)
+
+
+
+preds_egos <- reg_func_egos(
+  Y_e = Y_e,
+  X_e = X_e,
+  Z_e = Z_e,
+  reg_model = glm,
+  formula = as.formula(Y ~ Z + X1 + X2 + X3),
+  family = binomial(link = "logit") # Additional arg for glm
+)
+
+
+# TODO: we have a function that estimate the outcomes model
+# Also we have a function that given these estimate, return grid
+# of bias-corrected estimates
+# We should now write:
+# 1. Function that do boostrap for estimating variance and quantiles of bias-corrected estimands
+#    In it, the sensitivty params are treated as fixed (but not RR_i(0) in DE)
+# 2. Wrapper function that do it all and return all the IE and DE results
+# 3. Aux function that plot the results of this wrapper
 
