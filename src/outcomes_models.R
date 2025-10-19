@@ -100,11 +100,11 @@ reg_func_alters <- function(Y_a, X_a, F_a, X_e, reg_model, formula, ...) {
 
   # --- 2. Create Counterfactual Datasets for Prediction ---
   
-  # New data for alters (main sample) where everyone is treated (F=1)
+  # New data for alters where everyone are exposed (F=1)
   newdata_a_f1 <- dat_a
   newdata_a_f1$F <- 1
   
-  # New data for alters (main sample) where everyone is untreated (F=0)
+  # New data for alters where none are exposed (F=0)
   newdata_a_f0 <- dat_a
   newdata_a_f0$F <- 0
   
@@ -119,9 +119,7 @@ reg_func_alters <- function(Y_a, X_a, F_a, X_e, reg_model, formula, ...) {
   
   # --- 3. Generate Predictions ---
   
-  # Use the generic predict() function. 'type = "response"' is crucial for models
-  # like GLM to get predictions on the scale of the outcome (e.g., probabilities)
-  # rather than the linear predictor scale. We assume this is desired.
+  # Use the generic predict() function with 'type = "response"' for GLM
   mu_1_alters <- predict(fit, newdata = newdata_a_f1, type = "response")
   mu_0_alters <- predict(fit, newdata = newdata_a_f0, type = "response")
   mu_01_egos <- predict(fit, newdata = newdata_e_f1, type = "response")
@@ -174,15 +172,13 @@ reg_func_egos <- function(Y_e, X_e, Z_e, reg_model, formula, ...) {
   newdata_e_z1 <- dat_e
   newdata_e_z1$Z <- 1
   
-  # New data for egos where everyone is untreated (Z=0)
+  # New data for egos where no one is treated (Z=0)
   newdata_e_z0 <- dat_e
   newdata_e_z0$Z <- 0
   
   # --- 3. Generate Predictions ---
   
-  # Use the generic predict() function. 'type = "response"' is crucial for models
-  # like GLM to get predictions on the scale of the outcome (e.g., probabilities)
-  # rather than the linear predictor scale. We assume this is desired.
+  # Use the generic predict() function with 'type = "response"' for GLMs
   mu_10_e <- predict(fit, newdata = newdata_e_z1, type = "response")
   mu_00_e <- predict(fit, newdata = newdata_e_z0, type = "response")
 

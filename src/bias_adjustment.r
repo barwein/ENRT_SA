@@ -58,7 +58,7 @@ ie_pi_homo_point_grid_ <- function(mu_01,
   }, FUN.VALUE = numeric(2)))
   
   res_dt <- data.table(
-    pi_param = rownames(ie_grid_),
+    pi_param = as.numeric(rownames(ie_grid_)),
     ie_rd = ie_grid_[,1],
     ie_rr = ie_grid_[,2]
   )
@@ -100,7 +100,8 @@ de_grid_one_pi_multi_kappa <- function(mu_10,
                                        mu_00,
                                        mu_01,
                                        pi_vec,
-                                       kappa_vec_){
+                                       kappa_vec_,
+                                       bound_kappa = TRUE){
   # Estimate bias-corrected DE estimates for a single pi_param and a grid of kappa values
   pi_vec_numeric <- unlist(pi_vec)
   rr_i_0_ <- de_ego_rr_zero(mu_00 = mu_00,
@@ -108,13 +109,16 @@ de_grid_one_pi_multi_kappa <- function(mu_10,
                             pi_vec = pi_vec_numeric)
   
   # data-driven upper-bound for kappa
-  upp_bound <- (1 - pi_vec_numeric) / (rr_i_0_*(mu_10 - pi_vec_numeric))
-  u_i <- ifelse(mu_10 > pi_vec_numeric,
-                upp_bound,
-                inf)
-  k_bound <- min(u_i)
-  # Bound kappa_vec accordingly
-  kappa_vec_[kappa_vec_ >= k_bound] <- k_bound
+  if (bound_kappa){
+    upp_bound <- (1 - pi_vec_numeric) / (rr_i_0_*(mu_10 - pi_vec_numeric))
+    u_i <- ifelse(mu_10 > pi_vec_numeric,
+                  upp_bound,
+                  Inf)
+    k_bound <- min(u_i[u_i > 0])
+    # Bound kappa_vec accordingly
+    kappa_vec_[kappa_vec_ >= k_bound] <- k_bound
+  }
+  
   kappa_list <- as.list(kappa_vec_)
   names(kappa_list) <- round(kappa_vec_, 3)
   
@@ -142,7 +146,8 @@ de_grid_multi_pi_kappa <- function(mu_10,
                                    mu_00,
                                    mu_01,
                                    pi_list,
-                                   kappa_vec){
+                                   kappa_vec,
+                                   bound_kappa = TRUE){
   
   # Estimate bias-corrected DE estimates for a grid of (pi_param, kappa) combinations
   
@@ -155,7 +160,8 @@ de_grid_multi_pi_kappa <- function(mu_10,
                                mu_00 = mu_00,
                                mu_01 = mu_01,
                                pi_vec = pi_v,
-                               kappa_vec_ = kappa_vec)
+                               kappa_vec_ = kappa_vec,
+                               bound_kappa = bound_kappa)
   })
   res_dt <- rbindlist(de_list, idcol = "pi_param")
   res_dt$pi_param <- as.numeric(res_dt$pi_param)
