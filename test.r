@@ -15,14 +15,27 @@ X_a <- matrix(rbinom(n=n_a*3, size = 1, prob = 0.3), nrow = n_a, ncol = 3)
 ego_index <- rep(seq(n_e), each = 2)
 
 Z_e <- rbinom(n_e, 1, pz)
-F_a <- Z_e[ego_index]
+F_a_tilde <- Z_e[ego_index] # observed exposure
+F_a <- F_a_tilde 
+F_a[F_a==0] <- rbinom(sum(F_a==0), 1, 0.3)
 
+ego_expos <- rbinom(n_e, 1, 0.2)
 
-probs_ego <- 1 / (1 + exp(-(-1 + Z_e*2 + X_e %*% c(0.5, -1, -0.3))))
+probs_ego <- 1 / (1 + exp(-(-1 + Z_e*1 + 1.5*ego_expos + X_e %*% c(0.25, -0.25, -0.3))))
 Y_e <- rbinom(n_e, 1, probs_ego)
 
-probs_alters <- 1 / (1 + exp(-(-1 + F_a*1.5 + X_a %*% c(0.5, -1, -0.3))))
+true_de_rd <- mean(1 / (1 + exp(-(-1 + 1 + 1.5*ego_expos + X_e %*% c(0.25, -0.25, -0.3))))) - 
+  mean(1 / (1 + exp(-(-1 + 0 + 1.5*ego_expos + X_e %*% c(0.25, -0.25, -0.3)))))
+true_de_rr <- mean(1 / (1 + exp(-(-1 + 1 + 1.5*ego_expos + X_e %*% c(0.25, -0.25, -0.3))))) / 
+  mean(1 / (1 + exp(-(-1 + 0 + 1.5*ego_expos + X_e %*% c(0.25, -0.25, -0.3)))))
+
+probs_alters <- 1 / (1 + exp(-(-1 + F_a*1.5 + X_a %*% c(0.25, -0.25, -0.3))))
 Y_a <- rbinom(n_a, 1, probs_alters)
+
+true_ie_rd <- mean(1 / (1 + exp(-(-1 + 1.5 + X_a %*% c(0.25, -0.25, -0.3))))) - 
+  mean(1 / (1 + exp(-(-1 + 0 + X_a %*% c(0.25, -0.25, -0.3)))))
+true_ie_rr <- mean(1 / (1 + exp(-(-1 + 1.5 + X_a %*% c(0.25, -0.25, -0.3))))) / 
+  mean(1 / (1 + exp(-(-1 + 0 + X_a %*% c(0.25, -0.25, -0.3)))))
 
 rho_vec <- seq(1e-3,1e-2, 1e-3)
 m_vec_ee <- seq(1,20,2)
@@ -181,7 +194,7 @@ sa_bootstrap_res <- run_sensitivity_bootstrap(
   X_e = X_e,
   X_a = X_a,
   Z_e = Z_e,
-  F_a = F_a,
+  F_a = F_a_tilde,
   ego_id_a = ego_index,
   reg_model_egos = glm,
   reg_model_alters = glm,
@@ -190,8 +203,41 @@ sa_bootstrap_res <- run_sensitivity_bootstrap(
   pi_list_ego_ego = pi_num_hetero_ee,
   pi_list_alter_ego = pi_num_hetero_ae,
   kappa_vec = kappa_vec,
-  B = 50,
+  B = 1e3,
   family = binomial(link = "logit") # Additional arg for glm
 )
+
+
+null_sa_bootstrap_res <- run_sensitivity_bootstrap(
+  Y_e = Y_e,
+  Y_a = Y_a,
+  X_e = X_e,
+  X_a = X_a,
+  Z_e = Z_e,
+  F_a = F_a_tilde,
+  ego_id_a = ego_index,
+  reg_model_egos = glm,
+  reg_model_alters = glm,
+  formula_egos = as.formula(Y ~ Z + X1 + X2 + X3),
+  formula_alters = as.formula(Y ~ F + X1 + X2 + X3),
+  pi_list_ego_ego = list('0'=0),
+  pi_list_alter_ego = list('0' = 0.5),
+  kappa_vec = c(0),
+  B = 1e3,
+  family = binomial(link = "logit") # Additional arg for glm
+)
+
+
+# TODO: 1. finish the wrapping into one easy to use function
+# TODO: 2. Write aux function that plot the results
+# TODO: 3. Add PBA extension
+# TODO: 4. Test on more realistic DGP that mimics the network sampling design.
+
+
+
+
+
+
+
 
 

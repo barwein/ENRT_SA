@@ -123,6 +123,13 @@ reg_func_alters <- function(Y_a, X_a, F_a, X_e, reg_model, formula, ...) {
   mu_1_alters <- predict(fit, newdata = newdata_a_f1, type = "response")
   mu_0_alters <- predict(fit, newdata = newdata_a_f0, type = "response")
   mu_01_egos <- predict(fit, newdata = newdata_e_f1, type = "response")
+  
+  if(any(mu_1_alters < 0 | mu_1_alters > 1) |
+     any(mu_0_alters < 0 | mu_0_alters > 1) |
+     any(mu_01_egos < 0 | mu_01_egos > 1)) {
+    warning("Some predicted values are outside the [0, 1] range. ",
+            "Ensure that the regression model and link function are appropriate for the outcome type.")
+  }
 
   # --- 4. Return Results ---
   
@@ -182,6 +189,11 @@ reg_func_egos <- function(Y_e, X_e, Z_e, reg_model, formula, ...) {
   mu_10_e <- predict(fit, newdata = newdata_e_z1, type = "response")
   mu_00_e <- predict(fit, newdata = newdata_e_z0, type = "response")
 
+  if (any(mu_10_e < 0 | mu_10_e > 1) |
+      any(mu_00_e < 0 | mu_00_e > 1)) {
+    warning("Some predicted values are outside the [0, 1] range. ",
+            "Ensure that the regression model and link function are appropriate for the outcome type.")
+  }
   # --- 4. Return Results ---
   
   # Return a named list of vectors, ensuring output is clean.

@@ -88,9 +88,10 @@ SA_one_iter <- function(Y_e,
   egos_mu10 <- egos_reg$mu_10_e
   egos_mu00 <- egos_reg$mu_00_e
   
-  # TODO: add condition: pi_i^e = min(pi_i^e, egos_mu00/egos_mu01 - epsilon)
-  # TODO: think how that will impact $RR_i^e(0)$ and therefore the weights for DE:
-  # 1 + pi_i^e (RR_i(0) - 1)
+
+  pi_list_ego_ego <- egos_adjust_pi(pi_list_ego_ego,
+                                     mu_00 = egos_mu00,
+                                     mu_01 = egos_mu01)
   
   # Bias-corrected DE estimates (2D grid of (\pi, kappa))
   # 'DE_corrected' is data.table with columns: pi_param, kappa, de_rd, de_rr

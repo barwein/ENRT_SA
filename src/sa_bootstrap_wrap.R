@@ -52,7 +52,6 @@ library(data.table)
 #'         sensitivity parameters. The first row (`pi_param = 0`, `kappa = 0`)
 #'         contains the naive estimate.}
 #' }
-#' @export
 run_sensitivity_bootstrap <- function(Y_e,
                                       Y_a,
                                       X_e = NULL,
@@ -91,7 +90,7 @@ run_sensitivity_bootstrap <- function(Y_e,
     reg_model_egos = reg_model_egos, reg_model_alters = reg_model_alters,
     formula_egos = formula_egos, formula_alters = formula_alters,
     pi_list_ego_ego = pi_list_ego_ego, pi_list_alter_ego = pi_list_alter_ego,
-    kappa_vec = kappa_vec, pz = pz, 
+    kappa_vec = kappa_vec, bound_kappa = FALSE, pz = pz, 
     # ...
     family = binomial(link = "logit")
   )

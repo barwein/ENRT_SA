@@ -68,11 +68,31 @@ ie_pi_homo_point_grid_ <- function(mu_01,
 
 # Direct effects ----------------------------------------------------------
 
+egos_adjust_pi <- function(pi_list,
+                           mu_00,
+                           mu_01,
+                           epsilon = 1e-3){
+  ratio <- mu_00 / mu_01
+  # Adjust pi_vec to ensure RR_i^e(0) >= 0
+  pi_list_adjusted <- lapply(pi_list, function(pi_v){
+    pi_v <- ifelse(pi_v >= ratio, ratio - epsilon, pi_v)
+    pi_v[pi_v < 0] <- 0
+    return(pi_v)
+  })
+  return(pi_list_adjusted)
+}
+
+
 de_ego_rr_zero <- function(mu_00,
                            mu_01,
                            pi_vec){
   # Aux functions that computes RR_i^e(0) given estimates and pi vec
   rr_i_0 <- ((1 - pi_vec)*mu_01) / (mu_00 - pi_vec*mu_01)
+  # print(paste("range of RR_i^e(0):", paste(round(min(rr_i_0),3), round(max(rr_i_0),3), sep = " to ")))
+  if(any(rr_i_0 < 0)){
+    print(paste("number of i with pi >= ratio:", sum(pi_vec >= (mu_00 / mu_01))))
+    warning("Some values of RR_i^e(0) are negative. Check inputs.")
+  }
   return(rr_i_0)
 }
 
@@ -86,6 +106,12 @@ de_point_one_pi_kappa <- function(mu_10,
   # Weights vectors
   w_vec_10 <- 1 / (1 + pi_vec*(kappa_*rr_i_0 - 1))
   w_vec_00 <- 1 / (1 + pi_vec*(rr_i_0 - 1))
+  
+  # print(paste("range of w_vec_10:", paste(round(min(w_vec_10),3), round(max(w_vec_10),3), sep = " to ")))
+  
+  if(any(w_vec_10 < 0) | any(w_vec_00 < 0)){
+    warning("Some DE weights are negative. Check inputs.")
+  }
   
   # Direct effects on differences scale
   de_rd_ <- mean((mu_10*w_vec_10) - (mu_00*w_vec_00))
@@ -153,6 +179,9 @@ de_grid_multi_pi_kappa <- function(mu_10,
   
   if(length(mu_01) != length(mu_00) | length(mu_01) != length(mu_10)){
     stop("Estimates vectors are with different lengths.")
+  }
+  if (all(lapply(pi_list, function(p){all(p>=0)}) == FALSE)){
+    stop("Some pi_vec contains negative values.")
   }
   
   de_list <- lapply(pi_list, function(pi_v){

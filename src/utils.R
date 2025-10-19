@@ -110,6 +110,7 @@ get_dist_matrix <- function(X_e,
   return(dist_func(X_e, X_a, dist, p))
 }
 
+
 # Weights and probs from distances ----------------------------------------------------
 
 .col_logsumexp <- function(L){
