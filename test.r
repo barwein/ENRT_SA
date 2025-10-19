@@ -1,7 +1,9 @@
 
 source("src/sensitivity_params.r")
 source("src/bias_adjustment.r")
-source("outcomes_models.R")
+source("src/outcomes_models.R")
+source("src/sensitivity_analysis.R")
+source("src/sa_bootstrap_wrap.R")
 
 n_e <- 100
 n_a <- 200
@@ -151,12 +153,45 @@ preds_egos <- reg_func_egos(
 )
 
 
-# TODO: we have a function that estimate the outcomes model
-# Also we have a function that given these estimate, return grid
-# of bias-corrected estimates
-# We should now write:
-# 1. Function that do boostrap for estimating variance and quantiles of bias-corrected estimands
-#    In it, the sensitivty params are treated as fixed (but not RR_i(0) in DE)
-# 2. Wrapper function that do it all and return all the IE and DE results
-# 3. Aux function that plot the results of this wrapper
+# one iter of SA
+one_iter_num_hetero <- SA_one_iter(
+  Y_e = Y_e,
+  Y_a = Y_a,
+  X_e = X_e,
+  X_a = X_a,
+  Z_e = Z_e,
+  F_a = F_a,
+  reg_model_egos = glm,
+  reg_model_alters = glm,
+  formula_egos = as.formula(Y ~ Z + X1 + X2 + X3),
+  formula_alters = as.formula(Y ~ F + X1 + X2 + X3),
+  pi_list_ego_ego = pi_num_hetero_ee,
+  pi_list_alter_ego = pi_num_hetero_ae,
+  kappa_vec = kappa_vec,
+  pz = pz, 
+  family = binomial(link = "logit") # Additional arg for glm
+)
+
+
+# TEST the bootstrap wrapper
+
+sa_bootstrap_res <- run_sensitivity_bootstrap(
+  Y_e = Y_e,
+  Y_a = Y_a,
+  X_e = X_e,
+  X_a = X_a,
+  Z_e = Z_e,
+  F_a = F_a,
+  ego_id_a = ego_index,
+  reg_model_egos = glm,
+  reg_model_alters = glm,
+  formula_egos = as.formula(Y ~ Z + X1 + X2 + X3),
+  formula_alters = as.formula(Y ~ F + X1 + X2 + X3),
+  pi_list_ego_ego = pi_num_hetero_ee,
+  pi_list_alter_ego = pi_num_hetero_ae,
+  kappa_vec = kappa_vec,
+  B = 50,
+  family = binomial(link = "logit") # Additional arg for glm
+)
+
 

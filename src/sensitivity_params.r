@@ -10,12 +10,6 @@
 
 source("src/utils.R")
 
-# Wrapper of pi probs -----------------------------------------------------
-
-# TODO: create a wrapper that takes data and specifications and calls the relevant function
-# It should return the list of pi vectors (over all sensitivity parameters grid/draws)
-
-
 # Homogeneous case --------------------------------------------------------
 
 

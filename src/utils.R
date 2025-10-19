@@ -8,20 +8,6 @@
 #' @param params A list of parameters to vary in the sensitivity analysis.
 #' @return A data frame containing the results of the sensitivity analysis.
 
-
-# TODO: Think about the general structure of functions:
-# 1. Functions that compute estimates of IE and DE given pi (and kappa) values
-# 2. Functions that compute pi values given sensitivity parameters
-# 2a. Homogeneous probs
-# 2b. Homogeneous number of edges
-# 2c. Heterogeneous probs of edges
-# 2d. Heterogeneous number of edges
-# 3. Function in 1+2 should be efficent enough to run with bootstrap iterations
-# 4. Wrapper function that either do 
-# 4a. Sensitivity analysis for a grid of rho and kappa values (bias-corrected estimates and their associated CI)
-# 4b. PBA that takes a prior distribution over rho and kappa and returns a single bias-corrected estimate
-# 5. Wrapper function for IE and DE that take as input all the relevant requests and return the relevant result
-
 ### We focus only on identification of IE and DE and not the DE bounds!!! ###
 
 # Libraries ---------------------------------------------------------------
@@ -176,12 +162,4 @@ hetero_pi_weight_from_dist_ <- function(D,
   return(list(weights = weights,
               prob = prob))
 }
-
-# TODO: continue here. I have function that computes the weights W and probs matrix P
-# This for one gamma value.
-# Can compute for multiple using apply function
-# Given a list of these W and P matrices, and point estimate µ..,
-# I can compute the IE and DE estimates for each gamma value very fast
-# Repeat this process using non-parameteric bootstrap 
-# For PBA, we can do similar process, but in the end take an average over gamma values
 
