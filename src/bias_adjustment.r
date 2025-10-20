@@ -4,16 +4,6 @@
 
 source("src/sensitivity_params.r")
 
-# TODO: add wrapper for both IE and DE functions
-# For both, add function that uses non-parameteric bootstrap
-# Such that we'll have bias-corrected estimated + 95% CI for each parameters values
-# For IE, it is CI for each param
-# For DE, it is CI for each (pi_param, kappa) combination.
-
-# TODO: after completing the wrappers, add function that plot the results
-# Simple grid for IE, and contour plot for DE
-# The plot should include line/point for the naive estimate
-
 # Indirect effects --------------------------------------------------------
 
 ie_point_one_param_ <- function(esti_mat,
@@ -30,13 +20,17 @@ ie_point_one_param_ <- function(esti_mat,
   sum_01 <- sum(esti_mat %*% c(1,0))
   ie_rr_ <- sum_01 / (sum_01 - n_a*ie_rd_)
   
+  ie_rr_ <- ifelse(ie_rr_ < 0,
+                   0,
+                   ie_rr_)
+  
   return(c(ie_rd_, ie_rr_))
 }
 
-ie_pi_homo_point_grid_ <- function(mu_01,
-                                   mu_00,
-                                   pi_list,
-                                   pz){
+ie_pi_point_grid_ <- function(mu_01,
+                               mu_00,
+                               pi_list,
+                               pz){
   # Estimate bias-corrected IE estimates for a grid of pi_params
   if(length(mu_01) != length(mu_00)){
     stop("Estimates vectors are with different lengths.")
@@ -71,26 +65,42 @@ ie_pi_homo_point_grid_ <- function(mu_01,
 egos_adjust_pi <- function(pi_list,
                            mu_00,
                            mu_01,
-                           epsilon = 1e-3){
+                           epsilon = 1e-6){ # Increased precision slightly
+  
+  # Calculate ratio and handle numerical edge cases robustly
   ratio <- mu_00 / mu_01
-  # Adjust pi_vec to ensure RR_i^e(0) >= 0
+  
+  # If mu_01 is 0, ratio is Inf or NaN. We want pi_v < Inf, so this is okay.
+  # If both are 0, ratio is NaN. We treat this case as unconstrained (Inf).
+  ratio[is.nan(ratio)] <- Inf 
+  
+  # Adjust pi_vec to ensure the denominator of RR_i^e(0) is positive
   pi_list_adjusted <- lapply(pi_list, function(pi_v){
-    pi_v <- ifelse(pi_v >= ratio, ratio - epsilon, pi_v)
-    pi_v[pi_v < 0] <- 0
-    return(pi_v)
+    # Ensure pi_v is broadcastable to the length of ratio for the comparison
+    if (length(pi_v) == 1) {
+      pi_v_broadcast <- rep(pi_v, length(ratio))
+    } else {
+      pi_v_broadcast <- pi_v
+    }
+    
+    # Adjust pi where the condition is violated
+    pi_v_adjusted <- ifelse(pi_v_broadcast >= ratio, ratio - epsilon, pi_v_broadcast)
+    
+    # Ensure pi values are non-negative
+    pi_v_adjusted[pi_v_adjusted < 0] <- 0
+    
+    return(pi_v_adjusted)
   })
+  
   return(pi_list_adjusted)
 }
-
 
 de_ego_rr_zero <- function(mu_00,
                            mu_01,
                            pi_vec){
   # Aux functions that computes RR_i^e(0) given estimates and pi vec
   rr_i_0 <- ((1 - pi_vec)*mu_01) / (mu_00 - pi_vec*mu_01)
-  # print(paste("range of RR_i^e(0):", paste(round(min(rr_i_0),3), round(max(rr_i_0),3), sep = " to ")))
   if(any(rr_i_0 < 0)){
-    print(paste("number of i with pi >= ratio:", sum(pi_vec >= (mu_00 / mu_01))))
     warning("Some values of RR_i^e(0) are negative. Check inputs.")
   }
   return(rr_i_0)
@@ -106,8 +116,6 @@ de_point_one_pi_kappa <- function(mu_10,
   # Weights vectors
   w_vec_10 <- 1 / (1 + pi_vec*(kappa_*rr_i_0 - 1))
   w_vec_00 <- 1 / (1 + pi_vec*(rr_i_0 - 1))
-  
-  # print(paste("range of w_vec_10:", paste(round(min(w_vec_10),3), round(max(w_vec_10),3), sep = " to ")))
   
   if(any(w_vec_10 < 0) | any(w_vec_00 < 0)){
     warning("Some DE weights are negative. Check inputs.")
@@ -173,7 +181,7 @@ de_grid_multi_pi_kappa <- function(mu_10,
                                    mu_01,
                                    pi_list,
                                    kappa_vec,
-                                   bound_kappa = TRUE){
+                                   bound_kappa = FALSE){
   
   # Estimate bias-corrected DE estimates for a grid of (pi_param, kappa) combinations
   
