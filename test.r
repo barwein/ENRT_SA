@@ -110,15 +110,23 @@ esti_mat <- as.matrix(cbind(mu_01, mu_00))
 ie_rd_naive <- mean(esti_mat %*% c(1,-1))
 ie_rr_naive <- sum(esti_mat %*% c(1,0)) / sum(esti_mat %*% c(0,1))
 
-ie_homo_num <- ie_pi_point_grid_(mu_01 =  mu_01,
-                                      mu_00 = mu_00,
-                                      pi_list = pi_num_homo_ae,
-                                      pz = pz)
+ie_homo_num <- ie_aug_point_grid_(Y_a = Y_a,
+                                  F_a = F_a_tilde,
+                                  # m_a_1 = mu_01,
+                                  # m_a_0 = mu_00,
+                                  m_a_1 = rep(0,n_a),
+                                  m_a_0 = rep(0,n_a),
+                                  pi_list = pi_num_homo_ae,
+                                  pz = pz)
 
-ie_hetero_num <- ie_pi_point_grid_(mu_01 =  mu_01,
-                                        mu_00 = mu_00,
-                                        pi_list = pi_num_hetero_ae,
-                                        pz = pz)
+ie_hetero_num <- ie_aug_point_grid_(Y_a = Y_a,
+                                    F_a = F_a_tilde,
+                                    # m_a_1 = mu_01,
+                                    # m_a_0 = mu_00,
+                                    m_a_1 = rep(0,n_a),
+                                    m_a_0 = rep(0,n_a),
+                                    pi_list = pi_num_hetero_ae,
+                                    pz = pz)
 
 
 
@@ -317,12 +325,12 @@ pba_res <- enrt_pba(Y_e = Y_e,
     )
 
 
-
-# TODO: PBA with pi_hetero computional extensive (compared to homo), but works fine!
-# TODO: 1. Test on more realistic DGP that mimics the network sampling design.
-# TODO: the DGP can use data from HPTN (covariates, treatment, etc.)
-# TODO: just simulate contamination, and outcomes.
-
+# TODO: update code according to randomization-based framework
+# TODO: add two variance estimation options: 
+#  1. empirical (clustered for alters, and reg for egos)
+#  2. nonparametric network bootstrap
+# TODO: both IE and DE implemented using the augmented version. 
+#       If no outcome model is givem, take m(1)=m(0)=0 for both alters and egos.
 
 
 

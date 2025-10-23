@@ -6,59 +6,93 @@ source("src/sensitivity_params.r")
 
 # Indirect effects --------------------------------------------------------
 
-ie_point_one_param_ <- function(esti_mat,
-                                pi_vec,
-                                n_a,
-                                pz){
-  # Estimate bias-corrected IE estimate for a single pi_param
+#' Calculate augmented IE_RD for a single pi_vec
+ie_aug_point_one_param_ <- function(Y_a,
+                                    F_a,
+                                    m_a_1,
+                                    m_a_0,
+                                    pi_vec,
+                                    pz) {
   
-  # Indirect effects on differences scale
-  w_vec <- (1 - pz) / (1 - pi_vec)
-  ie_rd_ <- mean((esti_mat %*% c(1,-1)) * w_vec)
+  # Ensure pi_vec is valid
+  if (any(pi_vec >= 1)) {
+    warning("pi_vec contains values >= 1. IE estimate will be NA.")
+    pi_vec[pi_vec >= 1] <- NA
+  }
   
-  # IE on ratio scale 
-  sum_01 <- sum(esti_mat %*% c(1,0))
-  ie_rr_ <- sum_01 / (sum_01 - n_a*ie_rd_)
+  # Weights for bias correction
+  weights <- (1 - pz) / (1 - pi_vec)
   
-  ie_rr_ <- ifelse(ie_rr_ < 0,
-                   0,
-                   ie_rr_)
+  I_1 <- (F_a == 1)
+  I_0 <- (F_a == 0)
   
-  return(c(ie_rd_, ie_rr_))
+  # Augmented estimator components
+  term_1 <- (I_1 * (Y_a - m_a_1)) / pz
+  term_2 <- (I_0 * (Y_a - m_a_0)) / (1 - pz)
+  term_3 <- m_a_1 - m_a_0
+  
+  inside_sum <- term_1 - term_2 + term_3
+  
+  # Final estimator for RD
+  ie_rd_ <- mean(weights * inside_sum, na.rm = TRUE)
+  
+  return(c(ie_rd_))
 }
 
-ie_pi_point_grid_ <- function(mu_01,
-                               mu_00,
+#' Calculate augmented IE estimates for a grid of pi_params
+#'
+#' @param Y_a Vector of alter outcomes.
+#' @param F_a Vector of alter observed exposures.
+#' @param m_a_1 Vector of cross-fit predictions E[Y|F=1,X].
+#' @param m_a_0 Vector of cross-fit predictions E[Y|F=0,X].
+#' @param pi_list List of pi_vec sensitivity parameters.
+#' @param pz Scalar, Pr(Z=1) among egos.
+#'
+#' @return A data.table with pi_param, ie_rd, ie_rr
+ie_aug_point_grid_ <- function(Y_a,
+                               F_a,
+                               m_a_1,
+                               m_a_0,
                                pi_list,
-                               pz){
-  # Estimate bias-corrected IE estimates for a grid of pi_params
-  if(length(mu_01) != length(mu_00)){
-    stop("Estimates vectors are with different lengths.")
-  }
-  esti_mat <- as.matrix(cbind(mu_01,mu_00))
+                               pz) {
   
-  if (pz <= 0 | pz >= 1){
+  if (length(Y_a) != length(F_a) ||
+      length(Y_a) != length(m_a_1) ||
+      length(Y_a) != length(m_a_0)) {
+    stop("Y_a, F_a, m_a_1, and m_a_0 must have the same length (n_a).")
+  }
+  
+  if (pz <= 0 | pz >= 1) {
     stop("Invalid treatment probability 'pz' input.")
   }
   
-  n_a_ <- nrow(esti_mat)
-  
-  ie_grid_ <- t(vapply(pi_list, function(pi_v){
-    out <- ie_point_one_param_(esti_mat = esti_mat,
-                               pi_vec = pi_v,
-                               n_a = n_a_,
-                               pz = pz)
+  ie_grid_ <- vapply(pi_list, function(pi_v) {
+    # Ensure pi_v has correct length if it's not scalar
+    if (length(pi_v) > 1 && length(pi_v) != length(Y_a)) {
+      stop(paste("Heterogeneous pi_vec length", length(pi_v), 
+                 "does not match alter sample size", length(Y_a)))
+    }
+    
+    # 'out' is now a scalar
+    out <- ie_aug_point_one_param_(
+      Y_a = Y_a,
+      F_a = F_a,
+      m_a_1 = m_a_1,
+      m_a_0 = m_a_0,
+      pi_vec = pi_v,
+      pz = pz
+    )
     out
-  }, FUN.VALUE = numeric(2)))
+  }, FUN.VALUE = numeric(1))
   
   res_dt <- data.table(
-    pi_param = as.numeric(rownames(ie_grid_)),
-    ie_rd = ie_grid_[,1],
-    ie_rr = ie_grid_[,2]
+    pi_param = as.numeric(names(pi_list)),
+    ie_rd = ie_grid_
   )
   
   return(res_dt)
 }
+
 
 # Direct effects ----------------------------------------------------------
 
