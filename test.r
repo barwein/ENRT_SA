@@ -100,6 +100,7 @@ pi_num_hetero_ae <- pi_hetero(X_e=X_e,
                               ego_index = ego_index,
                               pz=pz)
 
+
 # TEST BIAS ADJUSTMENT FOR IE
 ui_alters <- runif(n_a)
 mu_01 <- 1 / (1 + exp(-(ui_alters + 0.5)))
@@ -112,19 +113,22 @@ ie_rr_naive <- sum(esti_mat %*% c(1,0)) / sum(esti_mat %*% c(0,1))
 
 ie_homo_num <- ie_aug_point_grid_(Y_a = Y_a,
                                   F_a = F_a_tilde,
-                                  # m_a_1 = mu_01,
-                                  # m_a_0 = mu_00,
-                                  m_a_1 = rep(0,n_a),
-                                  m_a_0 = rep(0,n_a),
+                                  mu_a_1 = mu_01,
+                                  mu_a_0 = mu_00,
+                                  # mu_a_1 = rep(0,n_a),
+                                  # mu_a_0 = rep(0,n_a),
                                   pi_list = pi_num_homo_ae,
-                                  pz = pz)
+                                  pz = pz, 
+                                  ego_id_a = ego_index,
+                                  n_e = n_e,
+                                  estimate_var = TRUE)
 
 ie_hetero_num <- ie_aug_point_grid_(Y_a = Y_a,
                                     F_a = F_a_tilde,
-                                    # m_a_1 = mu_01,
-                                    # m_a_0 = mu_00,
-                                    m_a_1 = rep(0,n_a),
-                                    m_a_0 = rep(0,n_a),
+                                    # mu_a_1 = mu_01,
+                                    # mu_a_0 = mu_00,
+                                    mu_a_1 = rep(0,n_a),
+                                    mu_a_0 = rep(0,n_a),
                                     pi_list = pi_num_hetero_ae,
                                     pz = pz)
 
@@ -140,44 +144,48 @@ mu_01 <- 1 / (1 + exp(-(ui_egos + 0.8)))
 kappa_vec <- seq(0.5, 1, 0.1)
 # kappa_vec <- seq(1, 1.5, 0.05)
 
-de_hetero_num <- de_grid_multi_pi_kappa(mu_10 = mu_10,
-                                        mu_00 = mu_00,
-                                        mu_01 = mu_01,
+de_hetero_num <- de_grid_multi_pi_kappa(Y_e = Y_e, 
+                                        Z_e = Z_e,
+                                        mu_e_1 = mu_10,
+                                        mu_e_0 = mu_00,
+                                        # mu_e_1 = NULL,
+                                        # mu_e_0 = NULL,
                                         pi_list = pi_num_hetero_ee, 
-                                        kappa_vec = kappa_vec)
+                                        kappa_vec = kappa_vec,
+                                        pz =pz,
+                                        estimate_var = TRUE
+                                        )
 
-de_homo_num <- de_grid_multi_pi_kappa(mu_10 = mu_10,
-                                        mu_00 = mu_00,
-                                        mu_01 = mu_01,
-                                        pi_list = pi_num_homo_ee, 
-                                        kappa_vec = kappa_vec)
+de_homo_num <- de_grid_multi_pi_kappa(Y_e = Y_e, 
+                                      Z_e = Z_e,
+                                      mu_e_1 = mu_10,
+                                      mu_e_0 = mu_00,
+                                      # mu_e_1 = NULL,
+                                      # mu_e_0 = NULL,
+                                      pi_list = pi_num_homo_ee, 
+                                      kappa_vec = kappa_vec,
+                                      pz = pz)
 
+
+# Test crossfitting outcomes model
+outcome_mods <- estimate_outcome_models_cf(Y_e = Y_e,
+                                           Y_a = Y_a,
+                                           X_e = X_e,
+                                           X_a = X_a,
+                                           Z_e = Z_e, 
+                                           F_a = F_a_tilde,
+                                           ego_id_a = ego_index, 
+                                           reg_model_egos = glm,
+                                           reg_model_alters = glm,
+                                           formula_egos = as.formula(Y ~ Z + X1 + X2 + X3),
+                                           formula_alters = as.formula(Y ~ F + X1 + X2 + X3),
+                                           family = binomial(link = "logit") # Additional arg for glm
+                                           )
 
 
 # TEST OUTCOME MODEL
 
 frmal_alter <- as.formula(Y ~ F + X1 + X2 + X3)
-preds_alters <- reg_func_alters(
-  Y_a = Y_a,
-  X_a = X_a,
-  F_a = F_a,
-  X_e = X_e,
-  reg_model = glm,
-  formula = frmal_alter,
-  family = binomial(link = "logit") # Additional arg for glm
-)
-
-
-
-preds_egos <- reg_func_egos(
-  Y_e = Y_e,
-  X_e = X_e,
-  Z_e = Z_e,
-  reg_model = glm,
-  formula = as.formula(Y ~ Z + X1 + X2 + X3),
-  family = binomial(link = "logit") # Additional arg for glm
-)
-
 
 # one iter of SA
 one_iter_num_hetero <- SA_one_iter(
@@ -187,6 +195,7 @@ one_iter_num_hetero <- SA_one_iter(
   X_a = X_a,
   Z_e = Z_e,
   F_a = F_a,
+  ego_id_a = ego_index,
   reg_model_egos = glm,
   reg_model_alters = glm,
   formula_egos = as.formula(Y ~ Z + X1 + X2 + X3),
@@ -195,6 +204,7 @@ one_iter_num_hetero <- SA_one_iter(
   pi_list_alter_ego = pi_num_hetero_ae,
   kappa_vec = kappa_vec,
   pz = pz, 
+  estimate_var = TRUE,
   family = binomial(link = "logit") # Additional arg for glm
 )
 
@@ -218,6 +228,8 @@ sa_bootstrap_res <- run_sensitivity_bootstrap(
   kappa_vec = kappa_vec,
   B = 1e3,
   n_cores = 8,
+  pz = pz,
+  verbose = TRUE,
   family = binomial(link = "logit") # Additional arg for glm
 )
 
@@ -239,6 +251,7 @@ null_sa_bootstrap_res <- run_sensitivity_bootstrap(
   kappa_vec = c(0),
   B = 1e3,
   n_cores = 8,
+  pz = pz,
   family = binomial(link = "logit") # Additional arg for glm
 )
 
@@ -246,6 +259,7 @@ null_sa_bootstrap_res <- run_sensitivity_bootstrap(
 
 
 # # TEST THE FULL SENSITIVITY ANALYSIS FUNCTION
+set.seed(511)
 full_sa_res <- enrt_sa(Y_e = Y_e,
                         Y_a = Y_a,
                         X_e = X_e,
@@ -259,13 +273,35 @@ full_sa_res <- enrt_sa(Y_e = Y_e,
                         formula_alters = as.formula(Y ~ F + X1 + X2 + X3),
                         pi_lists_ego_ego = list("hetero" = pi_num_hetero_ee, "homo" = pi_num_homo_ee),
                         pi_lists_alter_ego = list("hetero" = pi_num_hetero_ae, "homo" = pi_num_homo_ae),
-                        kappa_vec = kappa_vec,
+                        kappa_vec = kappa_vec, 
                         pz = pz,
-                        B = 5e3,
                         n_cores = 8,
                         family = binomial(link = "logit") # Additional arg for glm
   )
 full_sa_res$null_results
+
+set.seed(511)
+full_sa_res_bootstrap <- enrt_sa(Y_e = Y_e,
+                                  Y_a = Y_a,
+                                  X_e = X_e,
+                                  X_a = X_a,
+                                  Z_e = Z_e,
+                                  F_a = F_a_tilde,
+                                  ego_id_a = ego_index,
+                                  reg_model_egos = glm,
+                                  reg_model_alters = glm,
+                                  formula_egos = as.formula(Y ~ Z + X1 + X2 + X3),
+                                  formula_alters = as.formula(Y ~ F + X1 + X2 + X3),
+                                  pi_lists_ego_ego = list("hetero" = pi_num_hetero_ee, "homo" = pi_num_homo_ee),
+                                  pi_lists_alter_ego = list("hetero" = pi_num_hetero_ae, "homo" = pi_num_homo_ae),
+                                  kappa_vec = kappa_vec, 
+                                  pz = pz,
+                                  bootstrap = TRUE,
+                                  B = 5e3,
+                                  n_cores = 8,
+                                  family = binomial(link = "logit") # Additional arg for glm
+  )
+full_sa_res_bootstrap$null_results
 
 
 
@@ -325,12 +361,11 @@ pba_res <- enrt_pba(Y_e = Y_e,
     )
 
 
-# TODO: update code according to randomization-based framework
-# TODO: add two variance estimation options: 
-#  1. empirical (clustered for alters, and reg for egos)
-#  2. nonparametric network bootstrap
-# TODO: both IE and DE implemented using the augmented version. 
-#       If no outcome model is givem, take m(1)=m(0)=0 for both alters and egos.
+# TODO: Update the 'pba.R' script. 
+#       When using empirical variance, then it is possible to add "random noise" to each estimate
+#       When using bootstrap, then do something similar to current implementation
+# TODO: Change DGP to randomization-based inference to check performance;
+#       also make realistic DGP and network sampling (can use HPTN data properties for motivation)
 
 
 
