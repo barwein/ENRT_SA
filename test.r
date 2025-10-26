@@ -219,7 +219,8 @@ sa_bootstrap_res <- run_sensitivity_bootstrap(
   Z_e = Z_e,
   F_a = F_a_tilde,
   ego_id_a = ego_index,
-  reg_model_egos = glm,
+  # reg_model_egos = glm,
+  reg_model_egos = NULL,
   reg_model_alters = glm,
   formula_egos = as.formula(Y ~ Z + X1 + X2 + X3),
   formula_alters = as.formula(Y ~ F + X1 + X2 + X3),
@@ -267,7 +268,8 @@ full_sa_res <- enrt_sa(Y_e = Y_e,
                         Z_e = Z_e,
                         F_a = F_a_tilde,
                         ego_id_a = ego_index,
-                        reg_model_egos = glm,
+                        # reg_model_egos = glm,
+                        reg_model_egos = NULL,
                         reg_model_alters = glm,
                         formula_egos = as.formula(Y ~ Z + X1 + X2 + X3),
                         formula_alters = as.formula(Y ~ F + X1 + X2 + X3),
@@ -288,7 +290,8 @@ full_sa_res_bootstrap <- enrt_sa(Y_e = Y_e,
                                   Z_e = Z_e,
                                   F_a = F_a_tilde,
                                   ego_id_a = ego_index,
-                                  reg_model_egos = glm,
+                                  # reg_model_egos = glm,
+                                  reg_model_egos = NULL,
                                   reg_model_alters = glm,
                                   formula_egos = as.formula(Y ~ Z + X1 + X2 + X3),
                                   formula_alters = as.formula(Y ~ F + X1 + X2 + X3),
@@ -323,17 +326,19 @@ pi_ie_args <- list(X_e=X_e,
 prior_de_poiss_lognorm <- function() {
   list(
     pi_param = rpois(1, lambda = 50), # This will be m^e
-    kappa = rlnorm(1, meanlog = 0, sdlog = 0.05)
+    # kappa = rlnorm(1, meanlog = 0, sdlog = 0.05)
+    kappa = rnorm(1, 1, .2)
   )
 }
 
 # pi_de_args <- list(n_e = n_e, type = "ego", pz = 0.5)
 pi_de_args <- list(X_e = X_e,
                    gamma = -1,
-                   dist = "norm", 
+                   dist = "norm",
                    p = 2,
                    pz = pz)
 
+set.seed(51)
 pba_res <- enrt_pba(Y_e = Y_e, 
                     Y_a = Y_a, 
                     X_e = X_e,
@@ -345,7 +350,10 @@ pba_res <- enrt_pba(Y_e = Y_e,
                     reg_model_alters = glm,
                     formula_egos = as.formula(Y ~ Z + X1 + X2 + X3),
                     formula_alters = as.formula(Y ~ F + X1 + X2 + X3),
-                    B = 1e4,
+                    bootstrap = FALSE,
+                    # bootstrap = TRUE,
+                    # B = 1e4,
+                    B = 10,
                     n_cores = 8,
                     prior_func_ie = prior_ie_poiss,
                     # pi_func_ie = pi_homo,
