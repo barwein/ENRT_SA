@@ -1,159 +1,181 @@
 
-#' Create a Fixed Population for ENRT Simulation
+library(data.table)
+
+#' Create Population with Independent Latent Edges and True Estimands
 #'
-#' Generates all theoretical, fixed quantities for a simulation, including
-#' the true network (A), all potential outcomes (POs), and the
-#' true causal estimands (IE, DE). This output does not involve
-#' any randomization from treatment assignment.
+#' Generates the true population network A, the observed network A_tilde,
+#' the potential outcomes (using specified naming), and calculates the
+#' true sample average IE and DE (Risk Difference).
 #'
-#' @param X_e A numeric matrix of covariates for the egos (n_e rows).
-#' @param X_a A numeric matrix of covariates for the alters (n_a rows).
-#' @param alters_per_ego Number of alters recruited by each ego.
-#' @param m_e Number of *contaminating* ego-ego edges to add.
-#' @param m_a Number of *contaminating* alter-ego edges to add (to egos
-#'            other than the alter's own).
-#' @param params_po A list of intercept/effect coefficients for the
-#'                  potential outcome models.
-#' @param params_covar A list of covariate coefficients (gamma) for the
-#'                     potential outcome models.
-#' @param seed An optional random seed for reproducibility of the
-#'             population and POs.
+#' @param X_e Matrix of ego covariates (n_e x p).
+#' @param X_a Matrix of alter covariates (n_a x p).
+#' @param alters_per_ego Integer, the number of alters *recruited* by each ego.
+#' @param m_e Integer, the *expected* number of latent ego-ego edges.
+#'        Used for Scenario 1 (homogeneous).
+#' @param m_a Integer, the *expected* number of latent alter-ego edges.
+#'        Used for Scenario 1 (homogeneous).
+#' @param rho_egos Optional. An (n_e x n_e) matrix of heterogeneous
+#'        ego-ego edge probabilities. Used for Scenario 2.
+#' @param rho_alters Optional. An (n_e x n_a) matrix of heterogeneous
+#'        alter-ego edge probabilities. Used for Scenario 2.
+#' @param params_po List of parameters for potential outcomes, e.g.,
+#'        list(b0_e, b1_e, b2_e, b3_e, b0_a, b2_a).
+#' @param params_covar List of covariate effect vectors, e.g.,
+#'        list(g_e, g_a).
+#' @param seed Integer for reproducibility.
 #'
-#' @return A list containing:
-#'   \item{n_e, n_a, n}{Unit counts.}
-#'   \item{X_e, X_a}{The input covariate matrices.}
-#'   \item{A}{The true n x n adjacency matrix (including contamination).}
-#'   \item{ego_id_a_map}{Vector mapping alters (1...n_a) to ego indices (1...n_e).
-#'                       This represents the observed network structure.}
-#'   \item{po_egos}{A list of 4 vectors: Y_e_00, Y_e_10, Y_e_01, Y_e_11.}
-#'   \item{po_alters}{A list of 2 vectors: Y_a_00, Y_a_01.}
-#'   \item{true_estimands}{A list with the true $IE and $DE.}
-#'
+#' @return A list containing A, A_tilde, po_egos, po_alters, X_e, X_a,
+#'         ego_id_a_map, n_e, n_a, IE_RD, and DE_RD.
 create_population <- function(X_e,
                               X_a,
-                              alters_per_ego = 2,
-                              m_e = 50,
-                              m_a = 100,
-                              params_po = list(
-                                b0_e = -2.0, b1_e = 0.7, b2_e = 0.5, b3_e = 0.2,
-                                b0_a = -2.5, b2_a = 0.6
-                              ),
-                              params_covar = list(
-                                g_e = c(0.5),
-                                g_a = c(0.4)
-                              ),
+                              alters_per_ego,
+                              m_e = NULL,
+                              m_a = NULL,
+                              rho_egos = NULL,
+                              rho_alters = NULL,
+                              params_po,
+                              params_covar,
                               seed = NULL) {
   
-  if (!is.null(seed)) set.seed(seed)
+  if (!is.null(seed)) {
+    set.seed(seed)
+  }
   
-  # --- 1. Setup Units & Validate Inputs ---
   n_e <- nrow(X_e)
   n_a <- nrow(X_a)
-  n_covar <- ncol(X_e)
+  n <- n_e + n_a
   
   if (n_a != n_e * alters_per_ego) {
-    stop("nrow(X_a) does not match nrow(X_e) * alters_per_ego.")
-  }
-  if (ncol(X_a) != n_covar) {
-    stop("X_e and X_a must have the same number of columns.")
-  }
-  if (length(params_covar$g_e) != n_covar) {
-    stop("Length of params_covar$g_e must equal ncol(X_e).")
-  }
-  if (length(params_covar$g_a) != n_covar) {
-    stop("Length of params_covar$g_a must equal ncol(X_a).")
+    stop("Mismatch in alter counts. Assumes n_a = n_e * alters_per_ego.")
   }
   
-  n <- n_e + n_a # Total units
-  ego_indices <- 1:n_e
-  alter_indices <- (n_e + 1):n
-  ego_id_a_map <- rep(ego_indices, times = alters_per_ego)
+  # --- 1. Create Ego-Alter Mapping and Observed Network (A_tilde) ---
   
-  # --- 1b. Calculate linear covariate term ---
-  lin_pred_X_e <- X_e %*% params_covar$g_e
-  lin_pred_X_a <- X_a %*% params_covar$g_a
+  ego_id_a_map <- rep(1:n_e, each = alters_per_ego)
   
+  A_tilde <- matrix(0, nrow = n, ncol = n)
+  alters_global_idx <- (n_e + 1):n
   
-  # --- 2. Create True Adjacency Matrix (A) ---
-  A <- matrix(0, nrow = n, ncol = n)
-  
-  # 2a. Observed ego-alter "star" edges (represents \tilde{A})
   for (j in 1:n_a) {
-    ego_idx <- ego_id_a_map[j]
-    alter_idx <- alter_indices[j]
-    A[ego_idx, alter_idx] <- 1
-    A[alter_idx, ego_idx] <- 1
+    i_ego <- ego_id_a_map[j]
+    j_alter_global <- alters_global_idx[j]
+    A_tilde[i_ego, j_alter_global] <- 1
+    A_tilde[j_alter_global, i_ego] <- 1
   }
   
-  # 2b. Contaminating ego-ego edges (m_e)
-  if (m_e > 0) {
-    possible_ee_pairs <- which(upper.tri(matrix(NA, n_e, n_e)), arr.ind = TRUE)
-    m_e <- min(m_e, nrow(possible_ee_pairs))
-    sampled_rows <- sample(1:nrow(possible_ee_pairs), m_e)
-    ee_edges <- possible_ee_pairs[sampled_rows, , drop = FALSE]
-    A[ee_edges] <- 1
-    A[ee_edges[, c(2,1), drop = FALSE]] <- 1 # Symmetric
+  A <- A_tilde
+  
+  # --- 2. Add Latent Ego-Ego Edges to A ---
+  
+  m_e_sampled <- 0
+  
+  if (is.null(rho_egos)) {
+    if(is.null(m_e)) stop("Must provide m_e for homogeneous case.")
+    rho_e_homo <- m_e / choose(n_e, 2)
+    if(rho_e_homo > 1) rho_e_homo <- 1
+    rho_ee_mat <- matrix(rho_e_homo, n_e, n_e)
+  } else {
+    rho_ee_mat <- rho_egos
   }
   
-  # 2c. Contaminating alter-ego edges (m_a)
-  if (m_a > 0) {
-    all_ae_pairs <- expand.grid(alter_idx_global = alter_indices,
-                                ego_idx_global = ego_indices)
-    alter_pos <- all_ae_pairs$alter_idx_global - n_e
-    all_ae_pairs$own_ego_idx <- ego_id_a_map[alter_pos]
-    valid_ae_pairs <- all_ae_pairs[all_ae_pairs$ego_idx_global != all_ae_pairs$own_ego_idx, ]
-    m_a <- min(m_a, nrow(valid_ae_pairs))
-    sampled_rows <- sample(1:nrow(valid_ae_pairs), m_a)
-    ae_edges <- valid_ae_pairs[sampled_rows, c("alter_idx_global", "ego_idx_global")]
-    A[as.matrix(ae_edges)] <- 1
-    A[as.matrix(ae_edges[, c(2, 1)])] <- 1 # Symmetric
+  for (i in 1:(n_e - 1)) {
+    for (j in (i + 1):n_e) {
+      prob <- rho_ee_mat[i, j]
+      edge_sampled <- rbinom(1, 1, prob)
+      
+      A[i, j] <- edge_sampled
+      A[j, i] <- edge_sampled
+      
+      # Increment counter if edge was added
+      m_e_sampled <- m_e_sampled + edge_sampled
+    }
   }
   
-  diag(A) <- 0
+  # --- 3. Add Latent Alter-Ego Edges to A ---
   
+  m_a_sampled <- 0
   
-  # --- 3. Generate Fixed Potential Outcomes ---
+  if (is.null(rho_alters)) {
+    if(is.null(m_a)) stop("Must provide m_a for homogeneous case.")
+    rho_a_homo <- m_a / (n_a * (n_e - 1))
+    if(rho_a_homo > 1) rho_a_homo <- 1
+    rho_ae_mat <- matrix(rho_a_homo, n_e, n_a)
+  } else {
+    rho_ae_mat <- rho_alters
+  }
   
-  # 3a. Egos (n_e)
-  Y_e_00 <- rbinom(n_e, 1, plogis(params_po$b0_e + lin_pred_X_e))
-  Y_e_10 <- rbinom(n_e, 1, plogis(params_po$b0_e + params_po$b1_e + lin_pred_X_e))
-  Y_e_01 <- rbinom(n_e, 1, plogis(params_po$b0_e + params_po$b2_e + lin_pred_X_e))
-  Y_e_11 <- rbinom(n_e, 1, plogis(params_po$b0_e + params_po$b1_e + 
-                                    params_po$b2_e + params_po$b3_e + 
-                                    lin_pred_X_e))
+  for (k in 1:n_e) { 
+    for (j in 1:n_a) {
+      if (k == ego_id_a_map[j]) {
+        next
+      }
+      j_alter_global <- alters_global_idx[j]
+      prob <- rho_ae_mat[k, j]
+      edge_sampled <- rbinom(1, 1, prob)
+      
+      A[k, j_alter_global] <- edge_sampled
+      A[j_alter_global, k] <- edge_sampled
+      
+      m_a_sampled <- m_a_sampled + edge_sampled
+    }
+  }
   
-  # 3b. Alters (n_a)
-  Y_a_00 <- rbinom(n_a, 1, plogis(params_po$b0_a + lin_pred_X_a))
-  Y_a_01 <- rbinom(n_a, 1, plogis(params_po$b0_a + params_po$b2_a + lin_pred_X_a))
+  # --- 4. Generate Potential Outcomes ---
   
+  # Calculate covariate linear predictors
+  Xg_e <- if(is.null(params_covar$g_e)) 0 else as.numeric(X_e %*% params_covar$g_e)
+  Xg_a <- if(is.null(params_covar$g_a)) 0 else as.numeric(X_a %*% params_covar$g_a)
   
-  # --- 4. Define True Causal Estimands ---
-  IE_true <- mean(Y_a_01 - Y_a_00)
-  DE_true <- mean(Y_e_10 - Y_e_00)
+  # Generate POs using baseline parameters and covariate effects
+  po_egos <- with(params_po, {
+    lp_e_00 <- b0_e + Xg_e
+    lp_e_01 <- b0_e + Xg_e + b2_e
+    lp_e_10 <- b0_e + Xg_e + b1_e
+    lp_e_11 <- b0_e + Xg_e + b1_e + b2_e + b3_e
+    
+    cbind(
+      Y_e_00 = rbinom(n_e, 1, plogis(lp_e_00)),
+      Y_e_01 = rbinom(n_e, 1, plogis(lp_e_01)),
+      Y_e_10 = rbinom(n_e, 1, plogis(lp_e_10)),
+      Y_e_11 = rbinom(n_e, 1, plogis(lp_e_11))
+    )
+  })
   
-  # --- 5. Return All Fixed Population Quantities ---
+  po_alters <- with(params_po, {
+    lp_a_00 <- b0_a + Xg_a
+    lp_a_01 <- b0_a + Xg_a + b2_a
+    
+    cbind(
+      Y_a_00 = rbinom(n_a, 1, plogis(lp_a_00)),
+      Y_a_01 = rbinom(n_a, 1, plogis(lp_a_01))
+    )
+  })
   
+  # --- 5. Calculate True Causal Estimands (RD) ---
+  
+  # IE = E[Y(0, 1) - Y(0, 0)] for alters [cite: 102]
+  IE_RD <- mean(po_alters[, "Y_a_01"] - po_alters[, "Y_a_00"])
+  
+  # DE = E[Y(1, 0) - Y(0, 0)] for egos [cite: 107]
+  DE_RD <- mean(po_egos[, "Y_e_10"] - po_egos[, "Y_e_00"])
+  
+  # --- 6. Return all data ---
   return(list(
-    n_e = n_e,
-    n_a = n_a,
-    n = n,
+    A = A,
+    A_tilde = A_tilde,
+    po_egos = po_egos,
+    po_alters = po_alters,
     X_e = X_e,
     X_a = X_a,
-    A = A,
     ego_id_a_map = ego_id_a_map,
-    po_egos = list(
-      Y_e_00 = Y_e_00, Y_e_10 = Y_e_10, Y_e_01 = Y_e_01, Y_e_11 = Y_e_11
-    ),
-    po_alters = list(
-      Y_a_00 = Y_a_00, Y_a_01 = Y_a_01
-    ),
-    true_estimands = list(
-      IE = IE_true,
-      DE = DE_true
-    )
+    n_e = n_e,
+    n_a = n_a,
+    IE_RD = IE_RD,
+    DE_RD = DE_RD,
+    m_e_sampled = m_e_sampled,
+    m_a_sampled = m_a_sampled
   ))
 }
-
 
 #' Run One Randomized Trial on a Fixed Population
 #'
@@ -179,7 +201,7 @@ run_trial <- function(population, pz = 0.5, seed = NULL) {
   ego_id_a_map <- population$ego_id_a_map
   n_e <- population$n_e
   n_a <- population$n_a
-  n <- population$n
+  n <- n_e + n_a
   
   
   # --- 2. Run Trial: Assign Treatment (Z) ---
@@ -204,21 +226,21 @@ run_trial <- function(population, pz = 0.5, seed = NULL) {
   # Based on Consistency: Y_i = Y_i(Z_i, F_i_true)
   
   # 4a. Egos
-  Y_e <- po_egos$Y_e_00 # Start with Z=0, F=0
+  Y_e <- po_egos[,"Y_e_00"] # Start with Z=0, F=0
   
   idx_e_10 <- (Z_e == 1 & F_e_true == 0)
   idx_e_01 <- (Z_e == 0 & F_e_true == 1)
   idx_e_11 <- (Z_e == 1 & F_e_true == 1)
   
-  Y_e[idx_e_10] <- po_egos$Y_e_10[idx_e_10]
-  Y_e[idx_e_01] <- po_egos$Y_e_01[idx_e_01]
-  Y_e[idx_e_11] <- po_egos$Y_e_11[idx_e_11]
+  Y_e[idx_e_10] <- po_egos[,"Y_e_10"][idx_e_10]
+  Y_e[idx_e_01] <- po_egos[,"Y_e_01"][idx_e_01]
+  Y_e[idx_e_11] <- po_egos[,"Y_e_11"][idx_e_11]
   
   # 4b. Alters (Z_i = 0 for all alters)
-  Y_a <- po_alters$Y_a_00 # Start with Z=0, F=0
+  Y_a <- po_alters[,"Y_a_00"] # Start with Z=0, F=0
   
   idx_a_01 <- (F_a_true == 1)
-  Y_a[idx_a_01] <- po_alters$Y_a_01[idx_a_01]
+  Y_a[idx_a_01] <- po_alters[,"Y_a_01"][idx_a_01]
   
   
   # --- 5. Return Data Formatted for enrt_sa ---
@@ -232,6 +254,26 @@ run_trial <- function(population, pz = 0.5, seed = NULL) {
     F_a = F_a_obs,  # Use *OBSERVED* exposure
     ego_id_a = ego_id_a_map
   ))
+}
+
+
+#' Generate Covariate Matrices for Egos and Alters
+#'
+create_covariates <- function(n_e,
+                              n_a,
+                              seed = NULL){
+  if (!is.null(seed)) set.seed(seed)
+  x_e_ber1 <- rbinom(n_e, 1, 0.6)
+  x_e_ber2 <- rbinom(n_e, 1, 0.2)
+  x_e_norm <- rnorm(n_e, mean = 0, sd = 2)
+  X_e <- cbind(x_e_ber1, x_e_ber2, x_e_norm)
+  
+  x_a_ber1 <- rbinom(n_a, 1, 0.5)
+  x_a_ber2 <- rbinom(n_a, 1, 0.3)
+  x_a_norm <- rnorm(n_a, mean = 0, sd = 2)
+  X_a <- cbind(x_a_ber1, x_a_ber2, x_a_norm)
+  
+  return(list(X_e = X_e, X_a = X_a))
 }
 
 

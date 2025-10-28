@@ -78,10 +78,12 @@ pi_hetero <- function(X_e,
                       dist = "norm",
                       ego_index = NULL,
                       pz = 0.5,
-                      p = 1){
+                      p = 1,
+                      return_rho_ij = FALSE){
   #' @title Heterogeneous pi values
-  #' 
-
+  #' @param return_rho_ij [Logical] If TRUE, returns a list containing
+  #'        both 'pi' (exposure probs) and 'rho' (edge prob matrices).
+  #'        Only implemented for the 'm_vec' (Example 4) case.
   
   type_ <- ifelse(is.null(X_a), "ego", "alter")
   
@@ -99,10 +101,7 @@ pi_hetero <- function(X_e,
   
   # Distance matrix
   D <- get_dist_matrix(X_e, X_a, dist, p)
-  # TODO: in the "alter" type case, need to convert D_ij = - Inf 
-  # for each ego i that its alter j is in its ego-network (e(j)=i).
-  # Should take an input vector of length n_a such that e_vec[j] = i
-  # where i will be value in (1,...,n_e) corresponding to the row of ego e(j).
+
   
   # get weights and probs matrices (for each gamma value)
   W_P_list <- lapply(gamma, function(g){
@@ -157,7 +156,11 @@ pi_hetero <- function(X_e,
         pz + (1 - pz)*p_exposed
       }
     })
-    return(pi_by_m)
+    if (return_rho_ij){
+      return(list(pi = pi_by_m, rho = rho_by_m))
+    } else{
+      return(pi_by_m)
+    }
   }
 }
 
