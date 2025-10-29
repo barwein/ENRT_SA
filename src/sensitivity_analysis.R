@@ -63,10 +63,10 @@ enrt_sa <- function(Y_e,
                     Z_e,
                     F_a,
                     ego_id_a,
-                    reg_model_egos,
-                    reg_model_alters,
-                    formula_egos,
-                    formula_alters,
+                    reg_model_egos = NULL,
+                    reg_model_alters = NULL,
+                    formula_egos = NULL,
+                    formula_alters = NULL,
                     pi_lists_ego_ego,
                     pi_lists_alter_ego,
                     kappa_vec,
@@ -246,9 +246,8 @@ enrt_sa <- function(Y_e,
     if (nrow(sa_results_de) > 0) {
       naive_de_rd <- null_results_de # This is now the single (0,0) point
       subtitle_de_rd <- paste0(
-        sprintf("Naive Estimate (pi=0, kappa=0, %.0f%% CI): %.2f [%.2f, %.2f]",
-                (1-alpha)*100, naive_de_rd$de_rd, naive_de_rd$ci_low, naive_de_rd$ci_high),
-        ". Dashed red line at 0 indicates no direct effect."
+        sprintf("Naive Estimate (pi=0, kappa=1, %.0f%% CI): %.2f [%.2f, %.2f]",
+                (1-alpha)*100, naive_de_rd$de_rd, naive_de_rd$ci_low, naive_de_rd$ci_high)
       )
       
       de_plot_data_rd <- sa_results_de
@@ -259,7 +258,8 @@ enrt_sa <- function(Y_e,
         facet_wrap(~ spec) +
         scale_fill_viridis_d(direction = -1, option = "plasma") +
         labs(title = "Sensitivity of Direct Effect (Risk Difference)", subtitle = subtitle_de_rd,
-             x = expression(paste(pi, " Parameter (m or ", rho, ")")), y = expression(paste(kappa, " Parameter")), fill = "Estimated DE (RD)") +
+             x = expression(paste(pi, " Parameter (m or ", rho, ")")),
+             y = expression(paste(kappa, " Parameter")), fill = "Estimated DE (RD)") +
         theme_bw(base_size = 14) + theme(legend.position = "bottom", strip.background = element_rect(fill="white"))
     }
   }

@@ -34,14 +34,6 @@ PEN_SITE <- "222" # Pennsylvanian site
 # ns: network summary
 # il: Intervention Session Participation Log (session attendance; helps infer treatment)
 # keys: key variables per participant (often contains arm assignment if available)
-# TODO:
-# 1. Define baseline covariates for analysis
-# 2. Define treatment variable for ego-networks
-# 3. Create tabular data.frame where each row is unit, and each column is a variable
-# 4. Create ego, alter, and ego-network indicating variables
-# 5. Define the composite outcome of `any risky behavior`. Either 6 or 12 months to follow-up.
-# 6. Define the sensitivity probabilities for alter-ego and ego-ego edges.
-
 
 # Keep only Pennsylvania site + prepare visit windows -------------------------------------------------------------------------
 
@@ -273,6 +265,12 @@ analysis_uid <- Reduce(function(x, y) merge(x, y, by = "uid", all.x = TRUE), lis
 # Now bring in network-level features by NKID
 analysis_dt <- merge(analysis_uid, net_agg, by = "NKID", all.x = TRUE)
 
+
+# Remove alters without ego in the data
+ego_nkids <- unique(analysis_dt[is_ego == TRUE]$NKID)
+analysis_dt <- analysis_dt[NKID %in% ego_nkids]
+
+
 # Order columns nicely
 setcolorder(analysis_dt, c("uid","NKID","is_ego","ego_treat",
                            "injrisk_any_6m","inject14_6m",
@@ -281,6 +279,7 @@ setcolorder(analysis_dt, c("uid","NKID","is_ego","ego_treat",
                            "net_avg_age","net_prev_nonwhite", "net_prop_male",
                            "net_prev_injrisk_any_base",
                            "net_prev_cocaine_base","net_prev_heroin_and_cocaine"))
+
 
 # Print number of NAs per column
 data.frame(apply(analysis_dt, 2, function(x){sum(is.na(x))}))
