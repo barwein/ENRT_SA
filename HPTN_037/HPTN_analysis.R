@@ -11,6 +11,7 @@ library(kableExtra)
 source("src/sensitivity_analysis.R")
 source("src/pba.R")
 source("src/sensitivity_params.R")
+source("HPTN_037/hptn_plot_functions.R")
 
 # Global parameters
 
@@ -272,125 +273,47 @@ sa_ie_data[, model_type := factor(model_type, levels = model_levels)]
 # Blues for "homo", Oranges for "hetero"
 # Light shade for Unaugmented, Dark shade for Augmented
 palette <- c(
-  "Homo & Not-Aug"   = "#1C8BD9", # Light Blue
+  "Homo & Not-Aug"   = "#085380", # Light Blue
   # "Homo & Not-Aug"   = "#7DAFD1", # Light Blue
   # "Homo & Aug"     = "#1F78B4", # Dark Blue
   "Homo & Aug"     = "#085380", # Dark Blue
   # "Hetero & Not-Aug" = "#FDBF6F", # Light Orange
-  "Hetero & Not-Aug" = "#DBA663", # Light Orange
+  "Hetero & Not-Aug" = "#BA7013", # Light Orange
   # "Hetero & Aug"   = "#FF7F00"  # Dark Orange
-  "Hetero & Aug"   = "#874D08"  # Dark Orange
+  "Hetero & Aug"   = "#BA7013"  # Dark Orange
 )
 
 # Labels for the legend
 plot_labels <- c(
-  "Homo & Not-Aug" = "Homo",
-  "Homo & Aug"     = "Homo (Aug)",
+  "Homo & Not-Aug" = "Homo", 
+  "Homo & Aug"     = "Homo",
   "Hetero & Not-Aug" = "Hetero",
-  "Hetero & Aug"   = "Hetero (Aug)"
+  "Hetero & Aug"   = "Hetero"
 )
 
 # --- 3. Create the Plot ---
 
-ie_plot <- ggplot() + 
-  geom_ribbon(data = sa_ie_data,
-  aes(
-    x = pi_param,
-    ymin = ci_low,
-    ymax = ci_high,
-    fill = model_type
-  ),
-  alpha = 0.3 
-) +
-  geom_line(
-    data = sa_ie_data,
-    aes(
-      x = pi_param,
-      y = ie_rd,
-      color = model_type
-    ),
-    linewidth = 1.5
-  ) +
-  # Add the Naive point estimates
-  geom_point(
-    data = sa_ie_naive_data,
-    aes(
-      x = pi_param,
-      y = ie_rd,
-      shape = aug,
-      group = aug
-    ),
-    color = "black",
-    size = 4,
-    position = position_dodge(12)
-  ) +
-  # Add the Naive error bars
-  geom_errorbar(
-    data = sa_ie_naive_data,
-    aes(
-      x = pi_param,
-      ymin = ci_low,
-      ymax = ci_high,
-      group = aug
-    ),
-    color = "black",
-    width = 10,
-    linewidth = 0.7,
-    position = position_dodge(12)
-  ) +
-  # Horizontal line at y=0 (no effect)
-  geom_hline(
-    yintercept = 0,
-    linetype = "dashed",
-    color = "grey48"
-  ) +
-  # Use the custom color palette for lines and fills
-  scale_color_manual(
-    name = "SA Model:",
-    values = palette,
-    labels = plot_labels
-  ) +
-  scale_fill_manual(
-    name = "SA Model:",
-    values = palette,
-    labels = plot_labels
-  ) +
-  # Customize the shape legend
-  scale_shape_manual(
-    name = "Naive Model:",
-    values = c("TRUE" = 17, "FALSE" = 16), # Triangle and Circle
-    labels = c("TRUE" = "Augmented", "FALSE" = "Unaugmented")
-  ) +
-  # Add labels (using latex2exp for the x-axis)
-  labs(
-    title = "Sensitivity Analysis for Indirect Effect",
-    y = "Estimated IE",
-    x = TeX("$m_a$ (Expected number of missing alter-ego edges)")
-  ) +
-  
-  # Adjust x-axis scale
-  scale_x_continuous(breaks = seq(0, max(m_vec_alters), 50),
-                     labels = seq(0, max(m_vec_alters), 50)) +
-  # scale_y_continuous(breaks = c(-0.45, -0.35, -0.25, -0.15, -0.05,0,0.05,0.15)) +
-  scale_y_continuous(breaks = seq(-0.5,0.2,0.1)) +
-  theme_bw(base_size = 14) +
-  theme(
-    legend.position = "bottom",
-    legend.box = "vertical",
-    legend.key.width = unit(1.5, "cm"),
-    axis.text = element_text(size = 12)
-  )
-
-# Display the plot (IE)
-print(ie_plot)
-ggsave("HPTN_037/figures/sa_ie_plot.png",
-       plot = ie_plot, width = 8, height = 5,
+ie_plot_aug <- sa_ie_plot(sa_ie_data = sa_ie_data[aug == TRUE,],
+                          sa_ie_naive_data = sa_ie_naive_data[aug == TRUE,],
+                          palette = palette,
+                          plot_labels = plot_labels,
+                          m_vec_alters = m_vec_alters)
+print(ie_plot_aug)
+ggsave("HPTN_037/figures/sa_ie_plot_augmented.png",
+       plot = ie_plot_aug, width = 8, height = 5,
        dpi = 300,
        bg = "white")
 
-# TODO: make two plots: augmented & not augmented
-#       Probably will show only the augmented in the main text.
-
+ie_plot_not_aug <- sa_ie_plot(sa_ie_data = sa_ie_data[aug == FALSE,],
+                          sa_ie_naive_data = sa_ie_naive_data[aug == FALSE,],
+                          palette = palette,
+                          plot_labels = plot_labels,
+                          m_vec_alters = m_vec_alters)
+print(ie_plot_not_aug)
+ggsave("HPTN_037/figures/sa_ie_plot_not_augmented.png",
+       plot = ie_plot_not_aug, width = 8, height = 5,
+       dpi = 300,
+       bg = "white")
 
 # DE plot (bootstrap & augmented scenario)
 spec_labels <- c(
@@ -420,7 +343,29 @@ ggsave("HPTN_037/figures/sa_de_plot.png",
        dpi = 300,
        bg = "white")
 
+# DE plot given kappa=2
+palette <- c(
+  "homo"   = "#085380", # Light Blue
+  "hetero"   = "#BA7013"  # Dark Orange
+)
 
+# Labels for the legend
+plot_labels <- c(
+  "homo" = "Homo", 
+  "hetero"= "Hetero"
+)
+
+de_plot_kappa2 <- sa_de_plot_given_kappa(sa_de_data = hptn_sa_bootstrap_aug$sa_results$DE[kappa == 2.0,],
+                                         sa_de_naive_data = hptn_sa_bootstrap_aug$null_results$DE,
+                                         kappa = 2,
+                                         palette = palette,
+                                         plot_labels = plot_labels, 
+                                         m_vec_egos = m_vec_egos)
+print(de_plot_kappa2)
+ggsave("HPTN_037/figures/sa_de_plot_aug_kappa2.png",
+       plot = de_plot_kappa2, width = 8, height = 5,
+       dpi = 300,
+       bg = "white")
 
 # --- PBA results ---
 
@@ -429,7 +374,7 @@ ggsave("HPTN_037/figures/sa_de_plot.png",
 # Priors for IE (for m_e)
 
 prior_ie_uniform <- function() {
-  sample(seq(1, 400, by=1), 1)
+  sample(seq(1, max(m_vec_alters), by=1), 1)
 }
 
 prior_ie_poisson <- function() {
@@ -444,8 +389,8 @@ prior_ie_neg_binom <- function() {
 
 prior_de_uniform <- function() {
   list(
-    pi_param = sample(seq(1, 300, by=1), 1),
-    kappa = runif(1, min = 1, max = 3.0)
+    pi_param = sample(seq(1, max(m_vec_egos), by=1), 1),
+    kappa = runif(1, min = 1, max = 3)
   )
 }
 
@@ -459,7 +404,7 @@ prior_de_nb_lognormal <- function() {
 prior_de_poisson_uniform <- function() {
   list(
     pi_param = rpois(1, lambda = 150),
-    kappa = runif(1, min = 1, max = 3.0)
+    kappa = runif(1, min = 1, max = 3)
   )
 }
 
@@ -994,40 +939,93 @@ pba_de_results <- rbindlist(
 
 
 # Plot results
-naive_ie_aug_boot <- hptn_sa_bootstrap_aug$null_results$IE
-# naive_ie_aug_boot[,`;=`(
-#   model = spec,
-#   augmented = aug,
-#   ie_rd_mean = ie_rd,
-#   ie_rd_q_low = ci_low,
-#   ie_rd_q_high = ci_high
-#   
-# )]
+prior_levels <- c("Naive", "Poisson", "NB", "Uniform")
 
-# TODO: make the plot with the naive estimator to the left as well.
-#       Repeat for Augmented & non augmented and for DE (same)
+prior_colors <- c(
+  "Uniform" = "#E41A1C", # Red
+  "Poisson" = "#377EB8", # Blue
+  "NB"      = "#4DAF4A"  # Green
+)
 
-pba_ie_plot_aug <- ggplot(pba_ie_results[augmented == TRUE & uncertainty_type == "total",],
-                      aes(x = prior,
-                          y = ie_rd_mean,
-                          ymin = ie_rd_q_low,
-                          ymax = ie_rd_q_high,
-                          color = prior,
-                          shape = model)) +
-  geom_point(position = position_dodge(.5),
-             size = 3) +
-  geom_errorbar(position = position_dodge(.5),
-                width = 0.3, 
-                linewidth = 0.8) +
-  geom_hline(yintercept = 0, linetype = "dashed", color = "grey40") +
-  labs(
-    x = "",
-    y = "Estimated IE",
-    title = "Probabilistic Bias Analysis for Indirect Effect"
-  ) +
-  theme_bw(base_size = 14)  +
-  theme(legend.position = "bottom",
-        axis.text.x = element_text(size = 15, face = "bold")) 
+model_labels <- c(
+  "homo"   = "Homo",
+  "hetero" = "Hetero"
+)
 
-print(pba_ie_plot_aug)
+model_shapes <- c(
+  "homo"   = 19,
+  "hetero" = 17
+)
+
+
+pba_ie_aug_figure <- pba_ie_plot(
+  pba_ie_data = pba_ie_results[augmented == TRUE & uncertainty_type == "total",],
+  null_results = hptn_sa_bootstrap_aug$null_results$IE,
+  prior_levels = prior_levels,
+  prior_colors = prior_colors,
+  model_labels = model_labels,
+  model_shapes = model_shapes,
+  aug = TRUE
+)
+
+print(pba_ie_aug_figure)
+
+ggsave("HPTN_037/figures/pba_ie_augmented.png",
+       plot = pba_ie_aug_figure, width = 8, height = 5,
+       dpi = 300,
+       bg = "white")
+
+pba_ie_not_aug_figure <- pba_ie_plot(
+  pba_ie_data = pba_ie_results[augmented == FALSE & uncertainty_type == "total",],
+  null_results = hptn_sa_bootstrap_not_aug$null_results$IE,
+  prior_levels = prior_levels,
+  prior_colors = prior_colors,
+  model_labels = model_labels,
+  model_shapes = model_shapes,
+  aug = FALSE
+)
+
+print(pba_ie_not_aug_figure)
+ggsave("HPTN_037/figures/pba_ie_not_augmented.png",
+       plot = pba_ie_not_aug_figure, width = 8, height = 5,
+       dpi = 300,
+       bg = "white")
+
+
+# DE plot
+prior_levels_de <- c("Naive", "Uniform","Poisson + Uniform", "NB + Lognormal")
+prior_colors_de <- c(
+  "Poisson + Uniform" = "#E41A1C", # Red
+  "NB + Lognormal" = "#377EB8", # Blue
+  "Uniform"      = "#4DAF4A"  # Green
+)
+pba_de_aug_figure <- pba_de_plot(
+  pba_de_data = pba_de_results[augmented == TRUE & uncertainty_type == "total",],
+  null_results = hptn_sa_bootstrap_aug$null_results$DE,
+  prior_levels = prior_levels_de,
+  prior_colors = prior_colors_de,
+  model_labels = model_labels,
+  model_shapes = model_shapes,
+  aug = TRUE
+)
+print(pba_de_aug_figure)
+ggsave("HPTN_037/figures/pba_de_augmented.png",
+       plot = pba_de_aug_figure, width = 8, height = 5,
+       dpi = 300,
+       bg = "white")
+
+pba_de_not_aug_figure <- pba_de_plot(
+  pba_de_data = pba_de_results[augmented == FALSE & uncertainty_type == "total",],
+  null_results = hptn_sa_bootstrap_not_aug$null_results$DE,
+  prior_levels = prior_levels_de,
+  prior_colors = prior_colors_de,
+  model_labels = model_labels,
+  model_shapes = model_shapes,
+  aug = FALSE
+)
+print(pba_de_not_aug_figure)
+ggsave("HPTN_037/figures/pba_de_not_augmented.png",
+       plot = pba_de_not_aug_figure, width = 8, height = 5,
+       dpi = 300,
+       bg = "white")
 

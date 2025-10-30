@@ -221,7 +221,7 @@ enrt_sa <- function(Y_e,
       naive_ie_rd <- null_results_ie
       
       subtitle_ie_rd <- paste0(
-        sprintf("Naive Estimate (%.0f%% CI): %.2f [%.2f, %.2f]",
+        sprintf("Naive Estimate (%.0f%% CI): %.3f [%.3f, %.3f]",
                 (1 - alpha) * 100, naive_ie_rd$ie_rd, naive_ie_rd$ci_low, naive_ie_rd$ci_high),
         ". Dashed line at 0 indicates no indirect effect."
       )
@@ -246,7 +246,7 @@ enrt_sa <- function(Y_e,
     if (nrow(sa_results_de) > 0) {
       naive_de_rd <- null_results_de # This is now the single (0,0) point
       subtitle_de_rd <- paste0(
-        sprintf("Naive Estimate (pi=0, kappa=1, %.0f%% CI): %.2f [%.2f, %.2f]",
+        sprintf("Naive Estimate (pi=0, kappa=1, %.0f%% CI): %.3f [%.3f, %.3f]",
                 (1-alpha)*100, naive_de_rd$de_rd, naive_de_rd$ci_low, naive_de_rd$ci_high)
       )
       
