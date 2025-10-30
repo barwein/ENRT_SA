@@ -16,8 +16,8 @@ source("HPTN_037/hptn_plot_functions.R")
 # Global parameters
 
 N_CORES <- 8
-# BOOTSTRAP_B <- 1e4
-BOOTSTRAP_B <- 1e2  # For testing; change to 1e4 for final analysis
+BOOTSTRAP_B <- 1e4
+# BOOTSTRAP_B <- 1e2  # For testing; change to 1e4 for final analysis
 
 # --- Read data ---
 hptn_df <- fread("HPTN_037/hptn_clean_df.csv")
@@ -1028,4 +1028,6 @@ ggsave("HPTN_037/figures/pba_de_not_augmented.png",
        plot = pba_de_not_aug_figure, width = 8, height = 5,
        dpi = 300,
        bg = "white")
+
+
 
