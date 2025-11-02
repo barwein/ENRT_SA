@@ -54,18 +54,19 @@ ra_pen[, `:=`(
   uid = as.character(uid)
 )]
 
-# 6‑month follow‑up: take the earliest completed assessment per uid
-ra_pen_6m <- ra_pen[
-  visnum == 6 & !is.na(studyday),
+# 12‑month follow‑up: take the earliest completed assessment per uid
+ra_pen_12m <- ra_pen[
+  # visnum == 6 & !is.na(studyday),
+  visnum == 12 & !is.na(studyday),
   .SD[which.min(studyday)],
   by = uid
 ]
 
 
-# Restrict other tables to those with 6m outcomes
-uid_6m <- unique(ra_pen_6m$uid)
-ra_pen_sub <- ra_pen[uid %in% uid_6m]
-dm_sub <- dm_pen[uid %in% uid_6m]
+# Restrict other tables to those with 12-month follow-up outcomes
+uid_12m <- unique(ra_pen_12m$uid)
+ra_pen_sub <- ra_pen[uid %in% uid_12m]
+dm_sub <- dm_pen[uid %in% uid_12m]
 
 
  
@@ -74,7 +75,7 @@ dm_sub <- dm_pen[uid %in% uid_6m]
 # Helper: treat blanks as NA
 blank_to_na <- function(x) {x[x %in% c("")] <- NA; x}
 
-ra_pen_6m[, c("RA3nwatr","RA3ncook","RA3ncotn","RA3nload","RA3nndl",
+ra_pen_12m[, c("RA3nwatr","RA3ncook","RA3ncotn","RA3nload","RA3nndl",
               "RA4othrs","RA4dkwel","RA3injlm","RA3inj6m",
               "RA3ndays") := lapply(.SD, blank_to_na),
           .SDcols = c("RA3nwatr","RA3ncook","RA3ncotn","RA3nload","RA3nndl",
@@ -83,40 +84,40 @@ ra_pen_6m[, c("RA3nwatr","RA3ncook","RA3ncotn","RA3nload","RA3nndl",
 
 # Numeric sharing counts (>0 = risky)
 num_risk <- c("RA3nwatr","RA3ncook","RA3ncotn","RA3nload","RA3nndl")
-ra_pen_6m[, (paste0(num_risk,"_bin")) := lapply(.SD,
+ra_pen_12m[, (paste0(num_risk,"_bin")) := lapply(.SD,
                                                 function(v) as.integer(as.numeric(v) > 0)),
           .SDcols = num_risk]
 
 
 # Public/shooting gallery (Yes/No)
-ra_pen_6m[, RA4othrs_bin := as.integer(RA4othrs == "Yes")]
+ra_pen_12m[, RA4othrs_bin := as.integer(RA4othrs == "Yes")]
 
 
 # Injecting with people you don't know well (anything except "rarely or never")
-ra_pen_6m[, RA4dkwel_bin := as.integer(!RA4dkwel %in% c(NA, "rarely or never"))]
+ra_pen_12m[, RA4dkwel_bin := as.integer(!RA4dkwel %in% c(NA, "rarely or never"))]
 
 
 # If no injection in last month (RA3injlm == 2 or "No") or last 6 months, set relevant risk to 0
-no_inj_month <- ra_pen_6m$RA3injlm %in% c("2","No")
-no_inj_6mo <- ra_pen_6m$RA3inj6m %in% c("0","No")
+no_inj_month <- ra_pen_12m$RA3injlm %in% c("2","No")
+no_inj_6mo <- ra_pen_12m$RA3inj6m %in% c("0","No")
 
 
 risk_cols <- c(paste0(num_risk,"_bin"), "RA4othrs_bin","RA4dkwel_bin")
 # treat NA as zeros
 for (cc in risk_cols) {
-  ra_pen_6m[no_inj_month | no_inj_6mo, (cc) := 0L]
-  ra_pen_6m[is.na(get(cc)), (cc) := 0L]
+  ra_pen_12m[no_inj_month | no_inj_6mo, (cc) := 0L]
+  ra_pen_12m[is.na(get(cc)), (cc) := 0L]
 }
 
 
 # Composite: any risky injection behavior at 6m
-ra_pen_6m[, injrisk_any_6m := as.integer(
+ra_pen_12m[, injrisk_any_6m := as.integer(
   do.call(pmax, c(.SD, list(na.rm = TRUE)))
 ), .SDcols = risk_cols]
 
 
 # Also mirror SAS "Injected >14 days last month" (inject14)
-ra_pen_6m[, inject14_6m := as.integer(as.numeric(RA3ndays) > 14)]
+ra_pen_12m[, inject14_6m := as.integer(as.numeric(RA3ndays) > 14)]
 
 
 # Baseline covariates (visnum = 0), one record per uid -------------------------------------------------------------------------
@@ -249,7 +250,7 @@ arm_by_uid[, treat := NULL]
  
 # Build final analysis table — merge all uid-based tables first, then add net_agg by NKID
 analysis_uid <- Reduce(function(x, y) merge(x, y, by = "uid", all.x = TRUE), list(
-  ra_pen_6m[, .(uid,
+  ra_pen_12m[, .(uid,
                 injrisk_any_6m,
                 inject14_6m)],
   dm_base,

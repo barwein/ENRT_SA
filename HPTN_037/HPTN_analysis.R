@@ -322,7 +322,8 @@ spec_labels <- c(
   # "homo" = TeX("Homogeneous $\\pi_i^e$"),
   # "hetero" = TeX("Heterogeneous $\\pi_i^e$")
 )
-de_plot <- hptn_sa_bootstrap_aug$de_rd_plot
+# de_plot <- hptn_sa_bootstrap_aug$de_rd_plot
+de_plot <- hptn_sa_bootstrap_not_aug$de_rd_plot
 de_plot <- de_plot + 
         scale_x_continuous(breaks = seq(0, max(m_vec_egos), 50),
                            labels = seq(0, max(m_vec_egos), 50)) +
@@ -355,8 +356,11 @@ plot_labels <- c(
   "hetero"= "Hetero"
 )
 
-de_plot_kappa2 <- sa_de_plot_given_kappa(sa_de_data = hptn_sa_bootstrap_aug$sa_results$DE[kappa == 2.0,],
-                                         sa_de_naive_data = hptn_sa_bootstrap_aug$null_results$DE,
+de_plot_kappa2 <- sa_de_plot_given_kappa(
+                                         sa_de_data = hptn_sa_bootstrap_not_aug$sa_results$DE[kappa == 2.0,],
+                                         sa_de_naive_data = hptn_sa_bootstrap_not_aug$null_results$DE,
+                                         # sa_de_data = hptn_sa_bootstrap_aug$sa_results$DE[kappa == 2.0,],
+                                         # sa_de_naive_data = hptn_sa_bootstrap_aug$null_results$DE,
                                          kappa = 2,
                                          palette = palette,
                                          plot_labels = plot_labels, 
