@@ -181,7 +181,7 @@ kable(ie_hetero_summ_not_aug,
 
 
 kbl(ie_hetero_summ_not_aug, 
-    caption = "IE Results - Heterogeneous Exposure - not_aug", 
+    caption = "IE Results - Heterogeneous Exposure - not aug", 
     digits = 3,
     format = "latex",
     booktabs = TRUE,
@@ -212,7 +212,7 @@ kable(de_hetero_summ_not_aug,
 
 
 kbl(de_hetero_summ_not_aug, 
-    caption = "DE Results - Heterogeneous Exposure - not_aug", 
+    caption = "DE Results - Heterogeneous Exposure - not aug", 
     digits = 3,
     format = "latex",
     booktabs = TRUE,
