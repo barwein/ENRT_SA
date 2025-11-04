@@ -1,0 +1,120 @@
+\begin{thebibliography}{}
+
+\bibitem[Aronow and Samii, 2017]{aronow_estimating_2017}
+Aronow, P.~M. and Samii, C. (2017).
+\newblock Estimating average causal effects under general interference, with application to a social network experiment.
+\newblock {\em The Annals of Applied Statistics}, 11(4).
+
+\bibitem[Asmus et~al., 2017]{Asmus2017}
+Asmus, J.~M., Carter, E.~W., Moss, C.~K., Biggs, E.~E., Bolt, D.~M., Born, T.~L., Bottema-Beutel, K., Brock, M.~E., Cattey, G.~N., Cooney, M., Fesperman, E.~S., Hochman, J.~M., Huber, H.~B., Lequia, J.~L., Lyons, G.~L., Vincent, L.~B., and Weir, K. (2017).
+\newblock Efficacy and {Social} {Validity} of {Peer} {Network} {Interventions} for {High} {School} {Students} {With} {Severe} {Disabilities}.
+\newblock {\em American Journal on Intellectual and Developmental Disabilities}, 122(2):118--137.
+
+\bibitem[Booth et~al., 2016]{Booth2016}
+Booth, R.~E., Davis, J.~M., Dvoryak, S., Brewster, J.~T., Lisovska, O., Strathdee, S.~A., and Latkin, C.~A. (2016).
+\newblock {HIV} incidence among people who inject drugs ({PWIDs}) in {Ukraine}: results from a clustered randomised trial.
+\newblock {\em The Lancet HIV}, 3(10):e482--e489.
+
+\bibitem[Buchanan et~al., 2024]{Buchanan_2024}
+Buchanan, A.~L., Hernández-Ramírez, R.~U., Lok, J.~J., Vermund, S.~H., Friedman, S.~R., Forastiere, L., and Spiegelman, D. (2024).
+\newblock Assessing direct and spillover effects of intervention packages in network-randomized studies.
+\newblock {\em Epidemiology}, 35(4):481.
+
+\bibitem[Buchanan et~al., 2018]{Buchanan2018}
+Buchanan, A.~L., Vermund, S.~H., Friedman, S.~R., and Spiegelman, D. (2018).
+\newblock Assessing {Individual} and {Disseminated} {Effects} in {Network}-{Randomized} {Studies}.
+\newblock {\em American Journal of Epidemiology}, 187(11):2449--2459.
+
+\bibitem[Chao et~al., 2025]{Chao2023}
+Chao, A., Spiegelman, D., Buchanan, A., and Forastiere, L. (2025).
+\newblock Estimation and inference for causal spillover effects in egocentric-network randomized trials in the presence of network membership misclassification.
+\newblock {\em Biostatistics}, 26(1):kxaf009.
+
+\bibitem[Crawford et~al., 2019]{Crawford2019}
+Crawford, F.~W., Morozova, O., Buchanan, A.~L., and Spiegelman, D. (2019).
+\newblock Interpretation of the {Individual} {Effect} {Under} {Treatment} {Spillover}.
+\newblock {\em American Journal of Epidemiology}, 188(8):1407--1409.
+
+\bibitem[Desrosiers et~al., 2020]{Desrosiers2020}
+Desrosiers, A., Kumar, P., Dayal, A., Alex, L., Akram, A., and Betancourt, T. (2020).
+\newblock Diffusion and spillover effects of an evidence-based mental health intervention among peers and caregivers of high risk youth in {Sierra} {Leone}: study protocol.
+\newblock {\em BMC Psychiatry}, 20(1):85.
+
+\bibitem[Fang et~al., 2025]{Fang2023}
+Fang, J., Spiegelman, D., Buchanan, A.~L., and Forastiere, L. (2025).
+\newblock Design of egocentric network-based studies to estimate causal effects under interference.
+\newblock {\em Statistical Methods in Medical Research}, page 09622802251357021.
+
+\bibitem[Forastiere et~al., 2020]{Forastiere2020}
+Forastiere, L., Airoldi, E.~M., and Mealli, F. (2020).
+\newblock Identification and estimation of treatment and interference effects in observational studies on networks.
+\newblock {\em Journal of the American Statistical Association}, 116(534):901--918.
+
+\bibitem[Greenland, 2005]{Greenland2005}
+Greenland, S. (2005).
+\newblock Multiple-{Bias} {Modelling} for {Analysis} of {Observational} {Data}.
+\newblock {\em Journal of the Royal Statistical Society Series A: Statistics in Society}, 168(2):267--306.
+
+\bibitem[Lash et~al., 2014]{Lash2014}
+Lash, T.~L., Fox, M.~P., MacLehose, R.~F., Maldonado, G., McCandless, L.~C., and Greenland, S. (2014).
+\newblock Good practices for quantitative bias analysis.
+\newblock {\em International Journal of Epidemiology}, 43(6):1969--1985.
+
+\bibitem[Latkin et~al., 2013]{Latkin2013}
+Latkin, C., Donnell, D., Liu, T.-Y., Davey-Rothwell, M., Celentano, D., and Metzger, D. (2013).
+\newblock The dynamic relationship between social norms and behaviors: the results of an {HIV} prevention network intervention for injection drug users.
+\newblock {\em Addiction}, 108(5):934--943.
+\newblock \_eprint: https://onlinelibrary.wiley.com/doi/pdf/10.1111/add.12095.
+
+\bibitem[Latkin et~al., 2009]{Latkin2009}
+Latkin, C.~A., Donnell, D., Metzger, D., Sherman, S., Aramrattna, A., Davis-Vogel, A., Quan, V.~M., Gandham, S., Vongchak, T., Perdue, T., and Celentano, D.~D. (2009).
+\newblock The efficacy of a network intervention to reduce {HIV} risk behaviors among drug users and risk partners in {Chiang} {Mai}, {Thailand} and {Philadelphia}, {USA}.
+\newblock {\em Social Science \& Medicine}, 68(4):740--748.
+
+\bibitem[Manski, 2013]{Manski2013}
+Manski, C.~F. (2013).
+\newblock Identification of treatment response with social interactions.
+\newblock {\em The Econometrics Journal}, 16(1):S1--S23.
+
+\bibitem[Miller et~al., 2018]{Miller2018}
+Miller, W.~C., Hoffman, I.~F., Hanscom, B.~S., Ha, T.~V., Dumchev, K., Djoerban, Z., Rose, S.~M., Latkin, C.~A., Metzger, D.~S., Lancaster, K.~E., Go, V.~F., Dvoriak, S., Mollan, K.~R., Reifeis, S.~A., Piwowar-Manning, E.~M., Richardson, P., Hudgens, M.~G., Hamilton, E.~L., Sugarman, J., Eshleman, S.~H., Susami, H., Chu, V.~A., Djauzi, S., Kiriazova, T., Bui, D.~D., Strathdee, S.~A., and Burns, D.~N. (2018).
+\newblock A scalable, integrated intervention to engage people who inject drugs in {HIV} care and medication-assisted treatment ({HPTN} 074): a randomised, controlled phase 3 feasibility and efficacy study.
+\newblock {\em The Lancet}, 392(10149):747--759.
+\newblock Publisher: Elsevier.
+
+\bibitem[Saint-Jacques et~al., 2019]{SaintJacques2019}
+Saint-Jacques, G., Varshney, M., Simpson, J., and Xu, Y. (2019).
+\newblock Using {Ego}-{Clusters} to {Measure} {Network} {Effects} at {LinkedIn}.
+\newblock arXiv:1903.08755 [cs, stat].
+
+\bibitem[Sherman et~al., 2009]{Sherman2009}
+Sherman, S.~G., Sutcliffe, C., Srirojn, B., Latkin, C.~A., Aramratanna, A., and Celentano, D.~D. (2009).
+\newblock Evaluation of a peer network intervention trial among young methamphetamine users in {Chiang} {Mai}, {Thailand}.
+\newblock {\em Social Science \& Medicine}, 68(1):69--79.
+
+\bibitem[Simmons et~al., 2015]{Simmons2015}
+Simmons, N., Donnell, D., Ou, S.-s., Celentano, D.~D., Aramrattana, A., Davis-Vogel, A., Metzger, D., and Latkin, C. (2015).
+\newblock Assessment of {Contamination} and {Misclassification} {Biases} in a {Randomized} {Controlled} {Trial} of a {Social} {Network} {Peer} {Education} {Intervention} to {Reduce} {HIV} risk {Behaviors} {Among} {Drug} {Users} and {Risk} {Partners} in {Philadelphia}, {PA} and {Chiang} {Mai}, {Thailand}.
+\newblock {\em AIDS and Behavior}, 19(10):1818--1827.
+
+\bibitem[Särndal et~al., 2003]{Saerndal2003}
+Särndal, C.-E., Swensson, B., and Wretman, J. (2003).
+\newblock {\em Model Assisted Survey Sampling (Springer Series in Statistics)}.
+\newblock Springer.
+
+\bibitem[Sävje, 2023]{Saevje2023}
+Sävje, F. (2023).
+\newblock Causal inference with misspecified exposure mappings: separating definitions and assumptions.
+\newblock {\em Biometrika}.
+
+\bibitem[VanderWeele et~al., 2015]{vanderweele2015}
+VanderWeele, T.~J., Tchetgen, E. J.~T., and Halloran, M.~E. (2015).
+\newblock Interference and sensitivity analysis.
+\newblock {\em Statistical science: a review journal of the Institute of Mathematical Statistics}, 29(4):687.
+
+\bibitem[Weinstein and Nevo, 2023]{Weinstein2023}
+Weinstein, B. and Nevo, D. (2023).
+\newblock Causal inference with misspecified network interference structure.
+\newblock {\em arXiv preprint arXiv:2302.11322}.
+
+\end{thebibliography}
