@@ -196,6 +196,7 @@ shorten >= 3pt, preaction = {decorate}
 \section{Egocentric-network randomized trials}
 \label{sec:egocentric_rct}
 \subsection{Setup and recruitment process}
+\label{subsec:recruitment}
 Let $\bG = (\bV,\bE)$ denote the population network,
 where $\bV = \{1,\ldots,N\}$ is the set of units, and $\bE = \{(i,j) : i,j \in \bV\}$ is the set of edges. 
 The population is of size $N = \lvert \bV \rvert$, which is assumed to be a finite, unknown number.
@@ -207,15 +208,15 @@ that is, $A_{ij} = A_{ji}$ and $A_{ii} = 0$ for all $i$.
 Units are recruited to the study via an \emph{egocentric-network sampling design}.
 The sampling process consists of two stages. 
 In the first stage, a set of egos (indexes) are sampled from the population.
-Then, in the second stage, each recruited ego recruits a subset of its neighbors in the population network as alters (non-index).
+Then, in the second stage, each recruited ego recruits a subset of its neighbors in the population network as alters (non-indexes).
 Formally, the recruitment process is as follows:
 \begin{enumerate}
     \item Sample egos from the population.
-    Denote the set of recruited egos by $\cR_e \subset V$.
+    Denote the set of recruited egos by $\cR_e \subset \bV$.
     Let $n_e = \lvert \cR_e \rvert$ denote the number of egos.
     We do not impose any restrictions on the sampling process of egos.
     \item Each ego recruits alters from its neighbors in the population network that are not recruited as egos in the first stage. 
-    We assume that each alter is linked to a single ego, resulting in $n_e$ disjoint ego-networks.
+    We assume that each alter is recruited by a single ego, resulting in $n_e$ disjoint ego-networks.
     This is often enforced in the recruitment process by researchers to avoid overlaps between the observed ego-networks.
     Denote the set of recruited alters by
     $\cR_a \in \bV \setminus \cR_e$, 
@@ -279,7 +280,7 @@ Denote the exposures in the true population network by $F_i = F(\bZ_{-i}, \bA)$.
 The exposures $F_i$ indicate whether at least one of the neighbors of unit $i$ is treated.
 Assumption~\ref{ass:expos_map} states that the exposure mapping is correctly specified \citep{Saevje2023},
 and imply that only treatments of neighbors affect the potential outcomes of unit $i$.
-This exposure mapping specification is common in the ENRT literature \citep{Buchanan2018,Chao2023,Fang2023}.
+This binary exposure mapping specification is common in the ENRT literature \citep{Buchanan2018,Chao2023,Fang2023}.
 
 By Assumption~\ref{ass:expos_map}, we can express the potential outcomes as
 $Y_i(\bZ)=Y_i(Z_i,F_i)$.
@@ -315,37 +316,11 @@ The second estimand is sample average direct effect of treatment on the egos dir
 \end{equation}
 Eq.~\eqref{eq:directed_effect} represents the average effect on egos of being treated compared to not being treated when not exposed to any treated neighbors.
 
-We explicitly separate the causal estimands for egos and alters, as recommended in the literature \citep{Crawford2019}.
-In that we avoid conflating the two groups,
-as the recruitment process may induce different selection mechanisms for egos and alters, 
+We explicitly separate the causal estimands for egos and alters.
+This separation resolve interpretation issues of other estimands \citep{Crawford2019}.
+Furthermore, by not conflating the two groups we avoid imposing additional assumptions and structure,
+as the recruitment process (Section~\ref{subsec:recruitment}) may induce different selection mechanisms for egos and alters, 
 leading to incomparable distributions of potential outcomes between the two groups.
-\\
-\\
-
-
-Note that conditional on recruitment $\cR$, 
-not all potential outcomes are necessarily well defined. 
-We observe a star ego-network $\widetilde{\bA}$, where each ego is connected to its alters, and alters and egos are not connected to each other. 
-If in the population network $\bA$, each recruited ego is not connected to any other recruited ego, then $Y_i(z,1),\; z\in \{0,1\}$
-is not well defined for the egos, as no ego can be exposed to the treatment of another ego.
-Furthermore, since alters cannot be assigned directly to treatment, $Y_i(1,f), \; f\in \{0,1\}$ is not well defined for alters. 
-
-
-Moving on to the positivity of treatment and exposures.
-For alters, we have $\Pr(Z_i=0, F_i=f \mid i \in\cR_a) >0, \; f\in \{0,1\}$ by Assumptions~\ref{ass:bernoulli_design} and the recruitment process. 
-By Assumption~\ref{ass:bernoulli_design}, $\Pr(Z_i=z, F_i=f \mid i \in\cR_e) = \Pr(Z_i=z \mid i \in\cR_e)\Pr(F_i=f \mid i \in\cR_e)$, and $\Pr(Z_i=z \mid i \in\cR_e)\in (0,1)$. Finally, let,
-\begin{equation}
-    \label{eq:ego_expos_prob}
-    \pi^e_i = \Pr(F_i=1 \mid i \in\cR_e),
-\end{equation}
-denote the probability that ego is exposed to at least one treated neighbor in the population network $\bA$.
-\begin{assumption}[Positivity of egos exposures]
-    \label{ass:ego_postivity}
-    $\pi^e_i \in (0,1) \; \forall i \in \cR_e$.
-\end{assumption}
-Specifically, Assumption~\ref{ass:ego_postivity} states that each ego is connected to at least one, but not all, other ego. The potential outcomes of egos $Y_i(z, f), i\in\cR_e$ are well defined for $f \in \{0,1\}$ only if $\pi^e_i \in (0,1)$, which is the crux of our proposed argument. As the population network $\bA$ is only partially observed, it cannot be verified from the observed data, however, it is required for proper interpretation.
-Note that Assumption~\ref{ass:ego_postivity} does not hold if egos recruit all their neighbors in the population network as alters, rather than a subset. 
-
 
 \subsection{Estimation with the observed data}
 Researchers have access only to the observed data composed of the treatment assignments $\bZ$,
@@ -353,23 +328,23 @@ the observed outcomes $Y_i, \; i \in \cR$, the observed network $\widetilde{\bA}
 covariates $\bX_i$.
 However, by Assumption~\ref{ass:consis}, the observed outcomes $Y_i$
 are generated from the potential outcomes with exposures $F_i$ 
-computed on the \emph{population network}.
+computed using the \emph{population network}.
 The observed exposures are $\widetilde{F}_i = F(\bZ_{-i}, \widetilde{\bA})$,
 which may differ from the true exposures $F_i$. 
-That is, the observed network $\widetilde{\bA}$ might not capture all the connections present in the population network $\bA$ 
+That is, the observed network $\widetilde{\bA}$ might not capture all the relevant edges present in the population network $\bA$ 
 due to the egocentric-network sampling process, resulting in \emph{misspecified network interference structure} \citep{Weinstein2023}.
+We specifically care about missing ego-ego and additional alter-alter edges induced by the sampling process.
+
+For example, in the context of Figure~\ref{fig:egonetwork},
+if only ego 1 is treated, for alter 6 we observe exposure $\widetilde{F}_i=0$ since its ego (node 2) is not treated,
+but its true exposure is $F_i=1$ due to its link to ego 1 in the population network. 
+Similarly, for ego 2 we observe exposure $\widetilde{F}_i=0$ while $F_i=1$ in the population network
+since it is connected to ego 1.
 
 By the ENRT design, the observed exposures of egos are $\widetilde{F}_i =0$ for all $i \in \cR_e$,
 while the observed exposures of alters can be either zero or one, depending on their ego's treatment status.
-Specifically, By Assumption~\ref{ass:bernoulli_design} alters are exposed to a treated ego
+Specifically, by Assumption~\ref{ass:bernoulli_design}, alters are exposed to a treated ego
 with probability $\Pr(\widetilde{F}_i=1 \mid i \in \cR_a) = p_z$.
-
-
-For example, in the context of Figure~\ref{fig:egonetwork},
-if only ego 1 is treated, alter 6 will have observed exposure $\widetilde{F}_i=0$ since its ego (node 2) is not treated,
-but will have true exposure of $F_i=1$ due to its link to ego 1 in the population network. 
-Similarly, ego 2 have an observed exposure of $\widetilde{F}_i=0$ while $F_i=1$ in the population network
-since it is connected to ego 1.
 
 Therefore, researchers can estimate causal effect only with the observed exposures.
 The most common estimator in randomization-based inference settings is the Horvitz-Thompson (HT) estimator.
@@ -402,7 +377,7 @@ and for direct effects \eqref{eq:directed_effect},
     \right].
 \end{equation}
 If some alter-ego or ego-ego edges are missing in the observed network $\widetilde{\bA}$ due to the egocentric-network sampling process,
-then for some units the observed exposures $\widetilde{F}_i$ may not be equal to the true exposures $F_i$ under all possible treatment assignments $\mathcal{Z}$.
+then for some units the observed exposures $\widetilde{F}_i$ may not agree with the true exposures $F_i$ under all possible treatment assignments $\mathcal{Z}$.
 In that case, both estimators \eqref{eq:IE_naive_HT} and \eqref{eq:DE_naive_HT} may not be design-unbiased.
 \begin{proposition}
     \label{prop:bias_naive_ht}
@@ -433,7 +408,7 @@ In that case, both estimators \eqref{eq:IE_naive_HT} and \eqref{eq:DE_naive_HT} 
     \end{equation*}
     where $\pi_i^a = \Pr(F_i=1\mid i\in \cR_a)$ and $\pi_i^e = \Pr(F_i=1 \mid i \in \cR_e)$ are the probabilities that an alter and ego, respectively, are exposed to at least one treated neighbor in the population network $\bA$.
 \end{proposition}
-Only when an alter is connected only to its own ego, $\pi_i^a=p_z$, and \eqref{eq:IE_naive_HT} will be design-unbiased estimator of \eqref{eq:indirect_effect}.
+When an alter is connected only to its own ego, $\pi_i^a=p_z$, and \eqref{eq:IE_naive_HT} will be design-unbiased estimator of \eqref{eq:indirect_effect}.
 Otherwise, whenever an alter is connected to more than one ego in the population network, $\pi_i^a > p_z$, and the indirect effect estimator \eqref{eq:IE_naive_HT} based on the observed exposures will be biased. 
 The magnitude of the bias will depend on the number of egos each alter is connected to in the population network.
 That is, the more egos an alter is connected to, the larger the gap between $\pi_i^a$ and $p_z$, and the larger the bias. 
@@ -442,21 +417,51 @@ Furthermore, if an ego is not connected to any other ego in the population netwo
 In that case, \eqref{eq:DE_naive_HT} will be a design-unbiased estimator of \eqref{eq:directed_effect}.
 However, if an ego is connected to at least one other ego in the population network, then $\pi_i^e>0$,
 and the direct effect estimator \eqref{eq:DE_naive_HT} based on the observed data will be biased.
-Similarly to alters, the magnitude of the bias will depend on the number of other egos each ego is connected to in the population network.
+Similarly to alters, the magnitude of the bias will depend on the number ego-ego edges to in the population network.
  
 \section{Sensitivity analysis for contamination between ego-networks}
 \label{sec:sa}
 
-Proposition~\ref{prop:bias_naive_ht} shows that the HT estimators based on the observed data are biased whenever there is contamination between the ego-networks.
-By the structure of the egocentric sampling and the exposure mapping (Assumption~\ref{ass:expos_map}), alters with observed exposure $\widetilde{F}_i=1$ will be correctly classified. However, those with $\widetilde{F}_i=1$ can have a true exposure of $F_i=1$ or $F_i=0$, depending on the structure of the population network $\bA$. That is, the observed outcomes $Y_i$ for alters with $\widetilde{F}_i=0$ can be generated from $Y_i(0,1)$ or $Y_i(0,0)$. 
+Proposition~\ref{prop:bias_naive_ht} shows that the HT estimators based on the observed data 
+    are biased whenever there is contamination between the ego-networks.
+We refer to contamination as the presence alter-ego and ego-ego edges in the population network $\bA$,
+that are missing from the observed network $\widetilde{\bA}$ due to the egocentric-network sampling process.   
+    
+By the structure of the egocentric-network sampling and the
+ exposure mapping specification (Assumption~\ref{ass:expos_map}),
+alters with observed exposure $\widetilde{F}_i=1$ will be correctly classified. 
+That is $\widetilde{F}_i=1$ implies $F_i=1$ with probability one for $i \in \cR_a$.
+However, alters with $\widetilde{F}_i=0$ can have a true exposure of $F_i=1$ or $F_i=0$,
+depending on the structure of the population network $\bA$.
+That is, the observed outcomes $Y_i$ for alters with $\widetilde{F}_i=0$ can be generated from $Y_i(0,1)$ or $Y_i(0,0)$.
 
-On the other hand, all egos have observed exposures of $\widetilde{F}_i=0$, as they are linked only to alters in the ego-network $\widetilde{\bA}$. Thus, the observed outcomes of egos that are assigned to treatment $Z_i=z$ can be generated from $Y_i(z,1)$ or $Y_i(z,0)$. Thus, the observed outcomes of egos are possibly linked to four different potential outcomes, compared to only two among the alters.
+On the other hand, all egos have observed exposures of $\widetilde{F}_i=0$, 
+as they are linked only to alters in their ego-network in the observed network $\widetilde{\bA}$.
+Thus, the observed outcomes of egos that are assigned to
+ treatment $Z_i=z$ can be generated from $Y_i(z,1)$ or $Y_i(z,0)$,
+ implying that observed outcomes of egos are possibly linked to four different potential outcomes,
+  compared to only two among the alters.
 
-We develop a sensitivity framework to estimate the direct and indirect effects, while accounting for possible exposure misspecification due to the egocentric recruitment process. For indirect effects \eqref{eq:indirect_effect}, we derive identification formulas that represent the estimands as a function of observable quantities and one sensitivity parameter. The parameter is related to the probability of edges between recruited egos and alters in $\bA$ and is further described in Section~\ref{subsec:rho_param}.
-For direct effects \eqref{eq:directed_effect}, we derive an identification formula for the direct effects using an additional sensitivity parameter.
-All proposed frameworks are designed to be simple post-analysis procedures that can be used to assess the validity of the causal claims under study against the threat of contamination between ego-networks.  
+We develop a sensitivity framework that enables researchers to assess the impact of
+ possible contamination between ego-networks on their causal estimates.
+The framework provides bias-corrected estimators of the indirect and direct effects 
+that account for possible exposure misspecification due to the egocentric-network recruitment process. 
 
-\bwnote{TODO: write some clarification that the SA or bias analysis for IE will depend on $\pi_i^a$, which can be simplified to specifying the number or probability of missing ego-alter edges (edges of alters to egos in different ego-networks). Similar thing to the egos about $\pi_i^e$ but with the additional sensitivity parameter $\kappa$.}
+ The bias-corrected indirect and direct effect estimators are a function of the
+exposure probabilities under the true population network $\pi_i^a$ and $\pi_i^e$, respectively.
+The structure of the egocentric-network sampling design and our setup 
+allow us to decompose $\pi_i^a$ and $\pi_i^e$ into basic
+ components that are straightforward to compute given specification
+  of the \emph{expected number} or the \emph{probability} of alter-ego and ego-ego edges.
+ The latter will form the basis of our sensitivity parameters, 
+ enabling seamless integration of covariates and prior knowledge into the sensitivity analysis.
+ We provide numerous examples and practical guidelines on how to specify these parameters in Section~\ref{subsec:rho_param}.
+ 
+ For the direct effects, we require an additional sensitivity parameter 
+    to account for the additional complexity of four possible potential outcomes generating the observed ones.
+This parameter is related to the magnitude of the treatment and exposure interaction effect on the egos,
+and its specifics are discussed in Section~\ref{subsec:de}.
+
 
 \subsection{Indirect effects}
 \label{subsec:ie}
