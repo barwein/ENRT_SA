@@ -30,6 +30,11 @@ Chao, A., Spiegelman, D., Buchanan, A., and Forastiere, L. (2025).
 \newblock Estimation and inference for causal spillover effects in egocentric-network randomized trials in the presence of network membership misclassification.
 \newblock {\em Biostatistics}, 26(1):kxaf009.
 
+\bibitem[Chernozhukov et~al., 2018]{Chernozhukov2018}
+Chernozhukov, V., Chetverikov, D., Demirer, M., Duflo, E., Hansen, C., Newey, W., and Robins, J. (2018).
+\newblock Double/debiased machine learning for treatment and structural parameters.
+\newblock {\em The Econometrics Journal}, 21(1):C1--C68.
+
 \bibitem[Crawford et~al., 2019]{Crawford2019}
 Crawford, F.~W., Morozova, O., Buchanan, A.~L., and Spiegelman, D. (2019).
 \newblock Interpretation of the {Individual} {Effect} {Under} {Treatment} {Spillover}.

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.9.10)  4 NOV 2025 16:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.9.10)  4 NOV 2025 16:09
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -769,54 +769,67 @@ Overfull \hbox (24.97276pt too wide) in paragraph at lines 424--424
 
 [4]
 
-[5]
-FiXme Note: 'TODO: continue here.' on input line 575.
-FiXme Note: 'Write about the grid of $\kappa $ values and what it means about attenuation or not towards the null. We do require that $\kappa \neq 1 - \frac {1}{\pi _i^e}$ for all $i\in \mathcal {R}_e$ for the estimator to be well defined.' on input line 587.
-FiXme Note: 'Refine the paragraph.' on input line 590.
+LaTeX Warning: Reference `eq:indirect_effect_estimator' on page 5 undefined on input line 496.
 
-Overfull \hbox (39.93356pt too wide) detected at line 606
+
+LaTeX Warning: Reference `eq:indirect_effect_estimator' on page 5 undefined on input line 498.
+
+FiXme Note: 'Expand on this point.' on input line 501.
+
+Overfull \hbox (9.86331pt too wide) detected at line 518
 [][][][][][] \OT1/cmr/m/n/10 = [] [] [] [] \OML/cmm/m/it/10 ;
  []
 
 
-LaTeX Warning: Reference `prop:de_2param_sa' on page 6 undefined on input line 610.
+
+[5]
+FiXme Note: 'Variance estimation... in the appendix...' on input line 521.
+FiXme Note: 'Write about the grid of $\kappa $ values and what it means about attenuation or not towards the null. We do require that $\kappa \neq 1 - \frac {1}{\pi _i^e}$ for all $i\in \mathcal {R}_e$ for the estimator to be well defined.' on input line 564.
+FiXme Note: 'Refine the paragraph.' on input line 567.
+
+Overfull \hbox (39.93356pt too wide) detected at line 583
+[][][][][][] \OT1/cmr/m/n/10 = [] [] [] [] \OML/cmm/m/it/10 ;
+ []
 
 
-LaTeX Warning: Reference `eq:indirect_effect_estimator' on page 6 undefined on input line 610.
+LaTeX Warning: Reference `prop:de_2param_sa' on page 6 undefined on input line 587.
 
 
-LaTeX Warning: Reference `eq:directed_effect_estimator' on page 6 undefined on input line 610.
+LaTeX Warning: Reference `eq:indirect_effect_estimator' on page 6 undefined on input line 587.
+
+
+LaTeX Warning: Reference `eq:directed_effect_estimator' on page 6 undefined on input line 587.
 
 
 
 [6]
 
 [7]
-Overfull \hbox (1.03899pt too wide) in paragraph at lines 715--716
+Overfull \hbox (1.03899pt too wide) in paragraph at lines 692--693
 []\OT1/cmr/bx/n/10 TODO: this cap-ping I de-scribed doesn't en-sure that each unit at-tains the bounded
  []
 
 
 
 [8]
-FiXme Note: 'Updated the high-level structure that includes the outcomes models $m^a, m^e$ as well.' on input line 761.
+FiXme Note: 'Updated the high-level structure that includes the outcomes models $m^a, m^e$ as well.' on input line 738.
 
 
 [9]
 
-LaTeX Warning: Reference `ass:spillovers_ego_alter' on page 10 undefined on input line 784.
+LaTeX Warning: Reference `ass:spillovers_ego_alter' on page 10 undefined on input line 761.
 
 
-LaTeX Warning: Reference `exmp:logistic_po' on page 10 undefined on input line 784.
+LaTeX Warning: Reference `exmp:logistic_po' on page 10 undefined on input line 761.
 
 
-LaTeX Warning: Reference `prop:de_2param_sa' on page 10 undefined on input line 786.
+LaTeX Warning: Reference `prop:de_2param_sa' on page 10 undefined on input line 763.
 
 
-LaTeX Warning: Reference `eq:indirect_effect_estimator' on page 10 undefined on input line 786.
+LaTeX Warning: Reference `eq:indirect_effect_estimator' on page 10 undefined on input line 763.
 
 
-LaTeX Warning: Reference `eq:directed_effect_estimator' on page 10 undefined on input line 786.
+LaTeX Warning: Reference `eq:directed_effect_estimator' on page 10 undefined on input line 763.
 
 
 
@@ -826,27 +839,27 @@ LaTeX Warning: Reference `eq:directed_effect_estimator' on page 10 undefined on 
 pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.896 
+l.873 
       
 pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.896 
+l.873 
       ]
-<figures/hptn/sa_ie_plot_not_augmented.png, id=388, 578.16pt x 361.35pt>
+<figures/hptn/sa_ie_plot_not_augmented.png, id=380, 578.16pt x 361.35pt>
 File: figures/hptn/sa_ie_plot_not_augmented.png Graphic file (type png)
 <use figures/hptn/sa_ie_plot_not_augmented.png>
-Package pdftex.def Info: figures/hptn/sa_ie_plot_not_augmented.png  used on input line 902.
+Package pdftex.def Info: figures/hptn/sa_ie_plot_not_augmented.png  used on input line 879.
 (pdftex.def)             Requested size: 292.0877pt x 182.55475pt.
-<figures/hptn/sa_de_plot.png, id=389, 722.7pt x 433.62pt>
+<figures/hptn/sa_de_plot.png, id=381, 722.7pt x 433.62pt>
 File: figures/hptn/sa_de_plot.png Graphic file (type png)
 <use figures/hptn/sa_de_plot.png>
-Package pdftex.def Info: figures/hptn/sa_de_plot.png  used on input line 909.
+Package pdftex.def Info: figures/hptn/sa_de_plot.png  used on input line 886.
 (pdftex.def)             Requested size: 333.81726pt x 200.28807pt.
-<figures/hptn/pba_ie_not_augmented.png, id=390, 578.16pt x 361.35pt>
+<figures/hptn/pba_ie_not_augmented.png, id=382, 578.16pt x 361.35pt>
 File: figures/hptn/pba_ie_not_augmented.png Graphic file (type png)
 <use figures/hptn/pba_ie_not_augmented.png>
-Package pdftex.def Info: figures/hptn/pba_ie_not_augmented.png  used on input line 919.
+Package pdftex.def Info: figures/hptn/pba_ie_not_augmented.png  used on input line 896.
 (pdftex.def)             Requested size: 250.36453pt x 156.4747pt.
 
 
@@ -854,17 +867,17 @@ Package pdftex.def Info: figures/hptn/pba_ie_not_augmented.png  used on input li
 pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.923 
+l.900 
       
 pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.923 
+l.900 
        <./figures/hptn/sa_ie_plot_not_augmented.png> <./figures/hptn/sa_de_plot.png>]
-<figures/hptn/pba_de_not_augmented.png, id=397, 578.16pt x 361.35pt>
+<figures/hptn/pba_de_not_augmented.png, id=389, 578.16pt x 361.35pt>
 File: figures/hptn/pba_de_not_augmented.png Graphic file (type png)
 <use figures/hptn/pba_de_not_augmented.png>
-Package pdftex.def Info: figures/hptn/pba_de_not_augmented.png  used on input line 926.
+Package pdftex.def Info: figures/hptn/pba_de_not_augmented.png  used on input line 903.
 (pdftex.def)             Requested size: 250.36453pt x 156.4747pt.
  (./enrt_draft.bbl
 
@@ -883,23 +896,23 @@ l.12
 [14])
 
 [15]
-Underfull \hbox (badness 10000) in paragraph at lines 1001--1006
+Underfull \hbox (badness 10000) in paragraph at lines 978--983
 
  []
 
 
 
 [16]
-Underfull \hbox (badness 10000) in paragraph at lines 1063--1068
+Underfull \hbox (badness 10000) in paragraph at lines 1040--1045
 
  []
 
 
-Overfull \hbox (5.4189pt too wide) detected at line 1107
+Overfull \hbox (5.4189pt too wide) detected at line 1084
 []
  []
 
-FiXme Note: 'TODO: add ref' on input line 1109.
+FiXme Note: 'TODO: add ref' on input line 1086.
 
 
 [17]
@@ -907,17 +920,17 @@ FiXme Note: 'TODO: add ref' on input line 1109.
 [18]
 
 [19]
-Underfull \hbox (badness 10000) in paragraph at lines 1341--1346
+Underfull \hbox (badness 10000) in paragraph at lines 1318--1323
 
  []
 
 
-Overfull \hbox (39.93356pt too wide) detected at line 1420
+Overfull \hbox (39.93356pt too wide) detected at line 1397
 []
  []
 
-FiXme Note: 'TODO: add ref' on input line 1421.
-FiXme Note: 'TODO: write about the adjusted DE estimator compared to the naive one in terms of $\kappa $ and $\pi _i^e$ combinations.' on input line 1449.
+FiXme Note: 'TODO: add ref' on input line 1398.
+FiXme Note: 'TODO: write about the adjusted DE estimator compared to the naive one in terms of $\kappa $ and $\pi _i^e$ combinations.' on input line 1426.
 
 
 [20]
@@ -926,29 +939,29 @@ FiXme Note: 'TODO: write about the adjusted DE estimator compared to the naive o
 pdfTeX warning (ext4): destination with the same identifier (name{table.B.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1552 
+l.1529 
        ]
 
 [22
 pdfTeX warning (ext4): destination with the same identifier (name{table.B.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1652 
+l.1629 
        
 pdfTeX warning (ext4): destination with the same identifier (name{table.B.3}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1652 
+l.1629 
        ]
-<figures/hptn/alter_per_egonet_histogram.png, id=511, 433.62pt x 289.08pt>
+<figures/hptn/alter_per_egonet_histogram.png, id=503, 433.62pt x 289.08pt>
 File: figures/hptn/alter_per_egonet_histogram.png Graphic file (type png)
 <use figures/hptn/alter_per_egonet_histogram.png>
-Package pdftex.def Info: figures/hptn/alter_per_egonet_histogram.png  used on input line 1657.
+Package pdftex.def Info: figures/hptn/alter_per_egonet_histogram.png  used on input line 1634.
 (pdftex.def)             Requested size: 250.36453pt x 166.91223pt.
-<figures/hptn/sa_de_plot_aug_kappa2.png, id=512, 578.16pt x 361.35pt>
+<figures/hptn/sa_de_plot_aug_kappa2.png, id=504, 578.16pt x 361.35pt>
 File: figures/hptn/sa_de_plot_aug_kappa2.png Graphic file (type png)
 <use figures/hptn/sa_de_plot_aug_kappa2.png>
-Package pdftex.def Info: figures/hptn/sa_de_plot_aug_kappa2.png  used on input line 1664.
+Package pdftex.def Info: figures/hptn/sa_de_plot_aug_kappa2.png  used on input line 1641.
 (pdftex.def)             Requested size: 292.0877pt x 182.55475pt.
 
 
@@ -956,19 +969,19 @@ Package pdftex.def Info: figures/hptn/sa_de_plot_aug_kappa2.png  used on input l
 pdfTeX warning (ext4): destination with the same identifier (name{table.B.4}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1668 
+l.1645 
        
 pdfTeX warning (ext4): destination with the same identifier (name{figure.C.1}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1668 
+l.1645 
         <./figures/hptn/alter_per_egonet_histogram.png>]
 
-FiXme Summary: Number of notes: 8,
+FiXme Summary: Number of notes: 9,
 (FiXme)        Number of warnings: 0,
 (FiXme)        Number of errors: 0,
 (FiXme)        Number of fatal errors: 0,
-(FiXme)        Total: 8.
+(FiXme)        Total: 9.
 
 
 
@@ -976,7 +989,7 @@ FiXme Summary: Number of notes: 8,
 pdfTeX warning (ext4): destination with the same identifier (name{figure.C.2}) has been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.1669 \end{document}
+l.1646 \end{document}
                       <./figures/hptn/sa_de_plot_aug_kappa2.png>] (./enrt_draft.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
@@ -990,18 +1003,18 @@ Package rerunfilecheck Info: File `enrt_draft.out' has not changed.
 (rerunfilecheck)             Checksum: 412D0830A7B729FD54F6218A2CE74781;3495.
  ) 
 Here is how much of TeX's memory you used:
- 27994 strings out of 473190
- 563850 string characters out of 5715800
- 985838 words of memory out of 5000000
- 50623 multiletter control sequences out of 15000+600000
+ 27990 strings out of 473190
+ 563757 string characters out of 5715800
+ 985799 words of memory out of 5000000
+ 50620 multiletter control sequences out of 15000+600000
  570437 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 102i,15n,107p,1046b,585s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 102i,15n,107p,1046b,583s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on enrt_draft.pdf (24 pages, 1423929 bytes).
+Output written on enrt_draft.pdf (24 pages, 1423552 bytes).
 PDF statistics:
- 656 PDF objects out of 1000 (max. 8388607)
- 568 compressed objects within 6 object streams
- 143 named destinations out of 1000 (max. 500000)
+ 648 PDF objects out of 1000 (max. 8388607)
+ 560 compressed objects within 6 object streams
+ 142 named destinations out of 1000 (max. 500000)
  208 words of extra memory for PDF output out of 10000 (max. 10000000)
 

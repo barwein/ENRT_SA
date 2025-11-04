@@ -412,6 +412,8 @@ When an alter is connected only to its own ego, $\pi_i^a=p_z$, and \eqref{eq:IE_
 Otherwise, whenever an alter is connected to more than one ego in the population network, $\pi_i^a > p_z$, and the indirect effect estimator \eqref{eq:IE_naive_HT} based on the observed exposures will be biased. 
 The magnitude of the bias will depend on the number of egos each alter is connected to in the population network.
 That is, the more egos an alter is connected to, the larger the gap between $\pi_i^a$ and $p_z$, and the larger the bias. 
+In addition, the naive indirect estimator \eqref{eq:IE_naive_HT} is
+attenuated towards the null of no indirect effect (Appendix~\ref{apdx_sec:proof}).
 
 Furthermore, if an ego is not connected to any other ego in the population network, then $\pi_i^e=0$.
 In that case, \eqref{eq:DE_naive_HT} will be a design-unbiased estimator of \eqref{eq:directed_effect}.
@@ -487,49 +489,74 @@ Given $\pi_i^a$, \eqref{eq:IE_corrected} is a design-unbiased estimator of \eqre
   $\EX_{\bZ}\left[\widehat{IE}_{adj} \right] = IE$.
 \end{proposition}
 
-\bwnote{TODO: split this paragraph. First part about bias magnitude move to previous Prop, and the part about attenuation towards the null keep here.}
-Moreover, the magnitude of the bias depends on the gap between $\pi^a_i$ and $p_z$, which in turn depends on the number of possible edges between alters and other recruited egos.
-By construction, $\widetilde{F}_i \leq F_i$ with probability one, as the neighbor sets in the observed network $\widetilde{\bA}$ are a subset of the sets in the population network $\bA$, and therefore $p_z \leq \pi^a_i $. Consequently, if each alter has the same exposure probabilities $\pi^a_i = \pi^a$ or that in the data each alter improves when exposed $\EX \big[Y_i \mid Z_i=0, \widetilde{F}_i=1, i \in\cR_a \big]\geq \EX \big[Y_i \mid Z_i=0, \widetilde{F}_i=0, i \in\cR_a \big]$, or vice versa, then the naive estimators \eqref{eq:indirect_effect_estimator} are biased towards the null of no indirect effect for alters (Appendix~\ref{apdx_sec:proof}).
+By the ENRT design and Assumptions~\ref{ass:expos_map}, $\pi_i^a \geq p_z$,
+ with equality if and only if there are no additional latent alter-ego edges.
+ Consequently, if each alter has the same exposure probabilities $\pi^a_i = \pi^a$,
+ then $\widehat{IE}_{adj} = \frac{1-p_z}{1-\pi^a} \widetilde{IE}$.
+ Therefore, $\text{sign}\left(\widehat{IE}_{adj}\right) = \text{sign}\left(\widetilde{IE}\right)$, 
+ and $\widehat{IE}_{adj} \geq \widehat{IE}$ if $\widehat{IE} >0$ and vice versa otherwise.
 
 
-\bwnote{Expand on this point.} Can modify the estimator \eqref{eq:IE_corrected} to include outcome model as well. Let $m^a_i(f) = \EX \left[Y_i \mid \widetilde{F}_i=f, \bX_i, i \in \cR_a \right]$
-be the conditional expectation among alters with observed exposure $\widetilde{F}_i = f$ and covariates $\bX_i$. In practice, we estimate it using the observed outcomes and exposures using some sort of cross-fitting such that $m^a_i(f)$ are independent of the design (of $\bZ$). We can use an augmented bias-corrected estimator
+The bias-corrected estimator \eqref{eq:IE_corrected} can be modified to include an outcome model.
+ Let $m^a_i(f) = \EX \left[Y_i \mid \widetilde{F}_i=f, \bX_i, i \in \cR_a \right]$
+be the conditional expectation among alters with observed exposure $\widetilde{F}_i = f$ and covariates $\bX_i$.
+The augmented bias-corrected estimator is
 \begin{equation}
     \label{eq:IE_corrected_aipw}
-    \widehat{IE}_{adj}^{aug} = 
+    \begin{aligned}
+    \widehat{IE}_{adj}^{aug} 
+    &= 
     \frac{1}{n_a}
     \sum_{i \in \cR_a}
     \frac{1-p_z}{1-\pi_i^a}
-    \left[
+    \Bigg[
     \frac{
     \mathbb{I}\{
-    \widetilde{F}_i=1\}\left(Y_i - m^a_i(1) \right)}{p_z} 
-    -
+    \widetilde{F}_i=1\}\left(Y_i - m^a_i(1) \right)}{p_z} -
+    \\ &\qquad \qquad \qquad
     \frac{
     \mathbb{I}\{\widetilde{F}_i=0\}\left(Y_i - m^a_i(0) \right)}{1 - p_z} 
     + \left\{m^a_i(1) - m^a_i(0) \right\}
-    \right],
+    \Bigg].
+    \end{aligned}
 \end{equation}
-which is still approximately design-unbiased as \eqref{eq:IE_corrected}, but can have lower variance.
+Given that $m_i^a(f)$ are estimated in a way that ensure their independence from the treatment assignment $\bZ$,
+e.g., via cross-fitting \citep{Chernozhukov2018},
+then \eqref{eq:IE_corrected_aipw} is also a design-unbiased estimator of \eqref{eq:indirect_effect}, but can have lower variance.
 
-\bwnote{Variance estimation... in the appendix...}
+Given $\pi_i^a$, the variance of the bias-corrected estimators \eqref{eq:IE_corrected} and \eqref{eq:IE_corrected_aipw}
+can be estimated using standard techniques for HT estimators under Bernoulli designs or 
+thorough a nonparameteric bootstrap that resamples ego-networks (see Appendix~\ref{apdx_sec:proof} for details).
 
 \subsection{Direct effects}
 \label{subsec:de}
 
-As the observed outcomes of egos are possibly generated from four different potential outcomes, compared to only two for the alters, bias correction for the direct effect estimator requires an additional structural assumption. Specifically, we require that the unit-level direct effects among exposed ($F_i=1$) and non-exposed ($F_i=0$) egos are proportional
+As the observed outcomes of egos are possibly generated from four different potential outcomes,
+ compared to only two for the alters, bias correction for the direct effect estimator requires an additional structural assumption. 
+ Specifically, we require that the unit-level direct effects among exposed ($F_i=1$) and non-exposed ($F_i=0$) egos are proportional
 \begin{assumption}
     \label{ass:egos_kappa}
     There exists a constant $\kappa$ such that 
     $Y_i(1,1) - Y_i(0,1) = \kappa \left\{Y_i(1,0) - Y_i(0,0)\right\}$ for all egos $i \in \cR_e$.
 \end{assumption}
-The interpretation of the additional sensitivity parameter $\kappa$ in Assumption~\ref{ass:egos_kappa} is related to the interaction term between treatment and exposure in the potential outcome model of the egos. Consider the saturated potential outcomes model
+The interpretation of the additional sensitivity parameter $\kappa$ in
+ Assumption~\ref{ass:egos_kappa} is related to the interaction term between treatment and exposure in the potential outcome model of the egos.
+  Consider the saturated potential outcomes model
 \begin{equation*}
     Y_i(z,f) = \beta_{0i} + \beta_{1i}z + \beta_{2i}f + \beta_{3i}zf,
 \end{equation*}
-then Assumption~\ref{ass:egos_kappa} is equivalent to $\beta_{3i} = (\kappa-1)\beta_{1i}$. That is, the interaction term $\beta_{3i}$ is proportional to the direct effect term $\beta_{1i}$ for all egos.
-Reasoning about the range of plausible $\kappa$ values depends on the mechanism under study. For example, in vaccine efficacy studies, if treatment represents vaccines, it is reasonable to assume that direct effects among egos with only non-vaccinated friends will be larger than those among egos exposed to vaccinated units, and therefore $\kappa < 1$.
-
+then Assumption~\ref{ass:egos_kappa} is equivalent to $\beta_{3i} = (\kappa-1)\beta_{1i}$. 
+That is, the interaction term $\beta_{3i}$ is proportional to the direct effect term $\beta_{1i}$ for all egos.
+Reasoning about the range of plausible $\kappa$ values depends on the mechanism under study. 
+For example, in vaccine efficacy studies, if treatment represents vaccines, 
+it is reasonable to assume that direct effects among egos with only non-vaccinated neighbors 
+will be larger than those among egos exposed to vaccinated units, and therefore $\kappa < 1$.
+On the other hand, in the HPTN-037 study \citep{Latkin2009}, 
+    which we analyze in Section~\ref{sec:data},
+    treatment represent a behavioral intervention.
+    Such intervention is likely to have monotonic effects, namely,
+    the direct effect is likely to be larger for egos with exposed to treated neighbors, leading to $\kappa > 1$.
+    
 Define the the bias-corrected direct effect estimator as a function of the observed data, $\pi_i^e$, and $\kappa$
 \begin{equation}
     \label{eq:DE_corrected}
@@ -545,6 +572,8 @@ Define the the bias-corrected direct effect estimator as a function of the obser
     \mathbb{I}\{Z_i=0\}Y_i}{1 - p_z} 
     \right]
 \end{equation}
+\bwnote{TODO: continue here.}
+
 Given $\pi_i^e$ and $\kappa$, \eqref{eq:DE_corrected} is a design-unbiased estimator of \eqref{eq:directed_effect}
 \begin{proposition}
 \label{prop:de_sa}
