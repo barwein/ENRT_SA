@@ -259,7 +259,7 @@ Assume that treatments are randomly assigned to the recruited egos via Bernoulli
 \begin{assumption}[Bernoulli experimental design]
 \label{ass:bernoulli_design}
     Treatments are independently assigned only to recruited egos
-    $\Pr(Z_i = 1 \mid \cR) = p_z 1\{i \in \cR_e\}$ where $p_z \in (0,1)$ is a known constant.
+    $\Pr(Z_i = 1 \mid \cR) = p_z \mathbb{I}\{i \in \cR_e\}$ where $p_z \in (0,1)$ is a known constant.
 \end{assumption}
 Denote the treatment space as $\mathcal{Z} = \left\{\bz \in \{0,1\}^N : \Pr(\bZ=\bz \mid \cR) > 0 \right\}$,
 where treatments of non-recruited units are assumed to be equal to zero with probability one.
@@ -335,7 +335,7 @@ The observed exposures are $\widetilde{F}_i = F(\bZ_{-i}, \widetilde{\bA})$,
 which may differ from the true exposures $F_i$. 
 That is, the observed network $\widetilde{\bA}$ might not include all the relevant edges present in the population network $\bA$ 
 due to the egocentric sampling process, resulting in \emph{misspecified network interference structure} \citep{Weinstein2023}.
-We specifically care about missing ego-ego and additional alter-alter edges induced by the sampling process.
+We specifically care about missing ego--ego and additional alter--alter edges induced by the sampling process.
 
 Consider, for example, the context of Figure~\ref{fig:egonetwork}.
 If only ego 1 is treated, for alter 6 we observe exposure $\widetilde{F}_i=0$ since its ego (node 2) is not treated,
@@ -378,7 +378,7 @@ and for direct effects \eqref{eq:directed_effect},
     \mathbb{I}\{Z_i=0\}Y_i}{1 - p_z} 
     \right].
 \end{equation}
-If some alter-ego or ego-ego edges are missing in the observed network $\widetilde{\bA}$ due to the egocentric sampling process,
+If some alter--ego or ego--ego edges are missing in the observed network $\widetilde{\bA}$ due to the egocentric sampling process,
 then for some units the observed exposures $\widetilde{F}_i$ may not agree with the true exposures $F_i$ under all possible treatment assignments $\mathcal{Z}$.
 In that case, both estimators \eqref{eq:IE_naive_HT} and \eqref{eq:DE_naive_HT} may not be design-unbiased.
 \begin{proposition}
@@ -421,14 +421,14 @@ Furthermore, if an ego is not connected to any other ego in the population netwo
 In that case, \eqref{eq:DE_naive_HT} will be a design-unbiased estimator of \eqref{eq:directed_effect}.
 However, if an ego is connected to at least one other ego in the population network, then $\pi_i^e>0$,
 and the direct effect estimator \eqref{eq:DE_naive_HT} based on the observed data will be biased.
-Similarly to alters, the magnitude of the bias will depend on the number ego-ego edges to in the population network.
+Similarly to alters, the magnitude of the bias will depend on the number ego--ego edges to in the population network.
  
 \section{Sensitivity analysis for contamination}
 \label{sec:sa}
 
 Proposition~\ref{prop:bias_naive_ht} shows that the HT estimators based on the observed data 
     are biased whenever there is contamination between the ego-networks.
-We refer to contamination as the presence alter-ego and ego-ego edges in the population network $\bA$,
+We refer to contamination as the presence alter--ego and ego--ego edges in the population network $\bA$,
 that are missing from the observed network $\widetilde{\bA}$ due to the egocentric sampling process.   
     
 By the structure of the egocentric sampling and the
@@ -447,7 +447,7 @@ However, the observed outcomes of egos that are assigned to
   compared to only two among the alters.
 
 We develop a sensitivity framework that enables researchers to assess the impact of
- possible contamination between ego-networks on their causal estimates.
+ possible contamination between ego-networks on the causal estimates.
 The framework provides bias-corrected estimators of the indirect and direct effects 
 that account for possible exposure misspecification due to the egocentric-network recruitment process. 
 
@@ -456,7 +456,7 @@ exposure probabilities under the true population network $\pi_i^a$ and $\pi_i^e$
 The structure of the egocentric sampling design and our setup 
 allow us to decompose $\pi_i^a$ and $\pi_i^e$ into basic
  components that are straightforward to compute given specification
-  of the \emph{expected number} or the \emph{probability} of alter-ego and ego-ego edges.
+  of the \emph{expected number} or the \emph{probability} of alter--ego and ego--ego edges.
  The latter will form the basis of our sensitivity parameters, 
  enabling seamless integration of covariates and prior knowledge into the sensitivity analysis.
  We provide multiple examples and practical guidelines on how to specify these parameters in Section~\ref{subsec:rho_param}.
@@ -492,14 +492,14 @@ Given $\pi_i^a$, \eqref{eq:IE_corrected} is a design-unbiased estimator of \eqre
 \end{proposition}
 
 By the ENRT design and Assumptions~\ref{ass:expos_map}, $\pi_i^a \geq p_z$,
- with equality if and only if there are no additional latent alter-ego edges.
+ with equality if and only if there are no additional latent alter--ego edges.
  Consequently, if each alter has the same exposure probabilities $\pi^a_i = \pi^a$,
  then $\widehat{IE}_{adj} = \frac{1-p_z}{1-\pi^a} \widehat{IE}$.
  Therefore, $\text{sign}\left(\widehat{IE}_{adj}\right) = \text{sign}\left(\widehat{IE}\right)$, 
  and $\widehat{IE}_{adj} \geq \widehat{IE}$ if $\widehat{IE} >0$ and vice versa otherwise.
 
 The bias-corrected estimator \eqref{eq:IE_corrected} can be modified to include an outcome model.
- Let $m^a_i(f) = \EX \left[Y_i \mid \widetilde{F}_i=f, \bX_i, i \in \cR_a \right]$
+ Let $\mu^a_i(f) = \EX \left[Y_i \mid \widetilde{F}_i=f, \bX_i, i \in \cR_a \right]$
 be the conditional expectation among alters with observed exposure $\widetilde{F}_i = f$ and covariates $\bX_i$.
 The augmented bias-corrected estimator is
 \begin{equation}
@@ -513,15 +513,15 @@ The augmented bias-corrected estimator is
     \Bigg[
     \frac{
     \mathbb{I}\{
-    \widetilde{F}_i=1\}\left(Y_i - m^a_i(1) \right)}{p_z} -
+    \widetilde{F}_i=1\}\left(Y_i - \mu^a_i(1) \right)}{p_z} -
     \\ &\qquad \qquad \qquad
     \frac{
-    \mathbb{I}\{\widetilde{F}_i=0\}\left(Y_i - m^a_i(0) \right)}{1 - p_z} 
-    + \left\{m^a_i(1) - m^a_i(0) \right\}
+    \mathbb{I}\{\widetilde{F}_i=0\}\left(Y_i - \mu^a_i(0) \right)}{1 - p_z} 
+    + \left\{\mu^a_i(1) - \mu^a_i(0) \right\}
     \Bigg].
     \end{aligned}
 \end{equation}
-Given that $m_i^a(f)$ are estimated in a way that ensure their independence from the treatment assignment $\bZ$,
+Given that $\mu^a_i(f)$ are estimated in a way that ensure their independence from the treatment assignment $\bZ$,
 e.g., via cross-fitting \citep{Chernozhukov2018},
 then \eqref{eq:IE_corrected_aipw} is also a design-unbiased estimator of \eqref{eq:indirect_effect}, but can have lower variance.
 
@@ -573,27 +573,33 @@ Define the the bias-corrected direct effect estimator as a function of the obser
     \mathbb{I}\{Z_i=0\}Y_i}{1 - p_z} 
     \right]
 \end{equation}
-\bwnote{TODO: continue here.}
-
 Given $\pi_i^e$ and $\kappa$, \eqref{eq:DE_corrected} is a design-unbiased estimator of \eqref{eq:directed_effect}
 \begin{proposition}
 \label{prop:de_sa}
     Under Assumptions~\ref{ass:bernoulli_design}, \ref{ass:expos_map}, \ref{ass:consis}, \ref{ass:egos_kappa}, we have
      $\EX_{\bZ}\left[\widehat{DE}_{adj} \right] = DE$.
 \end{proposition}
-
 If $\pi_i^e=0$ or $\kappa=1$, the bias-corrected estimator will reduce to the naive HT estimator \eqref{eq:DE_naive_HT},
  and both will be unbiased.
- Namely, the naive estimator \eqref{eq:DE_naive_HT} is unbiased if there are no latent ego-ego edges or
+ Namely, the naive estimator \eqref{eq:DE_naive_HT} is unbiased if there are no latent ego--ego edges or
  treatment and exposure interaction effects.
 
- Attenutated away from the null if $\kappa >1$, 
- towards the null if $\kappa < 1$ (for most plausible $\kappa$ values).
+Moreover, under Assumption~\ref{ass:egos_kappa}, the naive estimator $\widehat{IE}$ can be shown to be
+ attenutated \emph{away} from the null if $\kappa >1$, and attenuated \emph{towards} the null if
+   $\kappa \in \left( \min_{i \in \cR_e}\left\{1 - \frac{1}{\pi_i^e}\right\}, 1 \right)$.
+However, the left bound is not informative for most plausible $\kappa$ values.
+For example, if $\pi_i^e = \pi^e = 0.01$, the the lower bound is $-99$,
+which is not practically meaningful. 
+Thus, in general, the naive estimator is attenuated towards the null if $\kappa <1$ (Appendix~\ref{apdx_sec:proof}).
+In addition, for most plausible $\kappa$ values 
+    $\text{sign}\left(\widehat{DE}_{adj}\right) = \text{sign}\left(\widehat{DE}\right)$,
+so the bias-corrected estimator preserves the direction of the naive estimator.
 
- For most plausible $\kappa$ values 
-    $\text{sign}\left(\widehat{DE}_{adj}\right) = \text{sign}\left(\widehat{DE}\right)$.
-
-\bwnote{Refine the paragraph.} Extension also to augmented bias-corrected estimator as in \eqref{eq:IE_corrected_aipw}. Here $m^e_i(z) = \EX \left[Y_i \mid Z_i =z, \bX_i, i \in \cR_e \right]$.
+Similarly to the augmented indirect effect estimator \eqref{eq:IE_corrected_aipw},
+the bias-corrected direct effect estimator \eqref{eq:DE_corrected} 
+can also be extended to include an outcome model.
+Let $\mu^e_i(z) = \EX \left[Y_i \mid Z_i =z, \bX_i, i \in \cR_e \right]$.
+The augmented bias-corrected estimator is
 \begin{equation}
     \label{eq:DE_corrected_aipw}
     \begin{aligned}
@@ -605,164 +611,166 @@ If $\pi_i^e=0$ or $\kappa=1$, the bias-corrected estimator will reduce to the na
         \Bigg[
         \frac{
         \mathbb{I}\{
-        Z_i=1\}\left(Y_i - m^e_i(1) \right)}{p_z} 
+        Z_i=1\}\left(Y_i - \mu^e_i(1) \right)}{p_z} 
         -
         \\ &\qquad \qquad \qquad
         \frac{
-        \mathbb{I}\{Z_i=0\}\left(Y_i - m^e_i(0) \right)}{1 - p_z} 
-        + \left\{m^e_i(1) - m^e_i(0) \right\}
-        \Bigg]
+        \mathbb{I}\{Z_i=0\}\left(Y_i - \mu^e_i(0) \right)}{1 - p_z} 
+        + \left\{\mu^e_i(1) - \mu^e_i(0) \right\}
+        \Bigg].
     \end{aligned}
 \end{equation}
 
-\subsection{Specification of the sensitivity parameter}
+\subsection{Specification of the sensitivity parameters}
 \label{subsec:rho_param}
-Propositions~\ref {prop:ie_sa}-\ref{prop:de_2param_sa} establish the relationships between indirect \eqref{eq:indirect_effect} and direct \eqref{eq:directed_effect} estimands, the naive estimators \eqref{eq:indirect_effect_estimator}-\eqref{eq:directed_effect_estimator}, and the marginal probabilities of exposures in the population network $\pi^e_i$ and $\pi^a_i$.
-In the case of indirect effects among alters, we have point identification given $\pi^a_i$. For direct effects among egos, we develop a one-parameter sensitivity analysis on bounds of the direct effects and a two-parameter sensitivity analysis for point identification. Both depend on $\pi^e_i$. Let $\cR_e^{i} =\cR_e \setminus \{i\}$ be the set of egos excluding $i$.
+Propositions~\ref {prop:ie_sa}-\ref{prop:de_sa} establish that the bias-corrected estimators
+of the indirect and direct effects depend on the exposure probabilities
+$\pi_i^a = \Pr(F_i=1\mid i\in \cR_a)$ and $\pi_i^e = \Pr(F_i=1 \mid i \in \cR_e)$ 
+of alters and egos in the population network $\bA$. 
+For the direct effects, the bias-corrected estimator also depends on the sensitivity parameter $\kappa$. 
+We now illustrate how the computation of $\pi_i^a$ and $\pi_i^e$
+reduce to specification of edge-level probabilities or the expected number
+  of missing alter--ego and ego--ego edges. 
+  The latter form the basis of our sensitivity parameters.
 
-Since treatments are randomly assigned only to recruited units (Assumption~\ref{ass:bernoulli_design}) and exposures $F_i$ indicates whether a unit is exposed to at least one treated neighbor (Assumption~\ref{ass:expos_map}), the probabilities $\pi^a_i$ and $\pi^e_i$ depend only on alter-ego or ego-ego edges that are missing due to the egocentric recruitment process (dashed edges in Figure~\ref{fig:egonetwork}). 
-Specifically, the ego-ego edges $\left\{A_{ij}: i,j \in \cR_e\right\}$ and alter-ego edges between ego-networks $\left\{A_{ij} : i \in \cR_a, j \in \cR_e^{e(i)} \right\}$ are latent.
-The proposed sensitivity analysis will be expressed in terms of probabilities on these missing edges\footnote{This sensitivity analysis will be a weaker assumption than a full prior network model. We only require the specifications of edge probabilities for a subset of missing edges.}. 
+By the exposure mapping specification (Assumption~\ref{ass:expos_map}),
+the probabilities $\pi_i^a$ and $\pi_i^e$ depend 
+only on alter--ego or ego--ego edges in the population network $\bA$.
+In the observed network $\widetilde{\bA}$, each alter $i \in \cR_a$ is connected only to its ego $e(i) \in \cR_e$.
+Let $\cR_e^{j} = \cR_e \setminus \{j\}$ be the set of all egos other than $j \in \cR_e$.
+The latent alter--ego edges $\left\{A_{ij} : i \in \cR_a, j \in \cR_e^{e(i)} \right\}$,
+and ego--ego edges $\left\{A_{ij}: i \neq j \in \cR_e\right\}$ 
+    are the relevant missing edges from $\widetilde{\bA}$.
 Define the edge-level probabilities by
 \begin{equation}
     \label{eq:sbm}
     \begin{aligned}
-    &\Pr\left(A_{ij}=1 \mid i,j \in\cR_e\right) = \rho^e_{ij},
+    &\Pr\left(A_{ij}=1 \mid i \neq j \in\cR_e\right) = \rho^e_{ij},
     \\ 
     &\Pr\left(A_{ij}=1 \mid i \in \cR_a, j \in \cR_e^{e(i)} \right) = \rho^a_{ij},
     \end{aligned}
 \end{equation}
 for $\rho^e_{ij}, \rho^a_{ij} \in [0,1]$.
 Using \eqref{eq:sbm}, we can derive expressions for $\pi^e_i$ and $\pi^a_i$.
-Starting with $\pi^e_i$,
-By the law of total probability,
-\begin{equation*}
-    % \Pr(Z_jA_{ij} = 0 \mid i,j \in \cR_e) 
-    % =
-    % 1 - \Pr(Z_jA_{ij} = 1 \mid i,j \in \cR_e)
-    \Pr\left(Z_jA_{ij} = 1 \mid i,j \in \cR_e\right)
-    =
-    p_z\rho^e_{ij}.
-    % 1 - p_z\rho^e_{ij}.
-\end{equation*}
-The event $F_i=0$ is equivalent to $Z_jA_{ij} = 0$ for all $j \in \cR_e^i$. Assuming (conditional) edge independence yields,
+By the law of total probability and Assumption~\ref{ass:bernoulli_design},
+ $\Pr\left(Z_jA_{ij} = 1 \mid i,j \in \cR_e\right) =
+    p_z\rho^e_{ij}$.
+Assuming (conditional) edge independence yields,
 \begin{equation}
     \label{eq:pi_ego}
     \pi^e_i = 1 - \prod_{j \in  \cR_e^i}
     \big(1 - p_z \rho^e_{ij}\big).
 \end{equation}
-For alters $i\in\cR_a$, $F_i=1$ if its ego $e(i)$ or at least one of the other recruited egos connected to $i$ in the population network $\bA$ is treated. Therefore, we obtain (Appendix~\ref{apdx_sec:proof}),
+Alter $i\in\cR_a$ is exposed $F_i=1$ if its ego $e(i)$ or at least one of the other recruited 
+    egos connected to $i$ in the population network $\bA$ are treated.
+    Therefore, we obtain (Appendix~\ref{apdx_sec:proof}),
 \begin{equation}
     \label{eq:pi_a}
     \pi^a_i = p_z + 
     (1-p_z)
     \left[1- \prod_{j \in  \cR_e^{e(i)}}
-    \big(1 - p_z \rho^a_{ij}\big)\right]
-    = 
-    1 - (1-p_z)\prod_{j \in  \cR_e^{e(i)}}
-    \big(1 - p_z \rho^a_{ij}\big),
+    \big(1 - p_z \rho^a_{ij}\big)\right].
+    % = 
+    % 1 - (1-p_z)\prod_{j \in  \cR_e^{e(i)}}
+    % \big(1 - p_z \rho^a_{ij}\big),
 \end{equation}
-and $\pi^a_i \geq p_z$ as stated in Section~\ref{subsec:ie}.
-
-Eqs.~\eqref{eq:pi_ego}-\eqref{eq:pi_a} imply that the sensitivity analyses for indirect and direct effects demand specification of $\rho^e_{ij}$ and $\rho^a_{ij}$ by the researchers. We now consider some prominent examples.  
+Eqs.~\eqref{eq:pi_ego} and \eqref{eq:pi_a} illustrate how the exposure probabilities 
+can be computed given specifications of the edge-level probabilities $\rho^e_{ij}$ and $\rho^a_{ij}$.
+The latter form the basis of our sensitivity parameters.
+We now consider some prominent examples of how researchers can specify these parameters in practice.
+The examples include both homogeneous and heterogeneous edge probabilities,
+as well as specifications based on the expected number of missing edges.  
 
 \begin{exmp}[Homogeneous probabilities]
     \label{exmp:pi_homo}
-    The probabilities in \eqref{eq:sbm} are the same for all units:
-    $\rho^e_{ij}=\rho^e$ and $\rho^a_{ij}=\rho^a$. The product in \eqref{eq:pi_ego} is reduced to,
+    Specify the same probabilities \eqref{eq:sbm} for all units:
+    $\rho^e_{ij}=\rho^e$ and $\rho^a_{ij}=\rho^a$. 
+    The exposure probabilities \eqref{eq:pi_ego} and \eqref{eq:pi_a} simplify to
     \begin{equation*}
-        \prod_{j \in \cR_e^i}
-    \big(1 - p_z \rho^e_{ij}\big) = (1-p_z\rho^e)^{n_e-1},
+        \begin{aligned}
+            \pi_i^e &= 1 - (1-p_z\rho^e)^{n_e-1}, \\
+            \pi_i^a &= p_z + (1-p_z)\left[1- (1-p_z\rho^a)^{n_a-1}\right].
+        \end{aligned}
     \end{equation*}
-    and similarly to \eqref{eq:pi_a} with $\rho^a$.
+    For instance, if researchers suspect that 1\% of the possible ego--ego edges are missing,
+    they can set $\rho^e=0.01$. 
 \end{exmp}
 
-\begin{exmp}[Number of missing edges]
+\begin{exmp}[Homogeneous number of edges]
     \label{exmp:pi_number}
-    A special case of Example~\ref{exmp:pi_homo} occurs when the researchers specify the total \emph{expected} number of missing edges, separately for the ego-ego and alter-ego edges. 
-    If $m^e \in \left\{1,\ldots, \binom{n_e}{2}\right\}$ is the expected number of ego-ego edges that are believed to be missing, then set
+    A special case of Example~\ref{exmp:pi_homo} occurs
+     by specifying the \emph{expected} number of latent edges, separately for the ego--ego and alter--ego edges. 
+    Let $m^e \in \left\{1,\ldots, \binom{n_e}{2}\right\}$ be the expected number of ego--ego edges
+     that are believed to be missing. Setting 
     \begin{equation*}
-        \rho^e_{ij} = \rho^e(m^e) = \frac{m^e}{\binom{n_e}{2}}.
+        \rho^e_{ij} = \rho^e(m^e) = \frac{m^e}{\binom{n_e}{2}},
     \end{equation*}
-    There are $n_a(n_e-1)$ possible missing alter-ego edges between alters and egos from different ego-networks. If $m^a$ such edges are expected to be missing, set 
+    weights equally each ego--ego edge probability and yield $m^e$ expected ego--ego edges.
+    \\
+    There are $n_a(n_e-1)$ possible missing alter--ego edges. 
+     If $m^a$ such edges are expected to be missing, set the probability of each edge to
     \begin{equation*}
         \rho^a_{ij} = \rho^a(m^a) = \frac{m^a}{n_a(n_e-1)}.
     \end{equation*} 
+    For instance, assume researchers suspect that each alter 
+    is connected to $k>0$ additional egos on average.
+    This can be represented by settings $m^a = k (n_e-1)$.     
 \end{exmp}
 
 \begin{exmp}[Heterogeneous probabilities]
     \label{exmp:pi_hetero}
-    Examples~\ref{exmp:pi_homo}-\ref{exmp:pi_number} can be extended to incorporate unit-level characteristics through covariates $\bX_i$. 
-    A well-known result in network science is homophily, which states that units with similar characteristics are more likely to have social interactions.
-    For scalar $\gamma^e \geq 0$ we can define
-    similarity weights $w_{ij}^e = \exp \left(-\gamma^e d(\bX_i, \bX_j)\right)$ 
-     for distance function $d(\cdot, \cdot)$, e.g., the Euclidean distance $d(\bx_i,\bx_j)=\lVert\bx_i - \bx_j\rVert$ or the cosine distance $d(\bx_i,\bx_j)=1 - \frac{\bx_i^T\bx_j}{\lVert \bx_i \rVert \lVert \bx_j \rVert}$. 
-    Alternatively, it is possible to use the inner product, $w_{ij}^e = \exp \left(\gamma^e \bX_i^T\bX_j\right)$.
-    And then set ego-ego edge probabilities to
+    Examples~\ref{exmp:pi_homo}-\ref{exmp:pi_number} can be extended to incorporate unit-level 
+        characteristics through covariates $\bX_i$. 
+    A well-known result in network science is homophily \bwnote{TODO: add reference},
+      which states that units with similar characteristics 
+      are more likely to interact. 
+    The covariates similarity can be captured through a distance function.
+    Common examples include
+    \begin{itemize}
+        \item $L^p$ norm: $d(\bx_i,\bx_j)=\lVert\bx_i - \bx_j\rVert_p$.
+        \item Cosine distance: $d(\bx_i,\bx_j)=1 - \frac{\bx_i^T\bx_j}{\lVert \bx_i \rVert \lVert \bx_j \rVert}$.
+        \item Jaccard distance: $d(\bx_i,\bx_j)=1 - \frac{\lVert \bx_i \cap \bx_j \rVert}{\lVert \bx_i \cup \bx_j \rVert}$.
+    \end{itemize}
+    For $\gamma^e \geq 0$, define similarity weights using the distances    
+    $w_{ij}^e = \exp \left(-\gamma^e d(\bX_i, \bX_j)\right)$ or 
+    through the inner product $w_{ij}^e = \exp \left(\gamma^e \bX_i^T\bX_j\right)$.
+    Then, set ego--ego edge probabilities to
     \begin{equation*}
      \rho^e_{ij}=\frac{w_{ij}^e}{\sum_{j \in \cR_e^i}w_{ij}^e}.
     \end{equation*}
-    In both cases, $\gamma^e$ controls the influence of covariate similarity: $\gamma^e \to 0$ yields uniform probabilities $\rho^e_{ij} \to\frac{1}{n_e-1}$, while larger $\gamma^e$ concentrates mass on more closer or similar nodes. Analogous definitions apply for alter-ego edges with weights $w_{ij}^a$, probabilities $\rho^a_{ij}$, and a sensitivity parameter $\gamma^a \geq 0$.   
+    In both cases, $\gamma^e$ is the sensitivity paramaters
+     which controls the influence of covariate similarity.
+     Taking $\gamma^e \to 0$ yields uniform probabilities $\rho^e_{ij} \to\frac{1}{n_e-1}$,
+      while larger $\gamma^e$ concentrates mass on more similar nodes.
+       Analogous definitions apply for alter--ego edges with weights $w_{ij}^a$,
+       probabilities $\rho^a_{ij}$, and a sensitivity parameter $\gamma^a \geq 0$.   
 \end{exmp}
 
 \begin{exmp}[Heterogeneous number of missing edges]
 \label{exmp:pi_hetero_number}
-    Examples~\ref{exmp:pi_number}–\ref{exmp:pi_hetero} can be combined to allow pair-specific heterogeneous probabilities while fixing only the total expected number of missing edges.
+    Examples~\ref{exmp:pi_number}–\ref{exmp:pi_hetero} can be combined to allow 
+    pair-specific heterogeneous probabilities while fixing only the expected number of missing edges.
     Let $w_{ij}^e$ and $w_{ij}^a$ be the weights defined in Example~\ref{exmp:pi_hetero} with $\gamma^e=\gamma^a=1$.
-    Define the total sum of weights among ego-ego and alter-ego pairs with missing edges,
+    Define the total sum of weights among ego--ego and alter--ego pairs with missing edges,
     \begin{equation*}
      W^e=\sum_{i<j\in \cR_e}w_{ij}^e, \qquad W^a = \sum_{i\in \cR_a}\sum_{j \in \cR_e^{e(i)}} w_{ij}^a.   
     \end{equation*}
-    Similarly to Example~\ref{exmp:pi_number}, specify the expected numbers $m^e$ and $m^a$ of missing ego-ego and alter-ego edges, and set
+    Similarly to Example~\ref{exmp:pi_number}, specify the expected numbers $m^e$ and $m^a$
+        of missing ego--ego and alter--ego edges, and set
     \begin{equation*}
         \rho^e_{ij}=\frac{m^e}{W^e}\,w^e_{ij},
         \qquad
         \rho^a_{ij}=\frac{m^a}{W^a}\,w^a_{ij}.
     \end{equation*}
-    If $m^e \geq W^e$ or $m^a \geq W^a$, the probabilities must be capped to ensure that $\rho_{ij}\leq 1$. We describe a simple procedure for this scenario in Appendix~\ref{apdx_sec:proof}. Setting all weights to one recovers Example~\ref{exmp:pi_number}.
+    This ensure that the expected number of missing edges are $m^e$ and $m^a$,
+     while allowing for heterogeneous edge probabilities.
+    Setting all weights ($w_{ij}^e$ and $w_{ij}^a$) to one recovers Example~\ref{exmp:pi_number}.
 \end{exmp}
 
-\textbf{TODO: this capping I described doesn't ensure that each unit attains the bounded degree mentioned. That follows from the symmetry of edges in undirected networks. Need to either modify this solution (e.g., via greedy matching or top-d pruning that will define the feasible set of edges) or just remove it.}
-
-Examples~\ref{exmp:pi_homo}-\ref{exmp:pi_hetero} implicitly allow every latent ego-ego and alter-ego edge to exist.
-Suppose instead that each ego can form at most $d^e_{max}$ latent ego-ego ties and each node (ego or alter) at most $d^a_{max}$ latent alter-ego ties. 
-The probabilities in the examples can be modified as follows.
-\begin{enumerate}
-    \item \textbf{Example~\ref{exmp:pi_homo}.} Replace the exponent $n_e-1$ with $\min\left(n_e-1, d^e_{max}\right)$. Make the same substitution for the alter-ego exponent with $d^a_{max}$.
-    \item \textbf{Example~\ref{exmp:pi_number}.}
-    Now there are at most $M^e_{max}=\min \left(\binom{n_e}{2}, \frac{n_e d^e_{max}}{2}\right)$ latent ego-ego edges available. Set $\rho^e(m^e) = \frac{m^e}{M^e_{max}}$ for $m^e \in \{1,\ldots, M^e_{max}\}$. 
-    For alter-ego edges, the total bipartite edges is $M^a_{max} = \min \left(n_a(n_e-1),n_ed^a_{max},n_ad^a_{max}\right)$, so we define $\rho^a(m^a) = \frac{m^a}{M^a_{max}}$.
-    \item \textbf{Example~\ref{exmp:pi_hetero}.} Compute the weights $w_{ij}^e$, keep the $d^e_{max}$ largest weights for each ego (receptively, $d^a_{max}$ for each alter-ego with $\gamma^a$), set the rest to zero, and then renormalize the retained weights so they sum to one.
-\item \textbf{Example~\ref{exmp:pi_hetero_number}.}
-Start from the weights of Example~\ref{exmp:pi_hetero}. 
-For ego–ego pairs, for each ego keep its $d^e_{\max}$ largest weights and set the rest to zero; retain an edge $i\!<\!j$ only if it is in both endpoints’ top-$d^e_{\max}$ lists (mutual top-$d$). 
-For alter–ego pairs, apply the same pruning with $d^a_{\max}$ on \emph{both} sides (mutual top-$d^a_{\max}$). 
-\end{enumerate}
-Let $\widetilde{d}_i$ be the observed degree in the ego-network $\widetilde{\bA}$. Since each alter is connected only to its own ego, $\widetilde{d}_i=1$ for $i \in \cR_a$. After adding the possible latent edges, the maximal degrees are
-\begin{equation*}
-    d_{max}(i) = 
-    \begin{cases}
-        \widetilde{d}_i + d^e_{max} + d^a_{max},
-        & i \in \cR_e, \\
-        1 + d^a_{max}, & 
-        i \in \cR_a.
-    \end{cases}
-\end{equation*}
-These caps ensure that the modified probabilities remain valid inputs to \eqref{eq:pi_ego}-\eqref{eq:pi_a}. 
-
-\paragraph{Degree-feasible support via greedy pruning.}
-For ego–ego pairs, sort all candidate pairs $(i,j)$ by weight $w^e_{ij}$ (in the homogeneous case, use any fixed symmetric tie-break). 
-Scan in that order and add $(i,j)$ to the support $S_e$ if both endpoints currently have degree $< d^e_{\max}$; otherwise skip. 
-Stop when no more pairs can be added or when $|S_e|=M^e_{\max}=n_e d^e_{\max}/2$.
-For alter–ego pairs, apply the same rule on the bipartite graph (respecting the exclusion of $j^\star(i)$ and the cap $d^a_{\max}$ on \emph{both} sides) to obtain $S_a$.
-All sums/products “over available pairs” in Examples~\ref{exmp:pi_homo}–\ref{exmp:pi_hetero_number} are then taken over $S_e$ or $S_a$ (with $W^e,W^a$ replaced by the corresponding totals over these supports). 
-Selecting the top $M_{\max}$ pairs \emph{without} the degree check enforces only a global bound and can violate node caps; the greedy rule enforces both.
-(If any resulting $\rho_{ij}>1$, apply the global capping procedure in Appendix~\ref{apdx_sec:proof}.)
-
-
-
-\subsection{Practical considerations}
+\subsection{Running the sensitivity analyses in practice}
 \label{subsec:practice}
+\bwnote{TODO: continue here. Write the general overview. Then write the steps for grid SA and PBA.
+Mention variance estimation in both. Describe interpretation of results.}
 
 The proposed sensitivity analyses are flexible and are compatible with any statistical model for the conditional mean of the outcomes with the observed exposures $\widetilde{F}_i$, and possibly covariates $\widetilde{\bX}_i$. To avoid imposing additional structural assumptions on the differences of potential outcomes of egos and alters, we recommend estimating two conditional outcome models, separately for egos and alters.  
 
@@ -771,7 +779,7 @@ Given the sensitivity parameters $\rho^a_{ij}, \rho^e_{ij}$, and possibly $\kapp
 Given a grid of sensitivity parameters, the full procedure can be performed as follows. \bwnote{Updated the high-level structure that includes the outcomes models $m^a, m^e$ as well.}
 \begin{enumerate}[label = (\roman*)]
     \item \label{sa:step1} Estimate the outcome models 
-    $m^a_i(f), m^e_i(z)$. Use cross-fitting via $k$-fold split (deafult can be two-fold split, namely, split data into two folds (e.g., split into two folds of ego-networks), estimate outcome model in one fold and predict $m^e_i, m^a_i$ on the data from the second one, and vice versa). If not using the augmented estimators, we can set $m^e_i = m^a_i = 0$.
+    $\mu^a_i(f), \mu^e_i(z)$. Use cross-fitting via $k$-fold split (deafult can be two-fold split, namely, split data into two folds (e.g., split into two folds of ego-networks), estimate outcome model in one fold and predict $\mu^e_i, \mu^a_i$ on the data from the second one, and vice versa). If not using the augmented estimators, we can set $\mu^e_i = \mu^a_i = 0$.
     \item \label{sa:step2} For each parameter in the grid of sensitivity parameters, obtain bias-corrected estimates of IE \eqref{eq:IE_corrected}-\eqref{eq:IE_corrected_aipw} and DE \eqref{eq:DE_corrected}-\eqref{eq:DE_corrected_aipw}.
     \item \label{sa:step3} Estimate variance of both IE and DE bias-corrected estimator as a function of the SA parameters... we have a closed-form expression here.
     \item \label{sa:step4} Compute confidence intervals for the bias-corrected estimates using normal approximation.
@@ -1100,11 +1108,11 @@ will result in the second row of \eqref{apdx.eq:alter_bias_ht} where the terms $
     \left[
     \frac{
     \mathbb{I}\{
-    \widetilde{F}_i=1\}\left(Y_i - m^a_i(1) \right)}{p_z} 
+    \widetilde{F}_i=1\}\left(Y_i - \mu^a_i(1) \right)}{p_z} 
     -
     \frac{
-    \mathbb{I}\{\widetilde{F}_i=0\}\left(Y_i - m^a_i(0) \right)}{1 - p_z} 
-    + \left\{m^a_i(1) - m^a_i(0) \right\}
+    \mathbb{I}\{\widetilde{F}_i=0\}\left(Y_i - \mu^a_i(0) \right)}{1 - p_z} 
+    + \left\{\mu^a_i(1) - \mu^a_i(0) \right\}
     \right]
     \\ &=
     \frac{1}{n_a}
@@ -1116,7 +1124,7 @@ will result in the second row of \eqref{apdx.eq:alter_bias_ht} where the terms $
     \alpha_i^a \phi_i^a,
 \end{align*}
 where $\alpha_i^a = \frac{1-p_z}{1-\pi_i^a}$.
-We assume that the outcome models $m_i^a(f)$ are estimated through cross-fitting (\bwnote{TODO: add ref}) and therefore assumed to be independent of $\bZ$. We ignore the sampling uncertainty associated with estimating the outcome models. 
+We assume that the outcome models $\mu^a_i(f)$ are estimated through cross-fitting (\bwnote{TODO: add ref}) and therefore assumed to be independent of $\bZ$. We ignore the sampling uncertainty associated with estimating the outcome models. 
 
 Alters in the same ego-network have the same observed exposure.
 Recall that $e(i) \in \cR_e$ is the ego of alter $j \in \cR_a$.
@@ -1186,7 +1194,7 @@ For alters $i\in\cR_a$, $F_i=1$ if its ego $e(i)$ or at least one of the other r
     \Pr(F_i=1 \mid Z_{e(i)}=1, i\in \cR_a)\Pr(Z_{e(i)}=1\mid i \in \cR_a) 
     \\ &\quad + \Pr(F_i=1 \mid Z_{e(i)}=0, i\in \cR_a)\Pr(Z_{e(i)}=0\mid i \in \cR_a),
 \end{align*}
-but $\Pr(F_i=1 \mid Z_{e(i)}=1, i\in \cR_a)=1$ and $\Pr(Z_{e(i)}=1\mid i \in \cR_a)=p_z 1\{e(i) \in \cR_e\}$ by Assumptions~\ref{ass:bernoulli_design} and \ref{ass:expos_map}. Since only recruited egos have a non-zero probability of being assigned to treatment, then for alter $i\in \cR_a$, $F_i = \sum_{j\neq i}Z_jA_{ij}=\sum_{j \in \cR_e}Z_jA_{ij}$ with probability one. Thus, $F_i = 0 \mid  Z_{e(i)}=0, i\in \cR_a$ equal with probability one to $1\{\sum_{j \in \cR_e \setminus e(i)}Z_jA_{ij}=0\}$. Thus,
+but $\Pr(F_i=1 \mid Z_{e(i)}=1, i\in \cR_a)=1$ and $\Pr(Z_{e(i)}=1\mid i \in \cR_a)=p_z \mathbb{I}\{e(i) \in \cR_e\}$ by Assumptions~\ref{ass:bernoulli_design} and \ref{ass:expos_map}. Since only recruited egos have a non-zero probability of being assigned to treatment, then for alter $i\in \cR_a$, $F_i = \sum_{j\neq i}Z_jA_{ij}=\sum_{j \in \cR_e}Z_jA_{ij}$ with probability one. Thus, $F_i = 0 \mid  Z_{e(i)}=0, i\in \cR_a$ equal with probability one to $\mathbb{I}\{\sum_{j \in \cR_e \setminus e(i)}Z_jA_{ij}=0\}$. Thus,
 \begin{align*}
     \Pr(F_i=0 \mid Z_{e(i)}=0, i\in \cR_a) =
     \prod_{j \in  \cR_e \setminus \{e(i)\}}
@@ -1418,11 +1426,11 @@ Write
     \left[
     \frac{
     \mathbb{I}\{
-    Z_i=1\}\left(Y_i - m^e_i(1) \right)}{p_z} 
+    Z_i=1\}\left(Y_i - \mu^e_i(1) \right)}{p_z} 
     -
     \frac{
-    \mathbb{I}\{Z_i=0\}\left(Y_i - m^e_i(0) \right)}{1 - p_z} 
-    + \left\{m^e_i(1) - m^e_i(0) \right\}
+    \mathbb{I}\{Z_i=0\}\left(Y_i - \mu^e_i(0) \right)}{1 - p_z} 
+    + \left\{\mu^e_i(1) - \mu^e_i(0) \right\}
     \right],
     \\ &=
     \frac{1}{n_a}
@@ -1433,7 +1441,7 @@ Write
     \sum_{i \in \cR_a}
     \alpha_i^e \phi_i^e.
 \end{align*}
-We assume that the outcome models $m_i^e(z)$ are estimated through cross-fitting (\bwnote{TODO: add ref}) and therefore assumed to be independent of $\bZ$. We ignore the sampling uncertainty associated with estimating the outcome models. 
+We assume that the outcome models $\mu^e_i(z)$ are estimated through cross-fitting (\bwnote{TODO: add ref}) and therefore assumed to be independent of $\bZ$. We ignore the sampling uncertainty associated with estimating the outcome models. 
 We estimate the variance using the empirical estimate
 \begin{equation*}
     \begin{aligned}

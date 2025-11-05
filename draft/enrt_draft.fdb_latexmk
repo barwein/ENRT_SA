@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex enrt_draft"] 1762344457.88224 "enrt_draft.aux" "enrt_draft.bbl" "enrt_draft" 1762344460.45264 0
+["bibtex enrt_draft"] 1762356091.73571 "enrt_draft.aux" "enrt_draft.bbl" "enrt_draft" 1762356094.28888 0
   "./all_biblo.bib" 1762266136.17744 218778 02d5e3dbdc0bf5f5e09f5f8490a3baf0 ""
   "/usr/local/texlive/2025/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "enrt_draft.aux" 1762344460.24299 18296 537d8a3a066d61296997c8a890f14e87 "pdflatex"
+  "enrt_draft.aux" 1762356094.07595 18430 0be14b925de347d81f8cfc1e18e62716 "pdflatex"
   (generated)
   "enrt_draft.bbl"
   "enrt_draft.blg"
   (rewritten before read)
-["pdflatex"] 1762344457.96514 "/Users/barwein/Library/CloudStorage/Dropbox/My PC (LAPTOP-6NAJD2IQ)/Desktop/Gate/University/TAU/PhD/Writing/Drafts/Sampled networks/ENRT_SA/draft/enrt_draft.tex" "enrt_draft.pdf" "enrt_draft" 1762344460.45276 0
-  "/Users/barwein/Library/CloudStorage/Dropbox/My PC (LAPTOP-6NAJD2IQ)/Desktop/Gate/University/TAU/PhD/Writing/Drafts/Sampled networks/ENRT_SA/draft/enrt_draft.tex" 1762344455.02085 84258 3486e95e959af25bd445e7ad9daa0075 ""
+["pdflatex"] 1762356091.82067 "/Users/barwein/Library/CloudStorage/Dropbox/My PC (LAPTOP-6NAJD2IQ)/Desktop/Gate/University/TAU/PhD/Writing/Drafts/Sampled networks/ENRT_SA/draft/enrt_draft.tex" "enrt_draft.pdf" "enrt_draft" 1762356094.28901 0
+  "/Users/barwein/Library/CloudStorage/Dropbox/My PC (LAPTOP-6NAJD2IQ)/Desktop/Gate/University/TAU/PhD/Writing/Drafts/Sampled networks/ENRT_SA/draft/enrt_draft.tex" 1762356089.46525 81979 93bbd40db9d0b2fed2aec2dd2bc32c5b ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1136768653 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -56,9 +56,7 @@
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1248133631 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1248133631 32362 179c33bbf43f19adbb3825bb4e36e57a ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb" 1248133631 31809 8670ca339bf94e56da1fc21c80635e2a ""
-  "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1248133631 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb" 1248133631 32762 224316ccc9ad3ca0423a14971cfa7fc1 ""
-  "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb" 1248133631 33993 9b89b85fd2d9df0482bd47194d1d3bf3 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "/usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb" 1248133631 32716 08e384dc442464e7285e891af9f45947 ""
@@ -231,10 +229,10 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1757514573 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1757514520 3345726 b8db0ef6a7892e454259cca4e786d964 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "enrt_draft.aux" 1762344460.24299 18296 537d8a3a066d61296997c8a890f14e87 "pdflatex"
-  "enrt_draft.bbl" 1762344457.96277 7943 25356c69fdbe35fe420036c7ab6e751e "bibtex enrt_draft"
-  "enrt_draft.out" 1762344460.24415 3384 5a63b9d165677d5adcfc87af2a072a68 "pdflatex"
-  "enrt_draft.tex" 1762344455.02085 84258 3486e95e959af25bd445e7ad9daa0075 ""
+  "enrt_draft.aux" 1762356094.07595 18430 0be14b925de347d81f8cfc1e18e62716 "pdflatex"
+  "enrt_draft.bbl" 1762356091.81798 7943 25356c69fdbe35fe420036c7ab6e751e "bibtex enrt_draft"
+  "enrt_draft.out" 1762356094.07717 3501 31be40f0af4fdfc9d27cf25c7646eafa "pdflatex"
+  "enrt_draft.tex" 1762356089.46525 81979 93bbd40db9d0b2fed2aec2dd2bc32c5b ""
   "figures/hptn/alter_per_egonet_histogram.png" 1762079267.66412 47934 1ecd8cd868e492abf37858ba86a85562 ""
   "figures/hptn/pba_de_augmented.png" 1762079875.46056 76268 c53d17882a320aba599d8ce1bae90c8d ""
   "figures/hptn/pba_de_not_augmented.png" 1762079875.66436 75939 903478a40021f6783a11c908e8df32da ""
