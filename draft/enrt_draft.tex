@@ -410,18 +410,21 @@ In that case, both estimators \eqref{eq:IE_naive_HT} and \eqref{eq:DE_naive_HT} 
     \end{equation*}
     where $\pi_i^a = \Pr(F_i=1\mid i\in \cR_a)$ and $\pi_i^e = \Pr(F_i=1 \mid i \in \cR_e)$ are the probabilities that an alter and ego, respectively, are exposed to at least one treated neighbor in the population network $\bA$.
 \end{proposition}
-When an alter is connected only to its own ego, $\pi_i^a=p_z$, and \eqref{eq:IE_naive_HT} will be design-unbiased estimator of \eqref{eq:indirect_effect}.
-Otherwise, whenever an alter is connected to more than one ego in the population network, $\pi_i^a > p_z$, and the indirect effect estimator \eqref{eq:IE_naive_HT} based on the observed exposures will be biased. 
-The magnitude of the bias will depend on the number of egos each alter is connected to in the population network.
+When an alter is connected only to its own ego, $\pi_i^a=p_z$, and \eqref{eq:IE_naive_HT}
+ is a design-unbiased estimator of \eqref{eq:indirect_effect}.
+Otherwise, whenever an alter is connected to more than one ego in the population network,
+ $\pi_i^a > p_z$, and the indirect effect estimator \eqref{eq:IE_naive_HT} based on
+  the observed exposures is biased. 
+The magnitude of the bias depends on the number of egos each alter is connected to in the population network.
 That is, the more egos an alter is connected to, the larger the gap between $\pi_i^a$ and $p_z$, and the larger the bias. 
 In addition, the naive indirect estimator \eqref{eq:IE_naive_HT} is
 attenuated towards the null of no indirect effect (Appendix~\ref{apdx_sec:proof}).
 
-Furthermore, if an ego is not connected to any other ego in the population network, then $\pi_i^e=0$.
-In that case, \eqref{eq:DE_naive_HT} will be a design-unbiased estimator of \eqref{eq:directed_effect}.
+If an ego is not connected to any other egos in the population network, then $\pi_i^e=0$.
+In that case, \eqref{eq:DE_naive_HT} is a design-unbiased estimator of \eqref{eq:directed_effect}.
 However, if an ego is connected to at least one other ego in the population network, then $\pi_i^e>0$,
-and the direct effect estimator \eqref{eq:DE_naive_HT} based on the observed data will be biased.
-Similarly to alters, the magnitude of the bias will depend on the number ego--ego edges to in the population network.
+and the direct effect estimator \eqref{eq:DE_naive_HT} based on the observed data is biased.
+Similarly to alters, the magnitude of the bias depend on the number ego--ego edges to in the population network.
  
 \section{Sensitivity analysis for contamination}
 \label{sec:sa}
@@ -456,13 +459,14 @@ exposure probabilities under the true population network $\pi_i^a$ and $\pi_i^e$
 The structure of the egocentric sampling design and our setup 
 allow us to decompose $\pi_i^a$ and $\pi_i^e$ into basic
  components that are straightforward to compute given specification
-  of the \emph{expected number} or the \emph{probability} of alter--ego and ego--ego edges.
+  of the \emph{expected number} or the \emph{probability} of missing alter--ego and ego--ego edges.
  The latter will form the basis of our sensitivity parameters, 
  enabling seamless integration of covariates and prior knowledge into the sensitivity analysis.
  We provide multiple examples and practical guidelines on how to specify these parameters in Section~\ref{subsec:rho_param}.
  
  For the direct effects, we require an additional sensitivity parameter 
-    to account for the additional complexity of four possible potential outcomes generating the observed ones.
+    to account for the complexity resulting from possibly four potential
+     outcomes generating the observed ones.
 This parameter is related to the magnitude of the treatment and exposure interaction effect on the egos,
 and its specifics are discussed in Section~\ref{subsec:de}.
 
@@ -490,7 +494,6 @@ Given $\pi_i^a$, \eqref{eq:IE_corrected} is a design-unbiased estimator of \eqre
   Under Assumptions~\ref{ass:bernoulli_design}, \ref{ass:expos_map}, \ref{ass:consis}, we have
   $\EX_{\bZ}\left[\widehat{IE}_{adj} \right] = IE$.
 \end{proposition}
-
 By the ENRT design and Assumptions~\ref{ass:expos_map}, $\pi_i^a \geq p_z$,
  with equality if and only if there are no additional latent alter--ego edges.
  Consequently, if each alter has the same exposure probabilities $\pi^a_i = \pi^a$,
@@ -556,7 +559,7 @@ On the other hand, in the HPTN-037 study \citep{Latkin2009},
     which we analyze in Section~\ref{sec:data},
     treatment represent a behavioral intervention.
     Such intervention is likely to have monotonic effects, namely,
-    the direct effect is likely to be larger for egos exposed to a treated neighbor, leading to $\kappa > 1$.
+    the direct effect will be larger for egos exposed to a treated neighbor, leading to $\kappa > 1$.
     
 Define the the bias-corrected direct effect estimator as a function of the observed data, $\pi_i^e$, and $\kappa$
 \begin{equation}
@@ -584,13 +587,14 @@ If $\pi_i^e=0$ or $\kappa=1$, the bias-corrected estimator will reduce to the na
  Namely, the naive estimator \eqref{eq:DE_naive_HT} is unbiased if there are no latent ego--ego edges or
  treatment and exposure interaction effects.
 
-Moreover, under Assumption~\ref{ass:egos_kappa}, the naive estimator $\widehat{IE}$ can be shown to be
- attenutated \emph{away} from the null if $\kappa >1$, and attenuated \emph{towards} the null if
-   $\kappa \in \left( \min_{i \in \cR_e}\left\{1 - \frac{1}{\pi_i^e}\right\}, 1 \right)$.
+Moreover, under Assumption~\ref{ass:egos_kappa}, the naive estimator $\widehat{IE}$ is
+ attenuated \emph{away} from the null if $\kappa >1$, and attenuated \emph{towards} the null if
+   $\kappa \in \left( \min_{i \in \cR_e}\left\{1 - \frac{1}{\pi_i^e}\right\}, 1 \right)$. 
+   See Appendix~\ref{apdx_sec:proof} for details.
 However, the left bound is not informative for most plausible $\kappa$ values.
 For example, if $\pi_i^e = \pi^e = 0.01$, the the lower bound is $-99$,
 which is not practically meaningful. 
-Thus, in general, the naive estimator is attenuated towards the null if $\kappa <1$ (Appendix~\ref{apdx_sec:proof}).
+Thus, in general, the naive estimator is attenuated towards the null if $\kappa <1$.
 In addition, for most plausible $\kappa$ values 
     $\text{sign}\left(\widehat{DE}_{adj}\right) = \text{sign}\left(\widehat{DE}\right)$,
 so the bias-corrected estimator preserves the direction of the naive estimator.
@@ -633,14 +637,16 @@ reduce to specification of edge-level probabilities or the expected number
   of missing alter--ego and ego--ego edges. 
   The latter form the basis of our sensitivity parameters.
 
-By the exposure mapping specification (Assumption~\ref{ass:expos_map}),
+By the exposure mapping specification (Assumption~\ref{ass:expos_map}) and 
+the experimental design (Assumption~\ref{ass:bernoulli_design}),
 the probabilities $\pi_i^a$ and $\pi_i^e$ depend 
 only on alter--ego or ego--ego edges in the population network $\bA$.
 In the observed network $\widetilde{\bA}$, each alter $i \in \cR_a$ is connected only to its ego $e(i) \in \cR_e$.
 Let $\cR_e^{j} = \cR_e \setminus \{j\}$ be the set of all egos other than $j \in \cR_e$.
 The latent alter--ego edges $\left\{A_{ij} : i \in \cR_a, j \in \cR_e^{e(i)} \right\}$,
 and ego--ego edges $\left\{A_{ij}: i \neq j \in \cR_e\right\}$ 
-    are the relevant missing edges from $\widetilde{\bA}$.
+    are the missing edges from $\widetilde{\bA}$
+    relevant to the exposure probabilities.
 Define the edge-level probabilities by
 \begin{equation}
     \label{eq:sbm}
@@ -653,7 +659,7 @@ Define the edge-level probabilities by
 for $\rho^e_{ij}, \rho^a_{ij} \in [0,1]$.
 Using \eqref{eq:sbm}, we can derive expressions for $\pi^e_i$ and $\pi^a_i$.
 By the law of total probability and Assumption~\ref{ass:bernoulli_design},
- $\Pr\left(Z_jA_{ij} = 1 \mid i,j \in \cR_e\right) =
+ $\Pr\left(Z_jA_{ij} = 1 \mid i\neq j \in \cR_e\right) =
     p_z\rho^e_{ij}$.
 Assuming (conditional) edge independence yields,
 \begin{equation}
@@ -661,7 +667,7 @@ Assuming (conditional) edge independence yields,
     \pi^e_i = 1 - \prod_{j \in  \cR_e^i}
     \big(1 - p_z \rho^e_{ij}\big).
 \end{equation}
-Alter $i\in\cR_a$ is exposed $F_i=1$ if its ego $e(i)$ or at least one of the other recruited 
+Alter $i\in\cR_a$ is exposed ($F_i=1$) only if its ego $e(i)$ or at least one of the other recruited 
     egos connected to $i$ in the population network $\bA$ are treated.
     Therefore, we obtain (Appendix~\ref{apdx_sec:proof}),
 \begin{equation}
@@ -699,7 +705,7 @@ as well as specifications based on the expected number of missing edges.
 \begin{exmp}[Homogeneous number of edges]
     \label{exmp:pi_number}
     A special case of Example~\ref{exmp:pi_homo} occurs
-     by specifying the \emph{expected} number of latent edges, separately for the ego--ego and alter--ego edges. 
+     by specifying the \emph{expected number} of latent edges, separately for the ego--ego and alter--ego edges. 
     Let $m^e \in \left\{1,\ldots, \binom{n_e}{2}\right\}$ be the expected number of ego--ego edges
      that are believed to be missing. Setting 
     \begin{equation*}
@@ -714,7 +720,7 @@ as well as specifications based on the expected number of missing edges.
     \end{equation*} 
     For instance, assume researchers suspect that each alter 
     is connected to $k>0$ additional egos on average.
-    This can be represented by settings $m^a = k (n_e-1)$.     
+    This can be represented by selecting $m^a = k (n_e-1)$.     
 \end{exmp}
 
 \begin{exmp}[Heterogeneous probabilities]
@@ -749,7 +755,7 @@ as well as specifications based on the expected number of missing edges.
 \begin{exmp}[Heterogeneous number of missing edges]
 \label{exmp:pi_hetero_number}
     Examples~\ref{exmp:pi_number}–\ref{exmp:pi_hetero} can be combined to allow 
-    pair-specific heterogeneous probabilities while fixing only the expected number of missing edges.
+    pair-specific heterogeneous probabilities while fixing the expected number of missing edges.
     Let $w_{ij}^e$ and $w_{ij}^a$ be the weights defined in Example~\ref{exmp:pi_hetero} with $\gamma^e=\gamma^a=1$.
     Define the total sum of weights among ego--ego and alter--ego pairs with missing edges,
     \begin{equation*}
@@ -769,27 +775,113 @@ as well as specifications based on the expected number of missing edges.
 
 \subsection{Running the sensitivity analyses in practice}
 \label{subsec:practice}
-\bwnote{TODO: continue here. Write the general overview. Then write the steps for grid SA and PBA.
-Mention variance estimation in both. Describe interpretation of results.}
+To assess the the impact of contamination on the causal estimates, 
+researchers can utilize the bias-corrected estimators
+\eqref{eq:IE_corrected}-\eqref{eq:IE_corrected_aipw} for the indirect effects
+and \eqref{eq:DE_corrected}-\eqref{eq:DE_corrected_aipw} for the direct effects.
+The bias-corrected estimators depend on the sensitivity parameters
+that define the edge-level probabilities \eqref{eq:sbm} and the parameter $\kappa$ for the direct effects.
+Examples~\ref{exmp:pi_homo}-\ref{exmp:pi_hetero_number} provide practical guidelines on how
+ to specify these parameters in practice.
+As the the true values of such parameters are unknown and can not be directly estimated from the data,
+ researchers can resort to sensitivity analyses by exploring a range of plausible values.
+ We consider here two approaches: grid sensitivity analysis (GSA) and probabilistic bias analysis (PBA).
+ 
+ In GSA, researchers specify a grid of values for the sensitivity parameters 
+ and compute the bias-corrected estimates for each combinatio
+  of parameters \bwnote{TODO: add ref}.
+ That results in a grid of bias-corrected estimates.
+ Such estimates can be coupled with the associated confidence interval for each
+ value of the sensitivity parameters in the specified grid. 
 
-The proposed sensitivity analyses are flexible and are compatible with any statistical model for the conditional mean of the outcomes with the observed exposures $\widetilde{F}_i$, and possibly covariates $\widetilde{\bX}_i$. To avoid imposing additional structural assumptions on the differences of potential outcomes of egos and alters, we recommend estimating two conditional outcome models, separately for egos and alters.  
+ In PBA, researchers specify a prior distribution for the
+ sensitivity parameters and compute the distribution of bias-corrected estimates 
+ over the priors \citep{Greenland2005,Lash2014,Fox2021}. 
+ In practice, this distribution is approximated using
+  Monte Carlo by sampling from the prior distribution, and summarized
+    through averages and intervals of the resulting bias-corrected estimates.
+ This distribution of bias-corrected estimates accounts for uncertainty
+  in the sensitivity parameters.
+  We can also compute a distribution of estimates that accounts for both design uncertainty
+   (over the treatment assignment distribution) and bias uncertainty (from the prior of the sensitivity parameters).
+  
+We now describe the GSA and PBA approaches in more details.
 
-Given the sensitivity parameters $\rho^a_{ij}, \rho^e_{ij}$, and possibly $\kappa$, the researchers can run the sensitivity analyses and obtain estimates or bounds for the estimands under study. Accounting for sampling uncertainty in both the estimated outcome model on the observed exposures and the exposure probabilities is possible through a non-parametric bootstrap. Due to possible dependence between units, we recommend to resample ego-networks rather than individual units. 
-
-Given a grid of sensitivity parameters, the full procedure can be performed as follows. \bwnote{Updated the high-level structure that includes the outcomes models $m^a, m^e$ as well.}
+\paragraph{Grid sensitivity analysis.}
+Given a grid of sensitivity parameters, the full procedure can be performed
+with either analytic variance estimators or nonparametric ego-network bootstrap.
+In the analytic case, the steps are as follows:
 \begin{enumerate}[label = (\roman*)]
-    \item \label{sa:step1} Estimate the outcome models 
-    $\mu^a_i(f), \mu^e_i(z)$. Use cross-fitting via $k$-fold split (deafult can be two-fold split, namely, split data into two folds (e.g., split into two folds of ego-networks), estimate outcome model in one fold and predict $\mu^e_i, \mu^a_i$ on the data from the second one, and vice versa). If not using the augmented estimators, we can set $\mu^e_i = \mu^a_i = 0$.
-    \item \label{sa:step2} For each parameter in the grid of sensitivity parameters, obtain bias-corrected estimates of IE \eqref{eq:IE_corrected}-\eqref{eq:IE_corrected_aipw} and DE \eqref{eq:DE_corrected}-\eqref{eq:DE_corrected_aipw}.
-    \item \label{sa:step3} Estimate variance of both IE and DE bias-corrected estimator as a function of the SA parameters... we have a closed-form expression here.
-    \item \label{sa:step4} Compute confidence intervals for the bias-corrected estimates using normal approximation.
+    \item \label{sa:step1} (Optional.) Estimate the outcome models 
+    $\mu^a_i(f)$ and $\mu^e_i(z)$.
+     We reccomend using cross-fitting via a two-fold split.
+     That is, estimate the outcome models on one fold and predict on the other fold,
+     and vice versa. 
+     These outcome models are estimated only once and used for all sensitivity parameter values.
+    \item \label{sa:step2} For each parameter in the grid of sensitivity parameters do:
+        \begin{enumerate}[label = (\alph*)]
+            \item Compute bias-corrected estimates of IE
+             \eqref{eq:IE_corrected}-\eqref{eq:IE_corrected_aipw}
+                and DE \eqref{eq:DE_corrected}-\eqref{eq:DE_corrected_aipw}.
+                \item Estimate the variance of each bias-corrected estimator (Appendix~\ref{apdx_sec:proof}).
+                \item Compute confidence intervals for each estimator using normal approximation.
+        \end{enumerate}    
 \end{enumerate}
+Alternatively, the analytic variance estimation and the normal approximation 
+in step \ref{sa:step2}(b)-(c) can be replaced by a nonparametric ego-network bootstrap.
+That is, resample with replacement $n_e$ ego-networks from the observed data,
+    compute the bias-corrected estimates for each bootstrap sample,
+    and estimate the variance or confidence intervals using the empirical distribution of the bootstrap estimates.
+This bootstrap procedure can also be modified to account for uncertainty in the outcome models estimation
+by re-estimating the outcome models for each bootstrap sample.    
 
-The interpretation of the sensitivity analyses results can follow other traditional approaches. That is, by observing what parameter values change the sign of the naive estimates. It will enable researchers to reason about the maximal level of contamination required to change the conclusion of the study.
+\paragraph{Probabilistic bias analysis.}
+Instead of specifying a grid of sensitivity parameters,
+researchers can specify a prior distribution for each parameter.
+For example, if researchers believe that on average 1\% of the possible ego--ego edges are missing,
+they can set $\rho^e \sim \text{Beta}(a,b)$ with mean $\frac{a}{a+b}=0.01$ in Example~\ref{exmp:pi_homo}.
+Let $p(\cdot)$ be the prior distribution for the sensitivity parameters.
+In practice, researchers can specify a separate prior for each parameter.
 
-\textbf{TODO: this 'deterministic' sensitivity analysis approach can be modified to Probabilistic bias analysis (PBA) \citep{Greenland2005, Lash2014} by taking a prior distribution on the sensitivity parameter $p(\rho^e)$, and instead of computing bias-corrected estimated for each sensitivity parameter value, replace Step~\ref{sa:step2} with multiple samples $\rho^e\sim p(\rho^e)$ and obtain bias-corrected estimates as the average of the bias-corrected estimates for each $\rho^e$ sample.}
+PBA enables us to obtain a distribution of bias-corrected estimates 
+over the prior of the sensitivity parameter. 
+This distribution can be summarized, e.g., through
+average and percentiles.
+This distribution accounts only for the bias uncertainty (from prior of sensitivity parameters).
+Incorporating design uncertainty (from the distribution of $\bZ$)
+ can be achieved through random error simulation or bootstrapping \citep{Greenland2005,Fox2021}.
+We now describe the general structure of the PBA procedure.
+Let $B > 0$ be the number of Monte Carlo samples.
+\begin{enumerate}[label = (\roman*)]
+    \item \label{pba:step1} For each $b=1,\ldots,B$ do:
+    \begin{enumerate}[label = (\alph*)]
+        \item Sample sensitivity parameters from the prior $p$.
+        \item Compute the bias-corrected estimates $\widehat{IE}_{adj}^{(b)}$ and $\widehat{DE}_{adj}^{(b)}$
+            , and estimate their variance using the analytic formulas (Appendix~\ref{apdx_sec:proof}).
+        \item Draw from the (approximate) random error distribution
+            \begin{equation*}
+                \widehat{IE}_{adj}^{(b,rand)} \sim
+                 N\left(\widehat{IE}_{adj}^{(b)},
+                  \widehat{\text{Var}}\left(\widehat{IE}_{adj}^{(b)}\right)\right),
+            \end{equation*}             
+            and similarly for the other estimators.
+    \end{enumerate}
+    \item Summarize the distribution of bias-corrected estimates. For example,
+    by computing the average $\frac{1}{B}\sum_{b=1}^B \widehat{IE}_{adj}^{(b,rand)}$
+    and empirical percentiles for intervals.
+\end{enumerate}
+Including the outcome models can be achieved similarly to the GSA procedure
+by estimating them once using cross-fitting before the PBA steps.
+In addition, the analytic variance estimation and random error simulation
+in step \ref{pba:step1}(b)-(c) can be replaced by a
+two-dimensional nonparametric bootstrap \citep{Fox2021}.
+That is, for each Monte Carlo sample $b=1,\ldots,B$,
+resample with replacement $n_e$ ego-networks from the observed data, and
+compute the bias-corrected estimates on the bootstrap sample. 
+The resulting empirical distribution of the bootstrap estimates will 
+account for both design and bias uncertainty, and can be summarized accordingly.
+We provide more technical details on the motivation behind the PBA procedure in Appendix~\ref{apdx.sec:pba}.
 
-\textbf{TODO: As we have a variance estimator expression given any value of the SA parameters, we can use normal approximation to obtain PBA interval accounting for both design uncertainty (over $\bZ$ distribution) and bias uncertainty (from prior of SA params).}
 
 \section{Simulation study}
 \label{sec:sim}
@@ -1124,7 +1216,10 @@ will result in the second row of \eqref{apdx.eq:alter_bias_ht} where the terms $
     \alpha_i^a \phi_i^a,
 \end{align*}
 where $\alpha_i^a = \frac{1-p_z}{1-\pi_i^a}$.
-We assume that the outcome models $\mu^a_i(f)$ are estimated through cross-fitting (\bwnote{TODO: add ref}) and therefore assumed to be independent of $\bZ$. We ignore the sampling uncertainty associated with estimating the outcome models. 
+We assume that the outcome models $\mu^a_i(f)$ are estimated through cross-fitting \citep{Chernozhukov2018}
+ and therefore assumed to be independent of $\bZ$.
+  We ignore the sampling uncertainty associated with estimating the outcome models. 
+Accounting for such uncertainty is possible through the nonparametric ego-network bootstrap procedure.
 
 Alters in the same ego-network have the same observed exposure.
 Recall that $e(i) \in \cR_e$ is the ego of alter $j \in \cR_a$.
@@ -1552,7 +1647,77 @@ Since $\pi_i^e$ is typically small, then $\min_{i \in \cR_e}\left\{1 - \frac{1}{
 Thus, in practice, we expect that the estimator $\widehat{DE}$ is attenuated away from the null if $\kappa > 1$ and towards the null if $\kappa < 1$
 for most realistic scenarios.
 
+\section{Probabilistic bias analysis}
+\label{apdx.sec:pba}
+We give a short overview of the technical motivation behind probabilistic bias analysis (PBA).
+For a more detailed treatment, we refer the reader to \citet{Greenland2005} and \citet{Fox2021}.
+
+Assume we observe data $\bD$ and are interested in estimating a causal effect $\theta$.
+We have an estimator $\widehat{\theta}(\bD)$ based on the observed data, but we know that it is biased.
+Namely, 
+\begin{equation*}
+    \EX_{\bD}\left[\widehat{\theta}(\bD)\right] \neq \theta.
+\end{equation*}
+Assume we can find a bias parameters $\rho$ and construct an estimator
+$\widehat{\theta}_{adj}(\bD, \rho)$ such that given $\rho$
+ it is unbiased (w.r.t. to the sampling distribution of the data):
+\begin{equation*}
+    \EX_{\bD}\left[\widehat{\theta}_{adj}(\bD, \rho)\mid \rho \right] = \theta.
+\end{equation*}
+However, the bias parameters $\rho$ are typically unknown.
+In PBA, we specify a probability distribution for the bias parameters $\rho$ based on prior knowledge or assumptions.
+This distribution reflects our uncertainty about the true value of the bias parameters.
+Let $p(\rho)$ denote this distribution.
+
+With a slight abuse of notation, write $\widehat{\theta}_{adj}$ as random variable 
+in the data $\bD$ and the bias parameters $\rho$ that represent the adjusted 
+estimator given the data and bias parameters.
+Using this prior, we can derive a ``posterior" distribution of the bias-corrected estimator $\widehat{\theta}_{adj}$
+given the data $\bD$ as follows.
+\begin{equation*}
+    p\left(\widehat{\theta}_{adj} \mid \bD \right)
+    =
+    \int
+    p\left(\widehat{\theta}_{adj} \mid \bD, \rho \right)
+    p(\rho)
+    d\rho.
+\end{equation*}
+Which can be approximated through Monte Carlo integration by
+drawing $M$ samples $\rho^{(1)}, \ldots, \rho^{(M)}$ from $p(\rho)$ and summarizing the
+distribution by, e.g., the average and percentiles.
+To account for the sampling variability as well, note that 
+\begin{equation*}
+    p\left(\widehat{\theta}_{adj} \right)
+    =
+    \int_{\bD}
+    \int_{\rho}
+    p\left(\widehat{\theta}_{adj} \mid \bD, \rho \right)
+    p(\rho)
+    p(\bD)
+    d\rho d\bD,
+\end{equation*}
+where $p(\bD)$ is the sampling distribution of the data.
+So we can derive the sampling distribution of $\widehat{\theta}_{adj}(\bD, \rho^{(m)})$
+(e.g., approximate with normal distribution),
+and then for each draw $\rho^{(m)}$ from $p(\rho)$, estimate the adjusted estimator
+and add random noise according to the sampling distribution
+to obtain a draw from $p\left(\widehat{\theta}_{adj} \right)$.
+Alternatively, it is possible use a two-dimensional bootstrap
+that, in each iteration, sample a sensitivity parameter, draw a bootstrap sample of the data,
+and compute the adjusted estimator in the bootstrap sample.
+Repeating this procedure many times allows us to approximate this integral.
+
+ In our case, the only randomness in the data is due to the randomization $\bZ$.
+ Thus,
+ we set $\widehat{\theta}(\bZ) = \widehat{IE}$ or $\widehat{DE}$,
+    the bias parameters 
+    $\rho = \pi_i^a$ or $\pi_i^e$ and $\kappa$,
+    and $\widehat{\theta}_{adj}(\bZ, \rho) = \widehat{IE}_{adj}$ or $\widehat{DE}_{adj}$.
+    Which motivates the PBA procedure described in Section~\ref{subsec:practice}.
+
+
 \section{Simulations}
+\label{apdx.sec:sim}
 
 {\renewcommand{\arraystretch}{0.8} % Shrink row height to 80% (adjust 0.8 as needed)
 
@@ -1755,6 +1920,7 @@ Scenario & spec & Variance & bias & coverage & ese\_ase\\
 }
 
 \section{Data analysis}
+\label{apdx.sec:data}
 
 \begin{figure}[H]
     \centering

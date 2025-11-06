@@ -3,44 +3,46 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: enrt_draft.aux
 The style file: apalike.bst
 Database file #1: all_biblo.bib
-You've used 24 entries,
+Warning--can't use both author and editor fields in Fox2021
+You've used 25 entries,
             1935 wiz_defined-function locations,
-            651 strings with 10957 characters,
-and the built_in function-call counts, 12246 in all, are:
-= -- 1133
-> -- 789
-< -- 6
-+ -- 294
-- -- 288
-* -- 1175
-:= -- 2164
-add.period$ -- 74
-call.type$ -- 24
-change.case$ -- 263
-chr.to.int$ -- 24
-cite$ -- 24
-duplicate$ -- 364
-empty$ -- 673
-format.name$ -- 316
-if$ -- 2301
+            660 strings with 11137 characters,
+and the built_in function-call counts, 12550 in all, are:
+= -- 1165
+> -- 796
+< -- 7
++ -- 296
+- -- 290
+* -- 1199
+:= -- 2220
+add.period$ -- 78
+call.type$ -- 25
+change.case$ -- 269
+chr.to.int$ -- 25
+cite$ -- 26
+duplicate$ -- 378
+empty$ -- 696
+format.name$ -- 319
+if$ -- 2362
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 24
-newline$ -- 125
-num.names$ -- 72
-pop$ -- 221
+missing$ -- 26
+newline$ -- 130
+num.names$ -- 75
+pop$ -- 224
 preamble$ -- 1
-purify$ -- 264
+purify$ -- 270
 quote$ -- 0
-skip$ -- 294
+skip$ -- 304
 stack$ -- 0
-substring$ -- 737
-swap$ -- 58
+substring$ -- 749
+swap$ -- 60
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 142
-warning$ -- 0
-while$ -- 80
+type$ -- 146
+warning$ -- 1
+while$ -- 82
 width$ -- 0
-write$ -- 314
+write$ -- 329
+(There was 1 warning)
