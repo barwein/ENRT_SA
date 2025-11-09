@@ -242,7 +242,7 @@ each ego reports only a subset of its true neighborhood, yielding an observed ne
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{figures/population_and_ego_network.png
+    \includegraphics[width=0.7\linewidth]{figures/population_and_ego_network.png
     }
     \caption{Egocentric sampling. 
     Panel~(A) shows the full $N=7$ population network.
@@ -924,18 +924,18 @@ are provided in Appendix~\ref{apdx.sec:sim}.
 Treatments were assigned according to a Bernoulli design with $p_z=0.5$.
 In each of the $5 \times 10^3$ simulation replications,
 we run the ENRT trial by generating treatment assignment.
-We report here the results where contamination is generated using   
+We report here the results for indirect effects where contamination is generated using   
 heterogeneous edge probabilities as in Example~\ref{exmp:pi_hetero_number}
 with Euclidean distance and $\gamma^e=\gamma^a=1$.
-Tables~\ref{tab:ie_results_main} and \ref{tab:de_results_main} summarize the results
-for the indirect and direct effects, respectively, using both analytic and bootstrap variance estimation.
-We use the augmented estimators \eqref{eq:IE_corrected_aipw} and \eqref{eq:DE_corrected_aipw}
+Table~\ref{tab:ie_results_main} summarize the results,
+ using both analytic and bootstrap variance estimation.
+We use the augmented estimator \eqref{eq:IE_corrected_aipw}
 with outcome models estimated by logistic regression via cross-fitting.
 When specification is Heterogeneous, the 
 edge probabilities are correctly-specified, while Homogeneous
 uses the same probability for all edges as in Example~\ref{exmp:pi_number}.
-The Naive specification corresponds to the uncorrected estimators \eqref{eq:IE_naive_HT}-\eqref{eq:DE_naive_HT}.
-As the level of contamination ($m_e, m_a$) increase,
+The Naive specification corresponds to the uncorrected estimator \eqref{eq:IE_naive_HT}.
+As the level of contamination ($m_a$) increase,
 the bias of the naive estimators increases and the coverage decreases substantially.
 In contrast, both bias-corrected estimators (Heterogeneous and Homogeneous)
 exhibit negligible bias and valid coverage across all scenarios,
@@ -943,14 +943,13 @@ implying that even a misspecified model for the edge probabilities
 (Homogeneous) can effectively correct for the bias.
 Moreover, across all scenarios, both analytic and bootstrap variance estimators
 over estimate the variance slightly.  
-Additional results, including homogeneous contamination settings and non-augmented estimators,
+Results for direct effects, additional results, including homogeneous contamination settings and non-augmented estimators,
 are provided in Appendix~\ref{apdx.sec:sim} and exhibit similar patterns.
     
 
 {\renewcommand{\arraystretch}{0.6} % Shrink row height to 80% (adjust 0.8 as needed)
 \begin{table}[H]
     \footnotesize
-\label{tab:ie_results_main}
 \caption{Simulation results for indirect effects under heterogeneous contamination 
 with augmented estimators. 
 Error is the empirical bias, Coverage is the empirical coverage of the 95\% confidence intervals,
@@ -1000,106 +999,175 @@ Scenario & Specification & Variance & Error & Coverage & SD/SE\\
 \cmidrule{3-6}
 \multirow{-6}{*}[1\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash $m_a=300, IE=0.318$} & \multirow{-2}{*}{\centering\arraybackslash Naive} & Bootstrap & -0.098 & 0.451 & 0.902\\
 \bottomrule
-\end{tabular}
-\end{table}
-}
-
-
-{\renewcommand{\arraystretch}{0.6} % Shrink row height to 80% (adjust 0.8 as needed)
-\begin{table}[H]
-\footnotesize
-\label{tab:de_results_main}
-\caption{
-Simulation results for direct effects under heterogeneous contamination 
-with augmented estimators.
-Error is the empirical bias, Coverage is the empirical coverage of the 95\% confidence intervals,
-and SD/SE is the ratio of standard deviation of the estimates to the mean standard errors.
-Specification ``Heterogeneous" uses the correct edge probabilities,
-``Homogeneous" uses the same probability for all edges,
-and ``Naive" is the uncorrected estimator.
-}
-\centering
-\begin{tabular}[t]{lccccc}
-\toprule
-Scenario & Specification & Variance & Error & Coverage & SD/SE\\
-\midrule
- &  & Analytic & 0.013 & 0.966 & 0.860\\
-\cmidrule{3-6}
- & \multirow{-2}{*}{\centering\arraybackslash Heterogeneous} & Bootstrap & 0.013 & 0.964 & 0.864\\
-\cmidrule{2-6}
- &  & Analytic & 0.010 & 0.966 & 0.869\\
-\cmidrule{3-6}
- & \multirow{-2}{*}{\centering\arraybackslash Homogeneous} & Bootstrap & 0.010 & 0.967 & 0.864\\
-\cmidrule{2-6}
- &  & Analytic & 0.089 & 0.684 & 0.866\\
-\cmidrule{3-6}
-\multirow{-6}{*}[1\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash $m_e=50, DE=0.345$} & \multirow{-2}{*}{\centering\arraybackslash Naive} & Bootstrap & 0.089 & 0.687 & 0.867\\
-\cmidrule{1-6}
- &  & Analytic & 0.016 & 0.936 & 0.930\\
-\cmidrule{3-6}
- & \multirow{-2}{*}{\centering\arraybackslash Heterogeneous} & Bootstrap & 0.016 & 0.936 & 0.928\\
-\cmidrule{2-6}
- &  & Analytic & 0.015 & 0.939 & 0.930\\
-\cmidrule{3-6}
- & \multirow{-2}{*}{\centering\arraybackslash Homogeneous} & Bootstrap & 0.015 & 0.934 & 0.932\\
-\cmidrule{2-6}
- &  & Analytic & 0.211 & 0.044 & 0.929\\
-\cmidrule{3-6}
-\multirow{-6}{*}[1\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash $m_e=150, DE=0.355$} & \multirow{-2}{*}{\centering\arraybackslash Naive} & Bootstrap & 0.210 & 0.046 & 0.935\\
-\cmidrule{1-6}
- &  & Analytic & 0.014 & 0.959 & 0.823\\
-\cmidrule{3-6}
- & \multirow{-2}{*}{\centering\arraybackslash Heterogeneous} & Bootstrap & 0.014 & 0.956 & 0.832\\
-\cmidrule{2-6}
- &  & Analytic & 0.014 & 0.957 & 0.822\\
-\cmidrule{3-6}
- & \multirow{-2}{*}{\centering\arraybackslash Homogeneous} & Bootstrap & 0.014 & 0.956 & 0.818\\
-\cmidrule{2-6}
- &  & Analytic & 0.270 & 0.001 & 0.820\\
-\cmidrule{3-6}
-\multirow{-6}{*}[1\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash $m_e=250, DE=0.345$} & \multirow{-2}{*}{\centering\arraybackslash Naive} & Bootstrap & 0.270 & 0.001 & 0.820\\
-\bottomrule
+\label{tab:ie_results_main}
 \end{tabular}
 \end{table}
 }
 
 \section{Data analysis}
 \label{sec:data}
-Analysis of HPTN 037 using the proposed SA procedures. Probably on the secondary outcomes used by others as well (``HIV risk behavior, such as sharing injection equipment"). Can take either $\rho$ to be either number of missing edges (Example~\ref{exmp:pi_number}) or with covariates (Example~\ref{exmp:pi_hetero}). Within the Pennsylvania site, I think they had more sub-sites, so edge probabilities can account for it, e.g., by allowing edges only between participants in the same sub-sites. 
-Limit the analysis to a 12-month follow-up, following previous analyses \citep{Buchanan2018,Buchanan_2024, Chao2023}.
 
-\subsection{Sensitivity analysis}
+HPTN 037 was a Phase III ENRT that evaluated the efficacy of a peer education intervention
+to reduce HIV risk behaviors among people who inject drugs and their drug and sexual networks \citep{Latkin2009}.
+Egos were randomized ($p_z =0.5$) to receive a peer education training
+and were encouraged to share the HIV risk reduction information with their drug and sexual network members (alters).
+Egos in the control arm received standard HIV prevention counseling.
+The study was conducted between 2002 and 2006 in Philadelphia, Pennsylvania and Chiang Mai, Thailand.
+The study recruited $414$ egos (index participants) who 
+were asked to recruit at least one drug or sex network member (alter) into the study.
+Researchers enforced that alters were not also egos, and that each alter was connected to only one ego 
+\citep{Latkin2009}.
+Following previous analyses \citep{Buchanan2018,Buchanan_2024,Chao2023}, we limit our analysis to the Pennsylvania site 
+and to a 12-month follow-up.
+That results in $n_e=150$ egos and $n_a=263$ alters, with an average of $2$ alters per ego-network.
+The primary outcome is a binary indicator of any injection-related risk behavior in the past month,
+ including sharing injection equipment, front and back loading, and injecting with people not well known or
+ in a public space.
+
+Contamination across ego-networks ia concern, 
+as egos and alters may have social connections outside of those sampled in the study.
+That is, alter might inject drug or have sexual relations with egos from other ego-networks,
+ or egos might be connected to each other. 
+ Using recall data collected after the trial,
+  \citet{Simmons2015} found strong evidence of contamination.
+  \citet{Chao2023} develop a bias-correction method to adjust for contamination,
+  only for the indirect effects,
+ building on the recall data and the unverifiable assumption of non-overlapping ego-networks.
+ That is, \citet{Chao2023} assumed that, in the population network, alters can only be connected to one ego,
+ and egos can not be connected to each other.
+
+ We relax this assumption and apply our proposed sensitivity analysis methods
+  to assess the impact of contamination on both indirect and direct effects estimates.
+  For both alter--ego and ego--edges, we specify the expected number of missing edges
+   as in Examples~\ref{exmp:pi_number} and \ref{exmp:pi_hetero_number}.
+   Covariates used in the analysis include risk behaviors at baseline, age, gender, and race.
+ For the heterogeneous edge probabilities specification (Example~\ref{exmp:pi_hetero_number}),
+ we use the Euclidean distance and set $\gamma^e=\gamma^a=1$.
+ For the direct effects, we specify values larger than $1$ to the interaction sensitivity parameter $\kappa$,
+    as we expect that the direct effect is larger among egos exposed to other treated egos.
+We apply both the grid sensitivity analysis (GSA) and probabilistic bias analysis (PBA)
+ described in Section~\ref{subsec:practice}.
+ 
+\subsection{Grid sensitivity analysis}
 \label{subsec:hptn_sa}
+For the indirect effects, we consider
+a grid of expected number of missing edges with
+$m^a \in [10, 400]$, representing the suspiction 
+that, in the homogeneous case, each alter is connected to up to $1.5$ additional egos on average.
+For the ego--ego edges, we consider $m^e \in [10, 300]$
+and $\kappa \in [1.1, 3]$ representing the suspicion that the direct effect
+among egos connected to other treated egos is up to three times larger than among those not connected to treated egos.
+We report here the results for the not-augmented estimators \eqref{eq:IE_corrected} and \eqref{eq:DE_corrected}
+with both homogeneous and heterogeneous edge probabilities specifications and 
+nonparametric ego-network bootstrap with $10^4$ resamples.
+Results for the augmented estimators \eqref{eq:IE_corrected_aipw} and \eqref{eq:DE_corrected_aipw}
+are provided in Appendix~\ref{apdx.sec:data}, and were consistent with the not-augmented results.
+
+Figures~\ref{fig:hptn_sa_ie_augmented} and \ref{fig:hptn_sa_de_augmented}
+ summarize the GSA results for indirect and direct effects, respectively.
+ For indirect effects, both homogeneous and heterogeneous specifications
+  yield similar results.
+ The results suggest that, for instance, if each alter is connected to up to $1$ additional ego on average ($m^a=263$)
+ in the homogeneous case,
+  the bias-corrected estimate is around $-0.225$ compared to the naive estimate of $-0.137$,
+   indicating a substantial bias due to contamination.
+For the direct effects, the bias-corrected estimates
+are closer to zero than the naive estimate of $-0.147$ across the entire grid of sensitivity
+parameters
+ for both homogeneous and heterogeneous specifications.
+ For example, if each ego is connected to up to $1$ additional ego on average ($m^e=75$)
+    and $\kappa=2$, the bias-corrected estimate is around $-0.1$ in the homogeneous case.
+ That suggests that assuming no-contamination leads to over-estimation of the direct effect.
+ However, both indirect and direct bias-corrected estimates remain statistically insignificant
+   at the $5\%$ level across the entire grid of sensitivity parameters
+    for both homogeneous and heterogeneous specifications. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\linewidth]{figures/hptn/sa_ie_plot_not_augmented.png}
-    \caption{Caption}
+    \includegraphics[width=0.6\linewidth]{figures/hptn/sa_ie_plot_not_augmented.png}
+    \caption{Grid sensitivity analysis results for indirect effects
+    using the estimator \eqref{eq:IE_corrected}.
+    The x-axis represents the expected number of missing alter--ego edges $m^a$,
+    while the y-axis represents the estimates values.
+    Results are shown for both homogeneous and heterogeneous edge probabilities specifications.}
     \label{fig:hptn_sa_ie_augmented}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{figures/hptn/sa_de_plot.png}
-    \caption{Caption}
+    \includegraphics[width=0.7\linewidth]{figures/hptn/sa_de_plot.png}
+    \caption{Grid sensitivity analysis results for direct effects
+    using the estimator \eqref{eq:DE_corrected}.
+    The x-axis represents the expected number of missing ego--ego edges $m^e$,
+    while the y-axis represents $\kappa$, the interaction sensitivity parameter.
+    Contour lines and color shading represent the estimates values.
+    Results are shown for both homogeneous and heterogeneous edge probabilities specifications.}
     \label{fig:hptn_sa_de_augmented}
 \end{figure}
 
 \subsection{Probabilistic bias analysis}
 \label{subsec:hptn_pba}
+For the PBA, we specify prior distributions for the sensitivity parameters,
+representing different degree of certiainty about their values.
+For $m^a$ and $m^e$ we consider three prior distributions. 
+The first, is uniform distributions over the ranges used in the GSA:
+$m^a \sim \text{Uniform}(10,400)$ and $m^e \sim \text{Uniform}(10,300)$,
+representing maximum entropy, but capped right tail, about the expected number of missing edges.
+The second is a Poisson distribution with mean equal to half of the maximum value in the GSA grid:
+$m^a \sim \text{Poisson}(200)$ and $m^e \sim \text{Poisson}(150)$,
+representing moderate uncertainty with unbounded but thin tail.
+The third is a Negative Binomial (NB) distribution with mean equal to half of the maximum value in the GSA grid
+ and size parameter equal to $10$: 
+$m^a \sim \text{NB}(10,1/21)$ and $m^e \sim \text{NB}(10,1/16)$,
+representing heavier tail than the Poisson.
+For the interaction sensitivity parameter $\kappa$, we consider a 
+continuous uniform prior
+$\kappa \sim \text{Uniform}[1,3]$, 
+and a log-normal distribution with mean equal to $\log(2)$ and standard deviation equal to $0.2$ on the log scale,
+represnting a heavier right tail than the uniform prior.
+We run the PBA procedure with $B=10^4$ Monte Carlo samples with 
+the non-parameteric ego-network bootstrap estimator.
+
+Figures~\ref{fig:hptn_pba_ie_not_augmented} and \ref{fig:hptn_pba_de_not_augmented}
+ summarize the PBA results for indirect and direct effects, respectively,
+ with the not-augmented estimators.
+ For indirect effects, the three prior distributions for $m^a$ yield similar point estimates,
+ with slighly larger magnitude for the heterogeneous specification.
+ The uniform prior results in the widest intervals,
+  while the Poisson prior results in the narrowest intervals.
+  All bias-corrected estimates are lower than the naive estimate of $-0.137$,
+   suggesting that contamination leads to under-estimation of the indirect effect.
+For the direct effects, all prior distributions for $m^e$ and $\kappa$ yield similar point estimates.
+ The uniform priors results in the widest intervals.
+  All bias-corrected estimates are closer to zero than the naive estimate of $-0.147$,
+   suggesting that contamination leads to over-estimation of the direct effect.
+Nevertheless, both indirect and direct $95\%$ PBA intervals across 
+all priors specifications and both homogeneous and heterogeneous specifications
+ include zero.
+
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\linewidth]{figures/hptn/pba_ie_not_augmented.png}
-    \caption{Caption}
-    \label{fig:hptn_pba_ie_augmented}
+    \includegraphics[width=0.5\linewidth]{figures/hptn/pba_ie_not_augmented.png}
+    \caption{Probabilistic bias analysis results for indirect effects
+    using the estimator \eqref{eq:IE_corrected}.
+    Results are shown for both homogeneous and heterogeneous edge probabilities specifications (shapes).
+    Different colors represent different prior distributions for the expected number of missing alter--ego edges $m^a$.
+    }
+    \label{fig:hptn_pba_ie_not_augmented}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\linewidth]{figures/hptn/pba_de_not_augmented.png}
-    \caption{Caption}
-    \label{fig:hptn_pba_de_augmented}
+    \includegraphics[width=0.5\linewidth]{figures/hptn/pba_de_not_augmented.png}
+    \caption{
+Probabilistic bias analysis results for direct effects
+    using the estimator \eqref{eq:DE_corrected}.
+    Results are shown for both homogeneous and heterogeneous edge probabilities specifications (shapes).
+    Different colors represent different prior distributions for the
+     expected number of missing ego--ego edges $m^e$ and the interaction sensitivity parameter $\kappa$.
+    }
+    \label{fig:hptn_pba_de_not_augmented}
 \end{figure}
 
 \section{Discussion}
@@ -1785,13 +1853,96 @@ Repeating this procedure many times allows us to approximate this integral.
 
 \section{Simulations}
 \label{apdx.sec:sim}
+We generated three covariates for each unit.
+\begin{equation*}
+    \begin{aligned}
+        X_{i1} &\sim \text{Bernoulli}(p_{1e}), \\
+        X_{i2} &\sim \text{Bernoulli}(p_{2e}), \\
+        X_{i3} &\sim \text{Normal}(0, 2^2),
+    \end{aligned}
+\end{equation*}
+where $p_{1e} = 0.6, p_{2e} = 0.2$ for egos and $p_{1a} = 0.5, p_{2a} = 0.3$ for alters.
+The covariates coefficents in the potential outcome models were set to
+$\beta_e = (-0.5, -0.3, 0.2)$ for egos and $\beta_a = (-0.4, -0.2, 0.1)$ for alters.
+Heterogeneous edges probabilities were generated with weights computed 
+using the Euclidean distance $\lVert \cdot \rVert_2$ between the covariates of units.
+The nonparameteric ego-network bootstrap was done by resampling egos-networks 
+with replacement $B = 5 \times 10^3$ times.
+
+Table~\ref{tab:de_results_main} reports the simulation results for direct effects
+with heterogeneous contamination and augmented estimators,
+which complement the results presented in the main text.
+Tables~\ref{apdx.tab:sim_ie_hetero_not_aug} and \ref{apdx.tab:sim_de_hetero_not_aug}
+report the simulation results for indirect and direct effects, respectively,
+with heterogeneous exposure probabilities and non-augmented estimators.
+Tables~\ref{apdx.tab:sim_ie_homo_aug} and \ref{apdx.tab:sim_de_homo_aug}
+report the simulation results for indirect and direct effects, respectively,
+with homogeneous exposure probabilities and augmented estimators.
+All results are similar to those presented in the main text.
+
+
+
+{\renewcommand{\arraystretch}{0.6} % Shrink row height to 80% (adjust 0.8 as needed)
+\begin{table}[H]
+\footnotesize
+\caption{Simulation results for direct effects with heterogeneous exposure probabilities 
+and augmented estimators.
+}
+\centering
+\begin{tabular}[t]{lccccc}
+\toprule
+Scenario & Specification & Variance & Error & Coverage & SD/SE\\
+\midrule
+ &  & Analytic & 0.013 & 0.966 & 0.860\\
+\cmidrule{3-6}
+ & \multirow{-2}{*}{\centering\arraybackslash Heterogeneous} & Bootstrap & 0.013 & 0.964 & 0.864\\
+\cmidrule{2-6}
+ &  & Analytic & 0.010 & 0.966 & 0.869\\
+\cmidrule{3-6}
+ & \multirow{-2}{*}{\centering\arraybackslash Homogeneous} & Bootstrap & 0.010 & 0.967 & 0.864\\
+\cmidrule{2-6}
+ &  & Analytic & 0.089 & 0.684 & 0.866\\
+\cmidrule{3-6}
+\multirow{-6}{*}[1\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash $m_e=50, DE=0.345$} & \multirow{-2}{*}{\centering\arraybackslash Naive} & Bootstrap & 0.089 & 0.687 & 0.867\\
+\cmidrule{1-6}
+ &  & Analytic & 0.016 & 0.936 & 0.930\\
+\cmidrule{3-6}
+ & \multirow{-2}{*}{\centering\arraybackslash Heterogeneous} & Bootstrap & 0.016 & 0.936 & 0.928\\
+\cmidrule{2-6}
+ &  & Analytic & 0.015 & 0.939 & 0.930\\
+\cmidrule{3-6}
+ & \multirow{-2}{*}{\centering\arraybackslash Homogeneous} & Bootstrap & 0.015 & 0.934 & 0.932\\
+\cmidrule{2-6}
+ &  & Analytic & 0.211 & 0.044 & 0.929\\
+\cmidrule{3-6}
+\multirow{-6}{*}[1\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash $m_e=150, DE=0.355$} & \multirow{-2}{*}{\centering\arraybackslash Naive} & Bootstrap & 0.210 & 0.046 & 0.935\\
+\cmidrule{1-6}
+ &  & Analytic & 0.014 & 0.959 & 0.823\\
+\cmidrule{3-6}
+ & \multirow{-2}{*}{\centering\arraybackslash Heterogeneous} & Bootstrap & 0.014 & 0.956 & 0.832\\
+\cmidrule{2-6}
+ &  & Analytic & 0.014 & 0.957 & 0.822\\
+\cmidrule{3-6}
+ & \multirow{-2}{*}{\centering\arraybackslash Homogeneous} & Bootstrap & 0.014 & 0.956 & 0.818\\
+\cmidrule{2-6}
+ &  & Analytic & 0.270 & 0.001 & 0.820\\
+\cmidrule{3-6}
+\multirow{-6}{*}[1\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash $m_e=250, DE=0.345$} & \multirow{-2}{*}{\centering\arraybackslash Naive} & Bootstrap & 0.270 & 0.001 & 0.820\\
+\bottomrule
+\label{tab:de_results_main}
+\end{tabular}
+\end{table}
+}
+
 
 {\renewcommand{\arraystretch}{0.8} % Shrink row height to 80% (adjust 0.8 as needed)
 
 \begin{table}[H]
 
-\caption{IE Results - Heterogeneous Exposure - not aug}
+\caption{Simulation results for indirect effects with heterogeneous exposure probabilities 
+and non-augmented estimators.}
 \centering
+\footnotesize
 \begin{tabular}[t]{lccccc}
 \toprule
 Scenario & Specification & Variance & Error & Coverage & SD/SE\\
@@ -1832,6 +1983,7 @@ Scenario & Specification & Variance & Error & Coverage & SD/SE\\
 \cmidrule{3-6}
 \multirow{-6}{*}[1\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash $m_a=300, IE=0.318$} & \multirow{-2}{*}{\centering\arraybackslash Naive} & Bootstrap & -0.097 & 0.696 & 0.874\\
 \bottomrule
+\label{apdx.tab:sim_ie_hetero_not_aug}
 \end{tabular}
 \end{table}
 }
@@ -1839,8 +1991,9 @@ Scenario & Specification & Variance & Error & Coverage & SD/SE\\
 {\renewcommand{\arraystretch}{0.8} 
 
 \begin{table}[H]
-
-\caption{DE Results - Heterogeneous Exposure - not aug}
+\footnotesize
+\caption{Simulation results for direct effects with heterogeneous exposure probabilities 
+and non-augmented estimators.}
 \centering
 \begin{tabular}[t]{lccccc}
 \toprule
@@ -1882,6 +2035,7 @@ Scenario & Specification & Variance & Error & Coverage & SD/SE\\
 \cmidrule{3-6}
 \multirow{-6}{*}[1\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash $m_e=250, DE=0.345$} & \multirow{-2}{*}{\centering\arraybackslash Naive} & Bootstrap & 0.271 & 0.108 & 0.991\\
 \bottomrule
+\label{apdx.tab:sim_de_hetero_not_aug}
 \end{tabular}
 \end{table}
 }
@@ -1890,8 +2044,10 @@ Scenario & Specification & Variance & Error & Coverage & SD/SE\\
 
 \begin{table}[H]
 
-\caption{IE Results - homogeneous Exposure - Augmented}
+\caption{Simulation results for indirect effects with homogeneous exposure probabilities 
+    and augmented estimators.}
 \centering
+\footnotesize
 \begin{tabular}[t]{lccccc}
 \toprule
 Scenario & Specification & Variance & Error & Coverage & SD/SE\\
@@ -1932,6 +2088,7 @@ Scenario & Specification & Variance & Error & Coverage & SD/SE\\
 \cmidrule{3-6}
 \multirow{-6}{*}[1\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash $m_a=300, IE=0.372$} & \multirow{-2}{*}{\centering\arraybackslash Naive} & Bootstrap & -0.148 & 0.075 & 0.864\\
 \bottomrule
+\label{apdx.tab:sim_ie_homo_aug}
 \end{tabular}
 \end{table}
 }
@@ -1940,8 +2097,10 @@ Scenario & Specification & Variance & Error & Coverage & SD/SE\\
 
 \begin{table}[H]
 
-\caption{DE Results - homogeneous Exposure - Augmented}
+\caption{Simulation results for direct effects with homogeneous exposure probabilities 
+and augmented estimators.}
 \centering
+\footnotesize
 \begin{tabular}[t]{lccccc}
 \toprule
 Scenario & Specification & Variance & Error & Coverage & SD/SE\\
@@ -1982,38 +2141,64 @@ Scenario & Specification & Variance & Error & Coverage & SD/SE\\
 \cmidrule{3-6}
 \multirow{-6}{*}[1\dimexpr\aboverulesep+\belowrulesep+\cmidrulewidth]{\raggedright\arraybackslash $m_e=250, DE=0.38$} & \multirow{-2}{*}{\centering\arraybackslash Naive} & Bootstrap & 0.217 & 0.026 & 0.909\\
 \bottomrule
+\label{apdx.tab:sim_de_homo_aug}
 \end{tabular}
 \end{table}
 }
 
 \section{Data analysis}
 \label{apdx.sec:data}
-
+Figure~\ref{fig:hptn_degree} shows the distribution of number of alters per ego-network in the 
+data. The average and median number is $2$, the range is from $1$ to $6$.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\linewidth]{figures/hptn/alter_per_egonet_histogram.png}
-    \caption{Caption}
+    \includegraphics[width=0.4\linewidth]{figures/hptn/alter_per_egonet_histogram.png}
+    \caption{Distribution of number of alters per ego-network.}
     \label{fig:hptn_degree}
 \end{figure}
 
+Figure~\ref{fig:sa_de_kappa2} shows the 
+results of the grid sensitivity analysis (Section~\ref{subsec:hptn_sa})
+for the direct effect given that $\kappa=2$. 
+This presenation, similar to that of indirect effects, enables us 
+to see how changing the expected number of missing ego--ego edges impact 
+the estimated direct effects. Clearly, for both specifications, the 
+estiamted effects approach zero as the contamination level increases. 
+However, all confidence intervals include zero for all levels of contamination,
+indicating that the direct effect is not statistically significant
+even without accounting for contamination.
+
+Figure~\ref{fig:sa_ie_aug} shows the results of the grid sensitivity analysis 
+for indirect effects using the augmented estimator.
+The structure is similar to that of the non-augmented estimator
+presented in the main text. 
+However, the augmented estimator had values closer to zero
+for all levels of contamination (including no contamination). 
+
+Figure~\ref{fig:pba_de_augmented} shows the results of the probabilistic bias analysis
+for direct effects using the augmented estimator.
+The results are similar to those of the non-augmented estimator
+presented in the main text.
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\linewidth]{figures/hptn/sa_de_plot_aug_kappa2.png}
-    \caption{Caption}
+    \includegraphics[width=0.5\linewidth]{figures/hptn/sa_de_plot_aug_kappa2.png}
+    \caption{Grid sensitivity analysis for direct effects with $\kappa=2$.
+    Non-augmented estimator.}
     \label{fig:sa_de_kappa2}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\linewidth]{figures/hptn/sa_ie_plot_augmented.png}
-    \caption{SA IE Augmented}
+    \includegraphics[width=0.5\linewidth]{figures/hptn/sa_ie_plot_augmented.png}
+    \caption{Grid sensitivity analysis for indirect effects with augmented estimator.}
     \label{fig:sa_ie_aug}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\linewidth]{figures/hptn/pba_de_augmented.png}
-    \caption{PBA DE Augmented}
+    \includegraphics[width=0.5\linewidth]{figures/hptn/pba_de_augmented.png}
+    \caption{Probabilistic bias analysis for direct effects with augmented estimator.}
     \label{fig:pba_de_augmented}
 \end{figure}
 
