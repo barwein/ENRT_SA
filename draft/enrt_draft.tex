@@ -931,19 +931,21 @@ Table~\ref{tab:ie_results_main} summarize the results,
  using both analytic and bootstrap variance estimation.
 We use the augmented estimator \eqref{eq:IE_corrected_aipw}
 with outcome models estimated by logistic regression via cross-fitting.
-When specification is Heterogeneous, the 
-edge probabilities are correctly-specified, while Homogeneous
-uses the same probability for all edges as in Example~\ref{exmp:pi_number}.
-The Naive specification corresponds to the uncorrected estimator \eqref{eq:IE_naive_HT}.
+When specification used is heterogeneous, the 
+edge probabilities are correctly-specified, while using homogeneous specification
+uses the same probability for all edges as in Example~\ref{exmp:pi_number}, 
+and is therefore misspecified.
+The naive specification corresponds to the uncorrected estimator \eqref{eq:IE_naive_HT}.
 As the level of contamination ($m_a$) increase,
 the bias of the naive estimators increases and the coverage decreases substantially.
-In contrast, both bias-corrected estimators (Heterogeneous and Homogeneous)
+In contrast, both bias-corrected estimators
 exhibit negligible bias and valid coverage across all scenarios,
 implying that even a misspecified model for the edge probabilities
-(Homogeneous) can effectively correct for the bias.
+(homogeneous specification) can effectively correct for the bias.
 Moreover, across all scenarios, both analytic and bootstrap variance estimators
 over estimate the variance slightly.  
-Results for direct effects, additional results, including homogeneous contamination settings and non-augmented estimators,
+Results for direct effects, additional results,
+ including homogeneous contamination settings and non-augmented estimators,
 are provided in Appendix~\ref{apdx.sec:sim} and exhibit similar patterns.
     
 
@@ -1007,8 +1009,8 @@ Scenario & Specification & Variance & Error & Coverage & SD/SE\\
 \section{Data analysis}
 \label{sec:data}
 
-HPTN 037 was a Phase III ENRT that evaluated the efficacy of a peer education intervention
-to reduce HIV risk behaviors among people who inject drugs and their drug and sexual networks \citep{Latkin2009}.
+HPTN 037 was a ENRT that evaluated the efficacy of a peer education intervention
+in reducing HIV risk behaviors among people who inject drugs and their drug and sexual networks \citep{Latkin2009}.
 Egos were randomized ($p_z =0.5$) to receive a peer education training
 and were encouraged to share the HIV risk reduction information with their drug and sexual network members (alters).
 Egos in the control arm received standard HIV prevention counseling.
@@ -1018,19 +1020,20 @@ were asked to recruit at least one drug or sex network member (alter) into the s
 Researchers enforced that alters were not also egos, and that each alter was connected to only one ego 
 \citep{Latkin2009}.
 Following previous analyses \citep{Buchanan2018,Buchanan_2024,Chao2023}, we limit our analysis to the Pennsylvania site 
-and to a 12-month follow-up.
-That results in $n_e=150$ egos and $n_a=263$ alters, with an average of $2$ alters per ego-network.
+and to a 12-month follow-up,
+yielding a sample of $n_e=150$ egos and $n_a=263$ alters,
+ with an average of $2$ alters per ego-network.
 The primary outcome is a binary indicator of any injection-related risk behavior in the past month,
  including sharing injection equipment, front and back loading, and injecting with people not well known or
  in a public space.
 
 Contamination across ego-networks ia concern, 
 as egos and alters may have social connections outside of those sampled in the study.
-That is, alter might inject drug or have sexual relations with egos from other ego-networks,
+That is, alters might inject drugs or have sexual relations with egos from other ego-networks,
  or egos might be connected to each other. 
  Using recall data collected after the trial,
-  \citet{Simmons2015} found strong evidence of contamination.
-  \citet{Chao2023} develop a bias-correction method to adjust for contamination,
+  \citet{Simmons2015} found evidence of contamination.
+  \citet{Chao2023} developed a bias-correction method to adjust for (homogeneous) exposure misclassification,
   only for the indirect effects,
  building on the recall data and the unverifiable assumption of non-overlapping ego-networks.
  That is, \citet{Chao2023} assumed that, in the population network, alters can only be connected to one ego,
@@ -1038,7 +1041,7 @@ That is, alter might inject drug or have sexual relations with egos from other e
 
  We relax this assumption and apply our proposed sensitivity analysis methods
   to assess the impact of contamination on both indirect and direct effects estimates.
-  For both alter--ego and ego--edges, we specify the expected number of missing edges
+  For both alter--ego and ego--ego edges, we specify the expected number of missing edges
    as in Examples~\ref{exmp:pi_number} and \ref{exmp:pi_hetero_number}.
    Covariates used in the analysis include risk behaviors at baseline, age, gender, and race.
  For the heterogeneous edge probabilities specification (Example~\ref{exmp:pi_hetero_number}),
@@ -1055,9 +1058,10 @@ a grid of expected number of missing edges with
 $m^a \in [10, 400]$, representing the suspiction 
 that, in the homogeneous case, each alter is connected to up to $1.5$ additional egos on average.
 For the ego--ego edges, we consider $m^e \in [10, 300]$
-and $\kappa \in [1.1, 3]$ representing the suspicion that the direct effect
-among egos connected to other treated egos is up to three times larger than among those not connected to treated egos.
-We report here the results for the not-augmented estimators \eqref{eq:IE_corrected} and \eqref{eq:DE_corrected}
+and $\kappa \in [1.1, 3]$ reflecting the suspicion that direct effects
+among egos connected to other treated egos is up to three times larger than the 
+effects among egos that are not connected to other treated egos.
+We report here the results for the estimators \eqref{eq:IE_corrected} and \eqref{eq:DE_corrected}
 with both homogeneous and heterogeneous edge probabilities specifications and 
 nonparametric ego-network bootstrap with $10^4$ resamples.
 Results for the augmented estimators \eqref{eq:IE_corrected_aipw} and \eqref{eq:DE_corrected_aipw}
@@ -1084,12 +1088,13 @@ parameters
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\linewidth]{figures/hptn/sa_ie_plot_not_augmented.png}
+    \includegraphics[width=0.55\linewidth]{figures/hptn/sa_ie_plot_not_augmented.png}
     \caption{Grid sensitivity analysis results for indirect effects
     using the estimator \eqref{eq:IE_corrected}.
     The x-axis represents the expected number of missing alter--ego edges $m^a$,
     while the y-axis represents the estimates values.
-    Results are shown for both homogeneous and heterogeneous edge probabilities specifications.}
+    Results are shown for both homogeneous (blue) and heterogeneous (orange)
+     edge probabilities specifications.}
     \label{fig:hptn_sa_ie_augmented}
 \end{figure}
 
@@ -1101,18 +1106,18 @@ parameters
     The x-axis represents the expected number of missing ego--ego edges $m^e$,
     while the y-axis represents $\kappa$, the interaction sensitivity parameter.
     Contour lines and color shading represent the estimates values.
-    Results are shown for both homogeneous and heterogeneous edge probabilities specifications.}
+    Results are shown for both heterogeneous (left) and  homogeneous (right) edge probabilities specifications.}
     \label{fig:hptn_sa_de_augmented}
 \end{figure}
 
 \subsection{Probabilistic bias analysis}
 \label{subsec:hptn_pba}
 For the PBA, we specify prior distributions for the sensitivity parameters,
-representing different degree of certiainty about their values.
+representing different degrees of certainty about their values.
 For $m^a$ and $m^e$ we consider three prior distributions. 
-The first, is uniform distributions over the ranges used in the GSA:
-$m^a \sim \text{Uniform}(10,400)$ and $m^e \sim \text{Uniform}(10,300)$,
-representing maximum entropy, but capped right tail, about the expected number of missing edges.
+The first, is discrete uniform distribution over the ranges used in the GSA:
+$m^a \sim \text{Uniform}\{10,400\}$ and $m^e \sim \text{Uniform}\{10,300\}$,
+representing maximum entropy, but capped right tail.
 The second is a Poisson distribution with mean equal to half of the maximum value in the GSA grid:
 $m^a \sim \text{Poisson}(200)$ and $m^e \sim \text{Poisson}(150)$,
 representing moderate uncertainty with unbounded but thin tail.
@@ -1124,51 +1129,73 @@ For the interaction sensitivity parameter $\kappa$, we consider a
 continuous uniform prior
 $\kappa \sim \text{Uniform}[1,3]$, 
 and a log-normal distribution with mean equal to $\log(2)$ and standard deviation equal to $0.2$ on the log scale,
-represnting a heavier right tail than the uniform prior.
+resulting in a heavier right tail than the uniform.
 We run the PBA procedure with $B=10^4$ Monte Carlo samples with 
 the non-parameteric ego-network bootstrap estimator.
 
-Figures~\ref{fig:hptn_pba_ie_not_augmented} and \ref{fig:hptn_pba_de_not_augmented}
- summarize the PBA results for indirect and direct effects, respectively,
+% Figures~\ref{fig:hptn_pba_ie_not_augmented} and \ref{fig:hptn_pba_de_not_augmented}
+Figure~\ref{fig:hptn_pba_not_augmented}
+ summarize the PBA results for indirect and direct effects
  with the not-augmented estimators.
  For indirect effects, the three prior distributions for $m^a$ yield similar point estimates,
  with slighly larger magnitude for the heterogeneous specification.
  The uniform prior results in the widest intervals,
-  while the Poisson prior results in the narrowest intervals.
-  All bias-corrected estimates are lower than the naive estimate of $-0.137$,
+  while the Poisson prior had the narrowest intervals.
+  All bias-corrected estimates are lower (point estimates around $-0.2$) than the naive estimate of $-0.137$,
    suggesting that contamination leads to under-estimation of the indirect effect.
 For the direct effects, all prior distributions for $m^e$ and $\kappa$ yield similar point estimates.
- The uniform priors results in the widest intervals.
-  All bias-corrected estimates are closer to zero than the naive estimate of $-0.147$,
+ The uniform priors yielded the widest intervals.
+  All bias-corrected estimates are closer to zero (point estimates around $-0.1$) than the naive estimate of $-0.147$,
    suggesting that contamination leads to over-estimation of the direct effect.
-Nevertheless, both indirect and direct $95\%$ PBA intervals across 
-all priors specifications and both homogeneous and heterogeneous specifications
+Nevertheless, across all priors and edge probabilities specifications, the indirect and direct $95\%$ PBA intervals 
  include zero.
 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\linewidth]{figures/hptn/pba_ie_not_augmented.png}
+    \begin{minipage}{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/hptn/pba_ie_not_augmented.png}
+    
+    \end{minipage}
+    % \hfill
+    \begin{minipage}{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{figures/hptn/pba_de_not_augmented.png}
+    \end{minipage}
     \caption{Probabilistic bias analysis results for indirect effects
-    using the estimator \eqref{eq:IE_corrected}.
-    Results are shown for both homogeneous and heterogeneous edge probabilities specifications (shapes).
-    Different colors represent different prior distributions for the expected number of missing alter--ego edges $m^a$.
+    (left) using the estimator \eqref{eq:IE_corrected},
+    and direct effects (right) using the estimator \eqref{eq:DE_corrected}.
+    Results are shown for both homogeneous and heterogeneous edge probabilities specifications.
+    Different colors represent different prior distributions for the expected number of missing edges
+    and the interaction sensitivity parameter $\kappa$.
     }
-    \label{fig:hptn_pba_ie_not_augmented}
+    \label{fig:hptn_pba_not_augmented}
 \end{figure}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.5\linewidth]{figures/hptn/pba_de_not_augmented.png}
-    \caption{
-Probabilistic bias analysis results for direct effects
-    using the estimator \eqref{eq:DE_corrected}.
-    Results are shown for both homogeneous and heterogeneous edge probabilities specifications (shapes).
-    Different colors represent different prior distributions for the
-     expected number of missing ego--ego edges $m^e$ and the interaction sensitivity parameter $\kappa$.
-    }
-    \label{fig:hptn_pba_de_not_augmented}
-\end{figure}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.5\linewidth]{figures/hptn/pba_ie_not_augmented.png}
+%     \caption{Probabilistic bias analysis results for indirect effects
+%     using the estimator \eqref{eq:IE_corrected}.
+%     Results are shown for both homogeneous and heterogeneous edge probabilities specifications (shapes).
+%     Different colors represent different prior distributions for the expected number of missing alter--ego edges $m^a$.
+%     }
+%     \label{fig:hptn_pba_ie_not_augmented}
+% \end{figure}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.5\linewidth]{figures/hptn/pba_de_not_augmented.png}
+%     \caption{
+% Probabilistic bias analysis results for direct effects
+%     using the estimator \eqref{eq:DE_corrected}.
+%     Results are shown for both homogeneous and heterogeneous edge probabilities specifications (shapes).
+%     Different colors represent different prior distributions for the
+%      expected number of missing ego--ego edges $m^e$ and the interaction sensitivity parameter $\kappa$.
+%     }
+%     \label{fig:hptn_pba_de_not_augmented}
+% \end{figure}
 
 \section{Discussion}
 \label{sec:discussion}
@@ -1178,8 +1205,15 @@ Probabilistic bias analysis results for direct effects
     \item Extension to observational studies is tricky as non-recruited units can be treated as well... Discuss the limitations here.
     \item Possible extensions to CRTs (one-stage or two-stage randomization settings). 
           Develop the formalism and estimands for CRTs with ego-network sampling.
-    \item Extension to binary exposure mapping with general threshold. 
-          Can obtain similar analytical expression for probabilities of exposures.
+    \item Extension to three level exposure mapping. 
+          Instead of looking at exposures as zero or at least one treated alter,
+          we can take $0, 1, 1+$ exposure levels.
+          In this case, the estimands can be the same as before.
+          However, the bias and bias-correction will be a bit more complex. 
+          Also, the exposure probabilities will be more complex to compute.
+          We can still compute them by noticing that 
+          $\sum_{j \neq i} A_{ij} Z_j$ is a Poisson-Binomial random variable,
+          and its PMF and probabilities can be approximated \citep{hong2013}.
     \item Transporting the in-sample exposure-contrast estimand to population-level estimands will balance the tradeoff between the difficulty of data acquisition under interference (full population network is often required) and policy relevance.
 \end{enumerate}
 
@@ -1856,12 +1890,12 @@ Repeating this procedure many times allows us to approximate this integral.
 We generated three covariates for each unit.
 \begin{equation*}
     \begin{aligned}
-        X_{i1} &\sim \text{Bernoulli}(p_{1e}), \\
-        X_{i2} &\sim \text{Bernoulli}(p_{2e}), \\
+        X_{i1} &\sim \text{Bernoulli}(p_{1}), \\
+        X_{i2} &\sim \text{Bernoulli}(p_{2}), \\
         X_{i3} &\sim \text{Normal}(0, 2^2),
     \end{aligned}
 \end{equation*}
-where $p_{1e} = 0.6, p_{2e} = 0.2$ for egos and $p_{1a} = 0.5, p_{2a} = 0.3$ for alters.
+where $p_{1} = 0.6, p_{2} = 0.2$ for egos and $p_{1} = 0.5, p_{2} = 0.3$ for alters.
 The covariates coefficents in the potential outcome models were set to
 $\beta_e = (-0.5, -0.3, 0.2)$ for egos and $\beta_a = (-0.4, -0.2, 0.1)$ for alters.
 Heterogeneous edges probabilities were generated with weights computed 

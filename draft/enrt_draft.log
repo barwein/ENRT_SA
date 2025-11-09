@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.9.10)  9 NOV 2025 14:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.9.10)  9 NOV 2025 16:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -801,15 +801,15 @@ FiXme Note: 'TODO: add ref' on input line 799.
 [10]
 
 [11]
-<figures/hptn/sa_ie_plot_not_augmented.png, id=429, 578.16pt x 361.35pt>
+<figures/hptn/sa_ie_plot_not_augmented.png, id=430, 578.16pt x 361.35pt>
 File: figures/hptn/sa_ie_plot_not_augmented.png Graphic file (type png)
 <use figures/hptn/sa_ie_plot_not_augmented.png>
-Package pdftex.def Info: figures/hptn/sa_ie_plot_not_augmented.png  used on input line 1087.
-(pdftex.def)             Requested size: 250.36453pt x 156.4747pt.
-<figures/hptn/sa_de_plot.png, id=432, 722.7pt x 433.62pt>
+Package pdftex.def Info: figures/hptn/sa_ie_plot_not_augmented.png  used on input line 1091.
+(pdftex.def)             Requested size: 229.49976pt x 143.4347pt.
+<figures/hptn/sa_de_plot.png, id=433, 722.7pt x 433.62pt>
 File: figures/hptn/sa_de_plot.png Graphic file (type png)
 <use figures/hptn/sa_de_plot.png>
-Package pdftex.def Info: figures/hptn/sa_de_plot.png  used on input line 1098.
+Package pdftex.def Info: figures/hptn/sa_de_plot.png  used on input line 1103.
 (pdftex.def)             Requested size: 292.0877pt x 175.25122pt.
 
 
@@ -817,31 +817,30 @@ Package pdftex.def Info: figures/hptn/sa_de_plot.png  used on input line 1098.
 <figures/hptn/pba_ie_not_augmented.png, id=443, 578.16pt x 361.35pt>
 File: figures/hptn/pba_ie_not_augmented.png Graphic file (type png)
 <use figures/hptn/pba_ie_not_augmented.png>
-Package pdftex.def Info: figures/hptn/pba_ie_not_augmented.png  used on input line 1151.
-(pdftex.def)             Requested size: 208.635pt x 130.39467pt.
-
-
-[13 <./figures/hptn/sa_de_plot.png>]
-<figures/hptn/pba_de_not_augmented.png, id=453, 578.16pt x 361.35pt>
+Package pdftex.def Info: figures/hptn/pba_ie_not_augmented.png  used on input line 1158.
+(pdftex.def)             Requested size: 200.28781pt x 125.17867pt.
+<figures/hptn/pba_de_not_augmented.png, id=444, 578.16pt x 361.35pt>
 File: figures/hptn/pba_de_not_augmented.png Graphic file (type png)
 <use figures/hptn/pba_de_not_augmented.png>
-Package pdftex.def Info: figures/hptn/pba_de_not_augmented.png  used on input line 1162.
-(pdftex.def)             Requested size: 208.635pt x 130.39467pt.
- (./enrt_draft.bbl
+Package pdftex.def Info: figures/hptn/pba_de_not_augmented.png  used on input line 1164.
+(pdftex.def)             Requested size: 200.28781pt x 125.17867pt.
+
+
+[13 <./figures/hptn/sa_de_plot.png>] (./enrt_draft.bbl
 
 [14 <./figures/hptn/pba_ie_not_augmented.png> <./figures/hptn/pba_de_not_augmented.png>]
 
 [15])
 
 [16]
-Underfull \hbox (badness 10000) in paragraph at lines 1246--1251
+Underfull \hbox (badness 10000) in paragraph at lines 1280--1285
 
  []
 
 
 
 [17]
-Underfull \hbox (badness 10000) in paragraph at lines 1308--1313
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1347
 
  []
 
@@ -852,22 +851,22 @@ Underfull \hbox (badness 10000) in paragraph at lines 1308--1313
 [19]
 
 [20]
-Underfull \hbox (badness 10000) in paragraph at lines 1594--1599
+Underfull \hbox (badness 10000) in paragraph at lines 1628--1633
 
  []
 
 
-Overfull \hbox (28.91495pt too wide) detected at line 1673
+Overfull \hbox (28.91495pt too wide) detected at line 1707
 []
  []
 
-FiXme Note: 'TODO: add ref' on input line 1674.
+FiXme Note: 'TODO: add ref' on input line 1708.
 
 
 [21]
 
 [22]
-Overfull \hbox (5.25284pt too wide) in paragraph at lines 1819--1824
+Overfull \hbox (5.25284pt too wide) in paragraph at lines 1853--1858
 \OT1/cmr/m/n/10 Which can be ap-prox-i-mated through Monte Carlo in-te-gra-tion by draw-ing $\OML/cmm/m/it/10 M$ \OT1/cmr/m/n/10 sam-ples $\OML/cmm/m/it/10 ^^Z[]; [] ; ^^Z[]$
  []
 
@@ -878,30 +877,32 @@ Overfull \hbox (5.25284pt too wide) in paragraph at lines 1819--1824
 [24]
 
 [25]
-<figures/hptn/alter_per_egonet_histogram.png, id=592, 433.62pt x 289.08pt>
+<figures/hptn/alter_per_egonet_histogram.png, id=594, 433.62pt x 289.08pt>
 File: figures/hptn/alter_per_egonet_histogram.png Graphic file (type png)
 <use figures/hptn/alter_per_egonet_histogram.png>
-Package pdftex.def Info: figures/hptn/alter_per_egonet_histogram.png  used on input line 2155.
+Package pdftex.def Info: figures/hptn/alter_per_egonet_histogram.png  used on input line 2189.
 (pdftex.def)             Requested size: 166.90544pt x 111.27188pt.
-<figures/hptn/sa_de_plot_aug_kappa2.png, id=597, 578.16pt x 361.35pt>
+
+
+[26]
+<figures/hptn/sa_de_plot_aug_kappa2.png, id=605, 578.16pt x 361.35pt>
 File: figures/hptn/sa_de_plot_aug_kappa2.png Graphic file (type png)
 <use figures/hptn/sa_de_plot_aug_kappa2.png>
-Package pdftex.def Info: figures/hptn/sa_de_plot_aug_kappa2.png  used on input line 2185.
+Package pdftex.def Info: figures/hptn/sa_de_plot_aug_kappa2.png  used on input line 2219.
 (pdftex.def)             Requested size: 208.635pt x 130.39467pt.
-
-
-[26 <./figures/hptn/alter_per_egonet_histogram.png>]
-<figures/hptn/sa_ie_plot_augmented.png, id=607, 578.16pt x 361.35pt>
+<figures/hptn/sa_ie_plot_augmented.png, id=606, 578.16pt x 361.35pt>
 File: figures/hptn/sa_ie_plot_augmented.png Graphic file (type png)
 <use figures/hptn/sa_ie_plot_augmented.png>
-Package pdftex.def Info: figures/hptn/sa_ie_plot_augmented.png  used on input line 2193.
+Package pdftex.def Info: figures/hptn/sa_ie_plot_augmented.png  used on input line 2227.
 (pdftex.def)             Requested size: 208.635pt x 130.39467pt.
-<figures/hptn/pba_de_augmented.png, id=608, 578.16pt x 361.35pt>
+<figures/hptn/pba_de_augmented.png, id=607, 578.16pt x 361.35pt>
 File: figures/hptn/pba_de_augmented.png Graphic file (type png)
 <use figures/hptn/pba_de_augmented.png>
-Package pdftex.def Info: figures/hptn/pba_de_augmented.png  used on input line 2200.
+Package pdftex.def Info: figures/hptn/pba_de_augmented.png  used on input line 2234.
 (pdftex.def)             Requested size: 208.635pt x 130.39467pt.
 
+
+[27 <./figures/hptn/alter_per_egonet_histogram.png> <./figures/hptn/sa_de_plot_aug_kappa2.png> <./figures/hptn/sa_ie_plot_augmented.png>]
 
 FiXme Summary: Number of notes: 4,
 (FiXme)        Number of warnings: 0,
@@ -911,7 +912,7 @@ FiXme Summary: Number of notes: 4,
 
 
 
-[27 <./figures/hptn/sa_de_plot_aug_kappa2.png> <./figures/hptn/sa_ie_plot_augmented.png> <./figures/hptn/pba_de_augmented.png>] (./enrt_draft.aux)
+[28 <./figures/hptn/pba_de_augmented.png>] (./enrt_draft.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -920,18 +921,18 @@ Package rerunfilecheck Info: File `enrt_draft.out' has not changed.
 (rerunfilecheck)             Checksum: 2B333ADF5328EA5E85403C59ADFC3AB5;3715.
  ) 
 Here is how much of TeX's memory you used:
- 29335 strings out of 473190
- 590446 string characters out of 5715800
- 1015246 words of memory out of 5000000
- 51952 multiletter control sequences out of 15000+600000
+ 29339 strings out of 473190
+ 590484 string characters out of 5715800
+ 1012973 words of memory out of 5000000
+ 51955 multiletter control sequences out of 15000+600000
  571683 words of font info for 84 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  102i,19n,107p,1046b,706s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on enrt_draft.pdf (27 pages, 1726237 bytes).
+Output written on enrt_draft.pdf (28 pages, 1727435 bytes).
 PDF statistics:
- 755 PDF objects out of 1000 (max. 8388607)
- 653 compressed objects within 7 object streams
- 146 named destinations out of 1000 (max. 500000)
+ 761 PDF objects out of 1000 (max. 8388607)
+ 658 compressed objects within 7 object streams
+ 147 named destinations out of 1000 (max. 500000)
  226 words of extra memory for PDF output out of 10000 (max. 10000000)
 

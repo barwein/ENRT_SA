@@ -65,6 +65,11 @@ Greenland, S. (2005).
 \newblock Multiple-{Bias} {Modelling} for {Analysis} of {Observational} {Data}.
 \newblock {\em Journal of the Royal Statistical Society Series A: Statistics in Society}, 168(2):267--306.
 
+\bibitem[Hong, 2013]{hong2013}
+Hong, Y. (2013).
+\newblock On computing the distribution function for the poisson binomial distribution.
+\newblock {\em Computational Statistics \& Data Analysis}, 59:41--51.
+
 \bibitem[Lash et~al., 2014]{Lash2014}
 Lash, T.~L., Fox, M.~P., MacLehose, R.~F., Maldonado, G., McCandless, L.~C., and Greenland, S. (2014).
 \newblock Good practices for quantitative bias analysis.
