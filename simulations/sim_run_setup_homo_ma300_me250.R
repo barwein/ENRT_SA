@@ -19,8 +19,7 @@ X_a <- covar_$X_a
 m_e <- 250
 m_a <- 300
 kappa_ <- 2
-n_iter <- 1e3
-# n_iter <- 100
+n_iter <- 5e3
 B_pba <- 5e3
 B_sa <- 5e3
 N_CORES <- 8

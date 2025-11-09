@@ -213,14 +213,14 @@ Then, in the second stage, each ego recruits a subset of its neighbors in the po
 Formally, the recruitment process is as follows:
 \begin{enumerate}
     \item Sample egos from the population.
-    Denote the set of recruited egos by $\cR_e \subset \bV$.
-    Let $n_e = \lvert \cR_e \rvert$ denote the number of egos.
+    Denote the set of recruited egos by $\cR_e \subset \bV$, 
+     and $n_e = \lvert \cR_e \rvert$ as the number of egos.
     We do not impose any restrictions on the sampling process of egos.
     \item Each ego recruits alters from its neighbors in the population network that are not recruited as egos in the first stage. 
     We assume that each alter is recruited by a single ego, resulting in $n_e$ disjoint ego-networks.
     This is often enforced in the recruitment process by researchers to avoid overlaps between the observed ego-networks.
     Denote the set of recruited alters by
-    $\cR_a \in \bV \setminus \cR_e$, 
+    $\cR_a \subset \bV \setminus \cR_e$, 
     and let $n_a = \lvert \cR_a \rvert$ be their number.
 \end{enumerate}
 The set of all recruited units is $\cR = \cR_e \cup \cR_a$ resulting in 
@@ -269,7 +269,7 @@ is referred to as an \emph{egocentric-network randomized trial} (ENRT).
 
 Let $Y_i(\bz)$ be the potential outcomes of each unit under treatment $\bz \in \mathcal{Z}$.
 We take a randomization-based inference approach,
-where the potential outcomes assumed to be fixed and the only source of randomness is due the treatment assignment. 
+where the potential outcomes assumed to be fixed and the only source of randomness is the treatment assignment. 
 Let $\bZ_{-i}$ denote the treatment assignment of all units except $i$.
 Assume that $\bZ_{-i}$ affects the potential outcomes of unit $i$ only
  through the values of the following exposure mapping \citep{Manski2013,aronow_estimating_2017,Forastiere2020}.
@@ -307,16 +307,16 @@ The first is the sample average indirect effects of treatment on the alters
 Eq.~\eqref{eq:indirect_effect} represents the average effect on alters of being exposed to a treated neighbor compared to not being exposed.
 In Appendix~\ref{apdx_sec:proof}, we also consider the indirect effects on the relative risk scale, in the case of binary outcomes.
 
-The second estimand is the sample average direct effect of treatment on the egos direct effect of 
-    treatment on the egos
+The second estimand is the sample average direct effect of treatment on the egos
 \begin{equation}
-    \label{eq:directed_effect}
+    \label{eq:directed_effect} 
     DE = 
     \frac{1}{n_e}
     \sum_{i\in\cR_e}
     Y_i(1, 0) - Y_i(0,0).
 \end{equation}
-Eq.~\eqref{eq:directed_effect} represents the average effect on egos of being treated compared to not being treated when not exposed to any treated neighbors.
+Eq.~\eqref{eq:directed_effect} represents the average effect on egos of being treated compared 
+    to not being treated when not exposed to any treated neighbors.
 
 We explicitly separate the causal estimands for egos and alters.
 This separation resolve interpretation issues of other estimands \citep{Crawford2019}.
@@ -335,7 +335,7 @@ The observed exposures are $\widetilde{F}_i = F(\bZ_{-i}, \widetilde{\bA})$,
 which may differ from the true exposures $F_i$. 
 That is, the observed network $\widetilde{\bA}$ might not include all the relevant edges present in the population network $\bA$ 
 due to the egocentric sampling process, resulting in \emph{misspecified network interference structure} \citep{Weinstein2023}.
-We specifically care about missing ego--ego and additional alter--alter edges induced by the sampling process.
+We specifically care about missing ego--ego and alter--ego edges induced by the sampling process.
 
 Consider, for example, the context of Figure~\ref{fig:egonetwork}.
 If only ego 1 is treated, for alter 6 we observe exposure $\widetilde{F}_i=0$ since its ego (node 2) is not treated,
@@ -432,7 +432,9 @@ Similarly to alters, the magnitude of the bias depend on the number ego--ego edg
 Proposition~\ref{prop:bias_naive_ht} shows that the HT estimators based on the observed data 
     are biased whenever there is contamination between the ego-networks.
 We refer to contamination as the presence alter--ego and ego--ego edges in the population network $\bA$,
-that are missing from the observed network $\widetilde{\bA}$ due to the egocentric sampling process.   
+that are missing from the observed network $\widetilde{\bA}$ due to the egocentric sampling process. 
+Under such contamination, the ego-networks are not disjoint in the population network,
+ leading to incorrect exposures when computed using the observed network.  
     
 By the structure of the egocentric sampling and the
  exposure mapping specification (Assumption~\ref{ass:expos_map}),
@@ -695,7 +697,7 @@ as well as specifications based on the expected number of missing edges.
     \begin{equation*}
         \begin{aligned}
             \pi_i^e &= 1 - (1-p_z\rho^e)^{n_e-1}, \\
-            \pi_i^a &= p_z + (1-p_z)\left[1- (1-p_z\rho^a)^{n_a-1}\right].
+            \pi_i^a &= p_z + (1-p_z)\left[1- (1-p_z\rho^a)^{n_e-1}\right].
         \end{aligned}
     \end{equation*}
     For instance, if researchers suspect that 1\% of the possible ego--ego edges are missing,
@@ -719,8 +721,10 @@ as well as specifications based on the expected number of missing edges.
         \rho^a_{ij} = \rho^a(m^a) = \frac{m^a}{n_a(n_e-1)}.
     \end{equation*} 
     For instance, assume researchers suspect that each alter 
-    is connected to $k>0$ additional egos on average.
-    This can be represented by selecting $m^a = k (n_e-1)$.     
+    is connected to $k^a>0$ additional egos on average.
+    This can be represented by selecting $m^a = k^a \times n_a$.     
+    Similarly, if each ego is believed to be connected to $k^e>0$ additional egos on average,
+    then $m^e = \frac{k^e \times n_e}{2}$.
 \end{exmp}
 
 \begin{exmp}[Heterogeneous probabilities]
@@ -788,7 +792,7 @@ As the the true values of such parameters are unknown and can not be directly es
  We consider here two approaches: grid sensitivity analysis (GSA) and probabilistic bias analysis (PBA).
  
  In GSA, researchers specify a grid of values for the sensitivity parameters 
- and compute the bias-corrected estimates for each combinatio
+ and compute the bias-corrected estimates for each combination
   of parameters \bwnote{TODO: add ref}.
  That results in a grid of bias-corrected estimates.
  Such estimates can be coupled with the associated confidence interval for each
@@ -1699,9 +1703,9 @@ To account for the sampling variability as well, note that
     d\rho d\bD,
 \end{equation*}
 where $p(\bD)$ is the sampling distribution of the data.
-So we can derive the sampling distribution of $\widehat{\theta}_{adj}(\bD, \rho^{(m)})$
-(e.g., approximate with normal distribution),
-and then for each draw $\rho^{(m)}$ from $p(\rho)$, estimate the adjusted estimator
+Assume we the distribution of $\widehat{\theta}_{adj}(\bD, \rho^{(m)})$
+ with normal distribution.
+Then for each draw $\rho^{(m)}$ from $p(\rho)$, estimate the adjusted estimator
 and add random noise according to the sampling distribution
 to obtain a draw from $p\left(\widehat{\theta}_{adj} \right)$.
 Alternatively, it is possible use a two-dimensional bootstrap
