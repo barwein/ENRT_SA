@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.9.10)  9 NOV 2025 10:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.9.10)  9 NOV 2025 11:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -568,8 +568,26 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \float@box=\box114
 \@float@everytoks=\toks46
 \@floatcapt=\box115
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen289
+\captionmargin=\dimen290
+\caption@leftmargin=\dimen291
+\caption@rightmargin=\dimen292
+\caption@width=\dimen293
+\caption@indent=\dimen294
+\caption@parindent=\dimen295
+\caption@hangindent=\dimen296
+Package caption Info: Standard document class detected.
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 25.
+\c@caption@flags=\count334
+\c@continuedfloat=\count335
+Package caption Info: float package is loaded.
+Package caption Info: hyperref package is loaded.
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 28.
  (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarypositioning.code.tex
 File: tikzlibrarypositioning.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarycalc.code.tex
@@ -606,12 +624,12 @@ File: pgflibraryshapes.multipart.code.tex 2023-01-15 v3.1.10 (3.1.10)
 File: tikzlibraryshapes.code.tex 2023-01-15 v3.1.10 (3.1.10)
  (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryshapes.misc.code.tex
 File: tikzlibraryshapes.misc.code.tex 2023-01-15 v3.1.10 (3.1.10)
- (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshapes.misc.code.tex
+
+(/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshapes.misc.code.tex
 File: pgflibraryshapes.misc.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryshapes.symbols.code.tex
 File: tikzlibraryshapes.symbols.code.tex 2023-01-15 v3.1.10 (3.1.10)
-
-(/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshapes.symbols.code.tex
+ (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshapes.symbols.code.tex
 File: pgflibraryshapes.symbols.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryshapes.arrows.code.tex
 File: tikzlibraryshapes.arrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
@@ -619,39 +637,39 @@ File: tikzlibraryshapes.arrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
 File: pgflibraryshapes.arrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryshapes.callouts.code.tex (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshapes.callouts.code.tex))) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.meta.code.tex
 File: pgflibraryarrows.meta.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfarrowinset=\dimen289
-\pgfarrowlength=\dimen290
-\pgfarrowwidth=\dimen291
-\pgfarrowlinewidth=\dimen292
+\pgfarrowinset=\dimen297
+\pgfarrowlength=\dimen298
+\pgfarrowwidth=\dimen299
+\pgfarrowlinewidth=\dimen300
 ) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryarrows.code.tex
 File: tikzlibraryarrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
  (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.code.tex
 File: pgflibraryarrows.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\arrowsize=\dimen293
+\arrowsize=\dimen301
 )) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecorations.markings.code.tex (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarydecorations.code.tex (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/modules/pgfmoduledecorations.code.tex
-\pgfdecoratedcompleteddistance=\dimen294
-\pgfdecoratedremainingdistance=\dimen295
-\pgfdecoratedinputsegmentcompleteddistance=\dimen296
-\pgfdecoratedinputsegmentremainingdistance=\dimen297
-\pgf@decorate@distancetomove=\dimen298
-\pgf@decorate@repeatstate=\count334
-\pgfdecorationsegmentamplitude=\dimen299
-\pgfdecorationsegmentlength=\dimen300
+\pgfdecoratedcompleteddistance=\dimen302
+\pgfdecoratedremainingdistance=\dimen303
+\pgfdecoratedinputsegmentcompleteddistance=\dimen304
+\pgfdecoratedinputsegmentremainingdistance=\dimen305
+\pgf@decorate@distancetomove=\dimen306
+\pgf@decorate@repeatstate=\count336
+\pgfdecorationsegmentamplitude=\dimen307
+\pgfdecorationsegmentlength=\dimen308
 )
 \tikz@lib@dec@box=\box136
 ) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrarydecorations.markings.code.tex)) (/usr/local/texlive/2025/texmf-dist/tex/latex/pgf/frontendlayer/libraries/tikzlibraryexternal.code.tex (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzexternalshared.code.tex)) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytrees.code.tex
 File: tikzlibrarytrees.code.tex 2023-01-15 v3.1.10 (3.1.10)
 )
-\c@remark=\count335
-\c@assumption=\count336
-\c@proposition=\count337
-\c@theorem=\count338
-\c@corollary=\count339
-\c@condition=\count340
-\c@lemma=\count341
-\c@exmp=\count342
-\c@design=\count343
-\c@defi=\count344
+\c@remark=\count337
+\c@assumption=\count338
+\c@proposition=\count339
+\c@theorem=\count340
+\c@corollary=\count341
+\c@condition=\count342
+\c@lemma=\count343
+\c@exmp=\count344
+\c@design=\count345
+\c@defi=\count346
  (/usr/local/texlive/2025/texmf-dist/tex/latex/fixme/fixme.sty
 Package: fixme 2019/01/03 v4.5 Collaborative annotations for LaTeX2e
  (/usr/local/texlive/2025/texmf-dist/tex/latex/base/ifthen.sty
@@ -667,15 +685,15 @@ Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
 \XKV@toks=\toks49
 \XKV@tempa@toks=\toks50
 )
-\XKV@depth=\count345
+\XKV@depth=\count347
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 ))
 \lox@file=\read4
-\c@fixmecount=\count346
-\c@fxnotecount=\count347
-\c@fxwarningcount=\count348
-\c@fxerrorcount=\count349
-\c@fxfatalcount=\count350
+\c@fixmecount=\count348
+\c@fxnotecount=\count349
+\c@fxwarningcount=\count350
+\c@fxerrorcount=\count351
+\c@fxfatalcount=\count352
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/fixme/themes/fxthemecolor.sty
 Package: fxthemecolor 
  (/usr/local/texlive/2025/texmf-dist/tex/latex/fixme/layouts/env/fxenvlayoutcolor.sty
@@ -684,46 +702,46 @@ Package: fxenvlayoutcolor
 Package: fxtargetlayoutcolor 
 )) (/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count351
+\l__color_backend_stack_int=\count353
 \l__pdf_internal_box=\box137
 ) (./enrt_draft.aux)
 \openout1 = `enrt_draft.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 175.
-LaTeX Font Info:    ... okay on input line 175.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 175.
-LaTeX Font Info:    ... okay on input line 175.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 175.
-LaTeX Font Info:    ... okay on input line 175.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 175.
-LaTeX Font Info:    ... okay on input line 175.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 175.
-LaTeX Font Info:    ... okay on input line 175.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 175.
-LaTeX Font Info:    ... okay on input line 175.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 175.
-LaTeX Font Info:    ... okay on input line 175.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 175.
-LaTeX Font Info:    ... okay on input line 175.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 175.
-LaTeX Font Info:    ... okay on input line 175.
-Package hyperref Info: Link coloring ON on input line 175.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 178.
+LaTeX Font Info:    ... okay on input line 178.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 178.
+LaTeX Font Info:    ... okay on input line 178.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 178.
+LaTeX Font Info:    ... okay on input line 178.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 178.
+LaTeX Font Info:    ... okay on input line 178.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 178.
+LaTeX Font Info:    ... okay on input line 178.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 178.
+LaTeX Font Info:    ... okay on input line 178.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 178.
+LaTeX Font Info:    ... okay on input line 178.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 178.
+LaTeX Font Info:    ... okay on input line 178.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 178.
+LaTeX Font Info:    ... okay on input line 178.
+Package hyperref Info: Link coloring ON on input line 178.
  (./enrt_draft.out) (./enrt_draft.out)
 \@outlinefile=\write4
 \openout4 = `enrt_draft.out'.
 
  (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count352
-\scratchdimen=\dimen301
+\scratchcounter=\count354
+\scratchdimen=\dimen309
 \scratchbox=\box138
-\nofMPsegments=\count353
-\nofMParguments=\count354
+\nofMPsegments=\count355
+\nofMParguments=\count356
 \everyMPshowfont=\toks51
-\MPscratchCnt=\count355
-\MPscratchDim=\dimen302
-\MPnumerator=\count356
-\makeMPintoPDFobject=\count357
+\MPscratchCnt=\count357
+\MPscratchDim=\dimen310
+\MPnumerator=\count358
+\makeMPintoPDFobject=\count359
 \everyMPtoPDFconversion=\toks52
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -731,16 +749,18 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (/usr/local/texlive/2025/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-LaTeX Font Info:    Trying to load font information for U+msa on input line 177.
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 180.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 177.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 180.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Package hyperref Info: bookmark level for unknown fixme defaults to 0 on input line 190.
-FiXme Note: '\citet {Chao2023} allow for alters with observed exposures equal one to be in fact not exposed to the treated ego (the ego didn't deliver the treatment...), but we exclude such measurement problem by our design. Namely, we only have a one-sided misclassification for alters (0 instead of 1, but not vice versa).' on input line 190.
+Package hyperref Info: bookmark level for unknown fixme defaults to 0 on input line 193.
+FiXme Note: '\citet {Chao2023} allow for alters with observed exposures equal one to be in fact not exposed to the treated ego (the ego didn't deliver the treatment...), but we exclude such measurement problem by our design. Namely, we only have a one-sided misclassification for alters (0 instead of 1, but not vice versa).' on input line 193.
 
 
 [1
@@ -749,23 +769,18 @@ FiXme Note: '\citet {Chao2023} allow for alters with observed exposures equal on
 <figures/population_and_ego_network.png, id=150, 794.4882pt x 429.0429pt>
 File: figures/population_and_ego_network.png Graphic file (type png)
 <use figures/population_and_ego_network.png>
-Package pdftex.def Info: figures/population_and_ego_network.png  used on input line 243.
+Package pdftex.def Info: figures/population_and_ego_network.png  used on input line 246.
 (pdftex.def)             Requested size: 333.81726pt x 180.2688pt.
 
 
-[2
-pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.259 \begin{assumption}
-                        [Bernoulli experimental design] <./figures/population_and_ego_network.png>]
+[2 <./figures/population_and_ego_network.png>]
 
 [3]
 
 [4]
 
 [5]
-Overfull \hbox (12.44386pt too wide) in paragraph at lines 604--609
+Overfull \hbox (12.44386pt too wide) in paragraph at lines 607--612
 \OT1/cmr/m/n/10 ma-tor [] can also be ex-tended to in-clude an out-come model. Let $\OML/cmm/m/it/10 ^^V[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 z\OT1/cmr/m/n/10 ) = \U/msb/m/n/10 E []$\OT1/cmr/m/n/10 .
  []
 
@@ -774,104 +789,71 @@ Overfull \hbox (12.44386pt too wide) in paragraph at lines 604--609
 [6]
 
 [7]
-FiXme Note: 'TODO: add reference' on input line 734.
+FiXme Note: 'TODO: add reference' on input line 737.
 
 
 [8]
-FiXme Note: 'TODO: add ref' on input line 796.
+FiXme Note: 'TODO: add ref' on input line 799.
 
 
 [9]
-FiXme Note: 'TODO: continue from here' on input line 892.
+
+Package caption Warning: \label without proper reference on input line 953.
+See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `ass:spillovers_ego_alter' on page 10 undefined on input line 900.
+LaTeX Warning: Reference `tab:ie_results_main' on page 10 undefined on input line 930.
 
 
-LaTeX Warning: Reference `exmp:logistic_po' on page 10 undefined on input line 900.
+Package caption Warning: \label without proper reference on input line 1011.
+See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `prop:de_2param_sa' on page 10 undefined on input line 902.
-
-
-LaTeX Warning: Reference `eq:indirect_effect_estimator' on page 10 undefined on input line 902.
-
-
-LaTeX Warning: Reference `eq:directed_effect_estimator' on page 10 undefined on input line 902.
+LaTeX Warning: Reference `tab:de_results_main' on page 10 undefined on input line 930.
 
 
 
 [10]
 
-[11
-pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1012 
-       
-pdfTeX warning (ext4): destination with the same identifier (name{table.2}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1012 
-       ]
-<figures/hptn/sa_ie_plot_not_augmented.png, id=402, 578.16pt x 361.35pt>
+[11]
+<figures/hptn/sa_ie_plot_not_augmented.png, id=414, 578.16pt x 361.35pt>
 File: figures/hptn/sa_ie_plot_not_augmented.png Graphic file (type png)
 <use figures/hptn/sa_ie_plot_not_augmented.png>
-Package pdftex.def Info: figures/hptn/sa_ie_plot_not_augmented.png  used on input line 1018.
+Package pdftex.def Info: figures/hptn/sa_ie_plot_not_augmented.png  used on input line 1076.
 (pdftex.def)             Requested size: 292.0877pt x 182.55475pt.
-<figures/hptn/sa_de_plot.png, id=403, 722.7pt x 433.62pt>
+<figures/hptn/sa_de_plot.png, id=415, 722.7pt x 433.62pt>
 File: figures/hptn/sa_de_plot.png Graphic file (type png)
 <use figures/hptn/sa_de_plot.png>
-Package pdftex.def Info: figures/hptn/sa_de_plot.png  used on input line 1025.
+Package pdftex.def Info: figures/hptn/sa_de_plot.png  used on input line 1083.
 (pdftex.def)             Requested size: 333.81726pt x 200.28807pt.
-<figures/hptn/pba_ie_not_augmented.png, id=404, 578.16pt x 361.35pt>
+<figures/hptn/pba_ie_not_augmented.png, id=416, 578.16pt x 361.35pt>
 File: figures/hptn/pba_ie_not_augmented.png Graphic file (type png)
 <use figures/hptn/pba_ie_not_augmented.png>
-Package pdftex.def Info: figures/hptn/pba_ie_not_augmented.png  used on input line 1035.
+Package pdftex.def Info: figures/hptn/pba_ie_not_augmented.png  used on input line 1093.
 (pdftex.def)             Requested size: 250.36453pt x 156.4747pt.
 
 
-[12
-pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1039 
-       
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1039 
-        <./figures/hptn/sa_ie_plot_not_augmented.png> <./figures/hptn/sa_de_plot.png>]
-<figures/hptn/pba_de_not_augmented.png, id=412, 578.16pt x 361.35pt>
+[12 <./figures/hptn/sa_ie_plot_not_augmented.png> <./figures/hptn/sa_de_plot.png>]
+<figures/hptn/pba_de_not_augmented.png, id=423, 578.16pt x 361.35pt>
 File: figures/hptn/pba_de_not_augmented.png Graphic file (type png)
 <use figures/hptn/pba_de_not_augmented.png>
-Package pdftex.def Info: figures/hptn/pba_de_not_augmented.png  used on input line 1042.
+Package pdftex.def Info: figures/hptn/pba_de_not_augmented.png  used on input line 1100.
 (pdftex.def)             Requested size: 250.36453pt x 156.4747pt.
  (./enrt_draft.bbl
 
-[13
-pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.12 
-     
-pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.12 
-      <./figures/hptn/pba_ie_not_augmented.png> <./figures/hptn/pba_de_not_augmented.png>]
+[13 <./figures/hptn/pba_ie_not_augmented.png> <./figures/hptn/pba_de_not_augmented.png>]
 
 [14])
 
 [15]
-Underfull \hbox (badness 10000) in paragraph at lines 1117--1122
+Underfull \hbox (badness 10000) in paragraph at lines 1178--1183
 
  []
 
 
 
 [16]
-Underfull \hbox (badness 10000) in paragraph at lines 1179--1184
+Underfull \hbox (badness 10000) in paragraph at lines 1240--1245
 
  []
 
@@ -882,22 +864,22 @@ Underfull \hbox (badness 10000) in paragraph at lines 1179--1184
 [18]
 
 [19]
-Underfull \hbox (badness 10000) in paragraph at lines 1465--1470
+Underfull \hbox (badness 10000) in paragraph at lines 1526--1531
 
  []
 
 
-Overfull \hbox (28.91495pt too wide) detected at line 1544
+Overfull \hbox (28.91495pt too wide) detected at line 1605
 []
  []
 
-FiXme Note: 'TODO: add ref' on input line 1545.
+FiXme Note: 'TODO: add ref' on input line 1606.
 
 
 [20]
 
 [21]
-Overfull \hbox (5.25284pt too wide) in paragraph at lines 1690--1695
+Overfull \hbox (5.25284pt too wide) in paragraph at lines 1751--1756
 \OT1/cmr/m/n/10 Which can be ap-prox-i-mated through Monte Carlo in-te-gra-tion by draw-ing $\OML/cmm/m/it/10 M$ \OT1/cmr/m/n/10 sam-ples $\OML/cmm/m/it/10 ^^Z[]; [] ; ^^Z[]$
  []
 
@@ -905,84 +887,43 @@ Overfull \hbox (5.25284pt too wide) in paragraph at lines 1690--1695
 
 [22]
 
-[23
-pdfTeX warning (ext4): destination with the same identifier (name{table.C.1}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1877 
-       
-pdfTeX warning (ext4): destination with the same identifier (name{table.C.2}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1877 
-       ]
-<figures/hptn/alter_per_egonet_histogram.png, id=537, 433.62pt x 289.08pt>
+[23]
+<figures/hptn/alter_per_egonet_histogram.png, id=549, 433.62pt x 289.08pt>
 File: figures/hptn/alter_per_egonet_histogram.png Graphic file (type png)
 <use figures/hptn/alter_per_egonet_histogram.png>
-Package pdftex.def Info: figures/hptn/alter_per_egonet_histogram.png  used on input line 1933.
+Package pdftex.def Info: figures/hptn/alter_per_egonet_histogram.png  used on input line 1994.
 (pdftex.def)             Requested size: 250.36453pt x 166.91223pt.
 
 
-[24
-pdfTeX warning (ext4): destination with the same identifier (name{table.C.3}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1937 
-       
-pdfTeX warning (ext4): destination with the same identifier (name{table.C.4}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1937 
-       ]
-<figures/hptn/sa_de_plot_aug_kappa2.png, id=544, 578.16pt x 361.35pt>
+[24]
+<figures/hptn/sa_de_plot_aug_kappa2.png, id=556, 578.16pt x 361.35pt>
 File: figures/hptn/sa_de_plot_aug_kappa2.png Graphic file (type png)
 <use figures/hptn/sa_de_plot_aug_kappa2.png>
-Package pdftex.def Info: figures/hptn/sa_de_plot_aug_kappa2.png  used on input line 1940.
+Package pdftex.def Info: figures/hptn/sa_de_plot_aug_kappa2.png  used on input line 2001.
 (pdftex.def)             Requested size: 292.0877pt x 182.55475pt.
-<figures/hptn/sa_ie_plot_augmented.png, id=545, 578.16pt x 361.35pt>
+<figures/hptn/sa_ie_plot_augmented.png, id=557, 578.16pt x 361.35pt>
 File: figures/hptn/sa_ie_plot_augmented.png Graphic file (type png)
 <use figures/hptn/sa_ie_plot_augmented.png>
-Package pdftex.def Info: figures/hptn/sa_ie_plot_augmented.png  used on input line 1947.
+Package pdftex.def Info: figures/hptn/sa_ie_plot_augmented.png  used on input line 2008.
 (pdftex.def)             Requested size: 292.0877pt x 182.55475pt.
-
-
-[25
-pdfTeX warning (ext4): destination with the same identifier (name{figure.D.1}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1951 
-       
-pdfTeX warning (ext4): destination with the same identifier (name{figure.D.2}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1951 
-        <./figures/hptn/alter_per_egonet_histogram.png> <./figures/hptn/sa_de_plot_aug_kappa2.png>]
-<figures/hptn/pba_de_augmented.png, id=553, 578.16pt x 361.35pt>
+<figures/hptn/pba_de_augmented.png, id=558, 578.16pt x 361.35pt>
 File: figures/hptn/pba_de_augmented.png Graphic file (type png)
 <use figures/hptn/pba_de_augmented.png>
-Package pdftex.def Info: figures/hptn/pba_de_augmented.png  used on input line 1954.
+Package pdftex.def Info: figures/hptn/pba_de_augmented.png  used on input line 2015.
 (pdftex.def)             Requested size: 292.0877pt x 182.55475pt.
 
 
-FiXme Summary: Number of notes: 5,
+[25 <./figures/hptn/alter_per_egonet_histogram.png> <./figures/hptn/sa_de_plot_aug_kappa2.png> <./figures/hptn/sa_ie_plot_augmented.png>]
+
+FiXme Summary: Number of notes: 4,
 (FiXme)        Number of warnings: 0,
 (FiXme)        Number of errors: 0,
 (FiXme)        Number of fatal errors: 0,
-(FiXme)        Total: 5.
+(FiXme)        Total: 4.
 
 
 
-[26
-pdfTeX warning (ext4): destination with the same identifier (name{figure.D.3}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1959 \end{document}
-                     
-pdfTeX warning (ext4): destination with the same identifier (name{figure.D.4}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.1959 \end{document}
-                      <./figures/hptn/sa_ie_plot_augmented.png> <./figures/hptn/pba_de_augmented.png>] (./enrt_draft.aux)
+[26 <./figures/hptn/pba_de_augmented.png>] (./enrt_draft.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -992,21 +933,21 @@ L3 programming layer <2025-01-18>
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `enrt_draft.out' has not changed.
-(rerunfilecheck)             Checksum: 16280434CB9680DC71906C40701436A9;3687.
+(rerunfilecheck)             Checksum: BFC6D2ECB08B9E7CC2EFE00A3E40563B;3687.
  ) 
 Here is how much of TeX's memory you used:
- 28028 strings out of 473190
- 564724 string characters out of 5715800
- 986168 words of memory out of 5000000
- 50649 multiletter control sequences out of 15000+600000
- 570437 words of font info for 79 fonts, out of 8000000 for 9000
+ 29326 strings out of 473190
+ 590171 string characters out of 5715800
+ 1010515 words of memory out of 5000000
+ 51944 multiletter control sequences out of 15000+600000
+ 571683 words of font info for 84 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  102i,19n,107p,1046b,706s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on enrt_draft.pdf (26 pages, 1660127 bytes).
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
+Output written on enrt_draft.pdf (26 pages, 1713566 bytes).
 PDF statistics:
- 687 PDF objects out of 1000 (max. 8388607)
- 599 compressed objects within 6 object streams
- 151 named destinations out of 1000 (max. 500000)
+ 715 PDF objects out of 1000 (max. 8388607)
+ 618 compressed objects within 7 object streams
+ 145 named destinations out of 1000 (max. 500000)
  226 words of extra memory for PDF output out of 10000 (max. 10000000)
 

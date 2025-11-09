@@ -17,8 +17,11 @@
 \usepackage{multicol}
 \usepackage{array}
 \usepackage{float}
+\usepackage{caption}
 
-%%%
+\captionsetup[table]{width=0.95\textwidth, font=small}
+\captionsetup[figure]{width=0.95\textwidth, font=small}
+
 \hypersetup{
 	colorlinks=true,
 	linkcolor=black,
@@ -777,7 +780,7 @@ as well as specifications based on the expected number of missing edges.
     Setting all weights ($w_{ij}^e$ and $w_{ij}^a$) to one recovers Example~\ref{exmp:pi_number}.
 \end{exmp}
 
-\subsection{Running the sensitivity analyses in practice}
+\subsection{Running the sensitivity analysis in practice}
 \label{subsec:practice}
 To assess the the impact of contamination on the causal estimates, 
 researchers can utilize the bias-corrected estimators
@@ -889,31 +892,77 @@ We provide more technical details on the motivation behind the PBA procedure in 
 
 \section{Simulation study}
 \label{sec:sim}
-\bwnote{TODO: continue from here}
 
-DGP that mimics the settings of HPTN 037. The average number of edges was $2$. In it, each ego recruited at least one network member (drug injection or sexual partner). We can have the following settings
+We conduct a simulation study to evaluate the performance of the bias-corrected 
+estimators \eqref{eq:IE_corrected}-\eqref{eq:IE_corrected_aipw} and 
+\eqref{eq:DE_corrected}-\eqref{eq:DE_corrected_aipw}. 
+Specifically, we assess the bias, variance estimation, and empirical coverage of the confidence intervals
+given that the true sensitivity parameters are known. 
+The simulation study is based on a data generating process
+ that mimics the settings of the HPTN-037 study \citep{Latkin2009}, 
+which we analyze in Section~\ref{sec:data}.
+We generated $n_e=200$ disjoint ego-networks with two alters each,
+which was the average number of alters per ego-network in HPTN-037,
+resulting in $n_a=400$.
+Contamination betweeh the ego-networks was generated
+ by specifiying the expected number of missing
+alter--ego and ego--ego edges, as in Examples~\ref{exmp:pi_number} and \ref{exmp:pi_hetero_number},
+and drawing the latent edges independently. 
+Specifically, we set the expected number of missing alter--ego edges to $m^a \in \{100,200,300\}$,
+and ego--ego edges to $m^e \in \{50,150,250\}$. 
+The binary potential outcomes were generated according to the models
+    \begin{equation*}
+        \begin{aligned}
+            \text{logit}\left(\Pr\left(Y_i(z,f)=1 \mid i \in \cR_e\right)\right) &= -2 + 2 z + 0.5 f + 2 zf + \bX_i^T \beta_e,
+            \\ 
+            \text{logit}\left(\Pr\left(Y_i(0,f)=1 \mid i \in \cR_a\right)\right) &= -2 + 2 f + \bX_i^T \beta_a,        
+        \end{aligned}
+    \end{equation*}
+implying interaction sensitivity parameter $\kappa=2$.
+The data-generating proccess of the covariates $\bX_i$ and the specification of $\beta_e$ and $\beta_a$
+are provided in Appendix~\ref{apdx.sec:sim}.
+Treatments were assigned according to a Bernoulli design with $p_z=0.5$.
+In each of the $5 \times 10^3$ simulation replications,
+we run the ENRT trial by generating treatment assignment.
+We report here the results where contamination is generated using   
+heterogeneous edge probabilities as in Example~\ref{exmp:pi_hetero_number}
+with Euclidean distance and $\gamma^e=\gamma^a=1$.
+Tables~\ref{tab:ie_results_main} and \ref{tab:de_results_main} summarize the results
+for the indirect and direct effects, respectively, using both analytic and bootstrap variance estimation.
+We use the augmented estimators \eqref{eq:IE_corrected_aipw} and \eqref{eq:DE_corrected_aipw}
+with outcome models estimated by logistic regression via cross-fitting.
+When specification is Heterogeneous, the 
+edge probabilities are correctly-specified, while Homogeneous
+uses the same probability for all edges as in Example~\ref{exmp:pi_number}.
+The Naive specification corresponds to the uncorrected estimators \eqref{eq:IE_naive_HT}-\eqref{eq:DE_naive_HT}.
+As the level of contamination ($m_e, m_a$) increase,
+the bias of the naive estimators increases and the coverage decreases substantially.
+In contrast, both bias-corrected estimators (Heterogeneous and Homogeneous)
+exhibit negligible bias and valid coverage across all scenarios,
+implying that even a misspecified model for the edge probabilities
+(Homogeneous) can effectively correct for the bias.
+Moreover, across all scenarios, both analytic and bootstrap variance estimators
+over estimate the variance slightly.  
+Additional results, including homogeneous contamination settings and non-augmented estimators,
+are provided in Appendix~\ref{apdx.sec:sim} and exhibit similar patterns.
+    
 
-\begin{enumerate}
-    \item Population network $\bA$ from SBM with $\{250,500,1000\}$ clusters. Each contain $[2,6]$ members (random uniform or truncated Poisson for cluster size). Between clusters probs $p_b \in \{0.01,0.05\}$ that will play the role of $\rho^a,\rho^e$. The between-cluster probs $p_b$ will generate the contamination. Can take either homogeneous or heterogeneous probabilities. 
-    \item Each cluster in the SBM can represent one ego-network, so we can randomly sample one unit from each cluster to be an ego, and sample $\min(d_i,2)$ other units from its cluster as alters. Then, we randomize treatments to egos $p_z=0.5$ (as in HPTN 037).
-    \item Generate potential outcomes from logistic model $\Pr(Y_i(z,f))=g^{-1}(\beta_0 + \beta_1 z +\beta_2f + \beta_3 zf)$.
-    To satisfy Assumption~\ref{ass:spillovers_ego_alter}, $\beta_0, \beta_2$ should be the same for egos and alters. Also, $\kappa$ in Assumption~\ref{ass:egos_kappa} is approximate $\exp(\beta_3)$ as described in Example~\ref{exmp:logistic_po}.
-    \item 
-    Run the sensitivity analyses using Propositions~\ref{prop:ie_sa}-\ref{prop:de_2param_sa}, where $\rho^e_{ij}=\rho^a_{ij}=0$ returns the naive estimates \eqref{eq:indirect_effect_estimator} and \eqref{eq:directed_effect_estimator}.
-    \item In Step~4, can do SA with both homogeneous (Examples~\ref{exmp:pi_homo}-\ref{exmp:pi_number}) and heterogeneous (Example~\ref{exmp:pi_hetero}) sensitivity edge probabilities. One of them will always be misspecified (depending on the network model used).
-    \item Can modify the outcome model by including a random effect of ego-network to create dependence within clusters.
-    \item Report results separately for indirect and direct effects. For direct effects, also separate the bounds from the bias correction with the addition of $\kappa$.
-\end{enumerate}
-Think about how to report the results.
-
-{\renewcommand{\arraystretch}{0.8} % Shrink row height to 80% (adjust 0.8 as needed)
+{\renewcommand{\arraystretch}{0.6} % Shrink row height to 80% (adjust 0.8 as needed)
 \begin{table}[H]
-
-\caption{IE Results - Heterogeneous Exposure - Augmented}
+    \footnotesize
+\label{tab:ie_results_main}
+\caption{Simulation results for indirect effects under heterogeneous contamination 
+with augmented estimators. 
+Error is the empirical bias, Coverage is the empirical coverage of the 95\% confidence intervals,
+and SD/SE is the ratio of standard deviation of the estimates to the mean standard errors.
+Specification ``Heterogeneous" uses the correct edge probabilities,
+``Homogeneous" uses the same probability for all edges,
+and ``Naive" is the uncorrected estimator.
+}
 \centering
 \begin{tabular}[t]{lccccc}
 \toprule
-Scenario & spec & Variance & bias & coverage & ese\_ase\\
+Scenario & Specification & Variance & Error & Coverage & SD/SE\\
 \midrule
  &  & Analytic & 0.016 & 0.978 & 0.774\\
 \cmidrule{3-6}
@@ -956,14 +1005,23 @@ Scenario & spec & Variance & bias & coverage & ese\_ase\\
 }
 
 
-{\renewcommand{\arraystretch}{0.8} % Shrink row height to 80% (adjust 0.8 as needed)
+{\renewcommand{\arraystretch}{0.6} % Shrink row height to 80% (adjust 0.8 as needed)
 \begin{table}[H]
-
-\caption{DE Results - Heterogeneous Exposure - Augmented}
+\footnotesize
+\label{tab:de_results_main}
+\caption{
+Simulation results for direct effects under heterogeneous contamination 
+with augmented estimators.
+Error is the empirical bias, Coverage is the empirical coverage of the 95\% confidence intervals,
+and SD/SE is the ratio of standard deviation of the estimates to the mean standard errors.
+Specification ``Heterogeneous" uses the correct edge probabilities,
+``Homogeneous" uses the same probability for all edges,
+and ``Naive" is the uncorrected estimator.
+}
 \centering
 \begin{tabular}[t]{lccccc}
 \toprule
-Scenario & spec & Variance & bias & coverage & ese\_ase\\
+Scenario & Specification & Variance & Error & Coverage & SD/SE\\
 \midrule
  &  & Analytic & 0.013 & 0.966 & 0.860\\
 \cmidrule{3-6}
@@ -1050,7 +1108,10 @@ Limit the analysis to a 12-month follow-up, following previous analyses \citep{B
 \begin{enumerate}
     \item In the case of homogeneous edge probabilities, it is possible to estimate $\pi^a_i$ (but not $\pi^e_i$) if we have validation data à la \citet{Chao2023}. They did it only for IE, and only on summary-level data.
     \item Extension to observational studies is tricky as non-recruited units can be treated as well... Discuss the limitations here.
-    \item Possible extensions to CRTs (one-stage or two-stage randomization settings).
+    \item Possible extensions to CRTs (one-stage or two-stage randomization settings). 
+          Develop the formalism and estimands for CRTs with ego-network sampling.
+    \item Extension to binary exposure mapping with general threshold. 
+          Can obtain similar analytical expression for probabilities of exposures.
     \item Transporting the in-sample exposure-contrast estimand to population-level estimands will balance the tradeoff between the difficulty of data acquisition under interference (full population network is often required) and policy relevance.
 \end{enumerate}
 
@@ -1733,7 +1794,7 @@ Repeating this procedure many times allows us to approximate this integral.
 \centering
 \begin{tabular}[t]{lccccc}
 \toprule
-Scenario & spec & Variance & bias & coverage & ese\_ase\\
+Scenario & Specification & Variance & Error & Coverage & SD/SE\\
 \midrule
  &  & Analytic & 0.016 & 0.972 & 0.855\\
 \cmidrule{3-6}
@@ -1783,7 +1844,7 @@ Scenario & spec & Variance & bias & coverage & ese\_ase\\
 \centering
 \begin{tabular}[t]{lccccc}
 \toprule
-Scenario & spec & Variance & bias & coverage & ese\_ase\\
+Scenario & Specification & Variance & Error & Coverage & SD/SE\\
 \midrule
  &  & Analytic & 0.014 & 0.950 & 0.968\\
 \cmidrule{3-6}
@@ -1833,7 +1894,7 @@ Scenario & spec & Variance & bias & coverage & ese\_ase\\
 \centering
 \begin{tabular}[t]{lccccc}
 \toprule
-Scenario & spec & Variance & bias & coverage & ese\_ase\\
+Scenario & Specification & Variance & Error & Coverage & SD/SE\\
 \midrule
  &  & Analytic & 0.010 & 0.987 & 0.741\\
 \cmidrule{3-6}
@@ -1883,7 +1944,7 @@ Scenario & spec & Variance & bias & coverage & ese\_ase\\
 \centering
 \begin{tabular}[t]{lccccc}
 \toprule
-Scenario & spec & Variance & bias & coverage & ese\_ase\\
+Scenario & Specification & Variance & Error & Coverage & SD/SE\\
 \midrule
  &  & Analytic & 0.021 & 0.953 & 0.887\\
 \cmidrule{3-6}
