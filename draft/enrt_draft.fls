@@ -396,6 +396,8 @@ INPUT ./figures/hptn/pba_de_not_augmented.png
 INPUT ./enrt_draft.bbl
 INPUT ./enrt_draft.bbl
 INPUT enrt_draft.bbl
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm
 INPUT ./figures/hptn/alter_per_egonet_histogram.png
 INPUT ./figures/hptn/alter_per_egonet_histogram.png
 INPUT ./figures/hptn/alter_per_egonet_histogram.png
@@ -421,6 +423,7 @@ INPUT ./enrt_draft.out
 INPUT ./enrt_draft.out
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb

@@ -1200,8 +1200,6 @@ Nevertheless, across all priors and edge probabilities specifications, the indir
 \begin{enumerate}
     \item In the case of homogeneous edge probabilities, it is possible to estimate $\pi^a_i$ (but not $\pi^e_i$) if we have validation data à la \citet{Chao2023}. They did it only for IE, and only on summary-level data.
     \item Extension to observational studies is tricky as non-recruited units can be treated as well... Discuss the limitations here.
-    \item Possible extensions to CRTs (one-stage or two-stage randomization settings). 
-          Develop the formalism and estimands for CRTs with ego-network sampling.
     \item Extension to three level exposure mapping. 
           Instead of looking at exposures as zero or at least one treated alter,
           we can take $0, 1, 1+$ exposure levels.
@@ -1209,7 +1207,7 @@ Nevertheless, across all priors and edge probabilities specifications, the indir
           However, the bias and bias-correction will be a bit more complex. 
           Also, the exposure probabilities will be more complex to compute.
           We can still compute them by noticing that 
-          $\sum_{j \neq i} A_{ij} Z_j$ is a Poisson-Binomial random variable,
+          $\sum_{j \neq i} Z_j A_{ij}$ is a Poisson-Binomial random variable,
           and its PMF and probabilities can be approximated \citep{hong2013}.
     \item Transporting the in-sample exposure-contrast estimand to population-level estimands will balance the tradeoff between the difficulty of data acquisition under interference (full population network is often required) and policy relevance.
 \end{enumerate}
@@ -1224,11 +1222,19 @@ Nevertheless, across all priors and edge probabilities specifications, the indir
 \renewcommand{\theequation}{\thesection.\arabic{equation}}
 \numberwithin{equation}{section}
 
+\renewcommand{\theassumption}{\thesection.\arabic{assumption}}
+\numberwithin{assumption}{section}
+
+\renewcommand{\theproposition}{\thesection.\arabic{proposition}}
+\numberwithin{proposition}{section}
+
 \renewcommand\thefigure{\thesection.\arabic{figure}}    
 \counterwithin{figure}{section}
 
 \renewcommand\thetable{\thesection.\arabic{table}}    
 \counterwithin{table}{section}
+
+
 
 \section{Proofs}
 \label{apdx_sec:proof}
@@ -1275,7 +1281,9 @@ Starting with the first inner term, for $i \in \cR_a$,
     Y_i(0,1),
     \end{aligned}
 \end{equation}
-where $(i)$ follows since $\mathbb{I}\{\widetilde{F}_i=f\}$ is equal with probability one to  $\mathbb{I}\{Z_i=0,\widetilde{F}_i=f\}$ and consistency (Assumption~\ref{ass:consis}) connect the observed outcomes $Y_i$ to the potential outcomes $Y_i(z,f)$; $(ii)$ from taking expectation with respect to the design $\bZ$; $(iii)$ since $p_z = \Pr(\widetilde{F}_i=1\mid i \in \cR_a)$ and $\frac{\Pr(F_i=f, \widetilde{F}_i=1 \mid i \in \cR_a)}{\Pr(\widetilde{F}_i=1\mid i \in \cR_a)} = \Pr(F_i = f \mid \widetilde{F}_i=1, i\in \cR_a)$; and $(iv)$ since $\Pr(F_i=1 \mid \widetilde{F}_i=1, i \in \cR_a) = 1$. To see this, note that $\sum_{j\neq i}\widetilde{A}_{ij}Z_j \leq \sum_{j\neq i}A_{ij}Z_j $ with probability one, which implies that $\widetilde{F}_i \leq F_i$ with probability one as well. Since $F_i$ is binary, if $\widetilde{F}_i=1$, it must also be $F_i=1$.
+where $(i)$ follows since $\mathbb{I}\{\widetilde{F}_i=f\}$ is
+ equal with probability one to  $\mathbb{I}\{Z_i=0,\widetilde{F}_i=f\}$ 
+ and consistency (Assumption~\ref{ass:consis}) connect the observed outcomes $Y_i$ to the potential outcomes $Y_i(z,f)$; $(ii)$ from taking expectation with respect to the design $\bZ$; $(iii)$ since $p_z = \Pr(\widetilde{F}_i=1\mid i \in \cR_a)$ and $\frac{\Pr(F_i=f, \widetilde{F}_i=1 \mid i \in \cR_a)}{\Pr(\widetilde{F}_i=1\mid i \in \cR_a)} = \Pr(F_i = f \mid \widetilde{F}_i=1, i\in \cR_a)$; and $(iv)$ since $\Pr(F_i=1 \mid \widetilde{F}_i=1, i \in \cR_a) = 1$. To see this, note that $\sum_{j\neq i}Z_j \widetilde{A}_{ij} \leq \sum_{j\neq i}Z_j A_{ij} $ with probability one, which implies that $\widetilde{F}_i \leq F_i$ with probability one as well. Since $F_i$ is binary, if $\widetilde{F}_i=1$, it must also be $F_i=1$.
 \\
 \\ 
 Moving to the second inner term, a similar derivation yields
@@ -1812,6 +1820,223 @@ if $\kappa > 1$ and attenuated \emph{towards} the null if $\kappa \in \left( \mi
 Since $\pi_i^e$ is typically small, then $\min_{i \in \cR_e}\left\{1 - \frac{1}{\pi_i^e}\right\}$ is a large negative number, and it is unlikely that $\kappa$ is smaller than that value in practice.
 Thus, in practice, we expect that the estimator $\widehat{DE}$ is attenuated away from the null if $\kappa > 1$ and towards the null if $\kappa < 1$
 for most realistic scenarios.
+
+\section{Extension to three-level exposure mapping}
+\label{apd.sec:three_level_em}
+
+We extend the framework to a three-level exposure mapping for alters, $F_i \in \{0, 1, 1+\}$,
+ indicating exposure to zero, exactly one, or two or more treated neighbors, respectively. 
+ We consider only the indirect effect estimand and estimators.
+ We derive bias expressions for the naive HT estimator
+ and propose an adjusted estimator to correct for the bias.
+ The adjusted estimators relies 
+ on the same sensitivity parameter of alter--ego edges probabilties $\rho^a_{ij}$ \eqref{eq:sbm}
+  defined in Section~\ref{subsec:rho_param}.
+ However, we require an additional sensitivity parameter, similar to the interaction 
+ parameter $\kappa$ for the bias-corrected direct effect estimator given in Section~\ref{subsec:de}.
+
+Let $S_i = \sum_{j\neq i} Z_jA_{ij}$ be the true number of 
+treated neighbors of unit $i$ in the population network $\bA$. 
+For alters $i \in \cR_a$, we can write $S_i = \sum_{j \in \cR_e} Z_jA_{ij}$.
+The modified exposure mapping (Assumption~\ref{ass:expos_map}) is
+\begin{assumption}[Three-Level Exposure Mapping]
+\label{apdx.ass:expos_map_three_level}
+    Let
+    \begin{equation*}
+        F(\bZ_{-i},\bA) =
+        \begin{cases}
+            0, & S_i = 0 \\
+            1, & S_i = 1 \\
+            1+, & S_i \ge 2
+        \end{cases}
+    \end{equation*}
+    For any $\bz, \bz' \in \mathcal{Z}$, 
+    if $z_i = z'_i$ and $F(\bz_{-i},\bA) = F(\bz'_{-i},\bA)$, then $Y_i(\bz) = Y_i(\bz')$.
+\end{assumption}
+By Assumption~\ref{apdx.ass:expos_map_three_level}, we can write $Y_i(\bZ) = Y_i(Z_i, F_i)$, where $F_i \in \{0, 1, 1+\}$.
+Thus, each unit not have six potential outcomes, instead of four.
+The modified consistency (Assumption~\ref{ass:consis}) is
+\begin{assumption}[Consistency (Three-Level)]
+\label{apdx.ass:consis_three_level}
+$Y_i = \sum_{z \in \{0,1\}}\sum_{f \in \{0, 1, 1+\}}Y_i(0,f) \mathbb{I}\left\{Z_i=0, F_i=f\right\}$.
+\end{assumption}
+The estimand of interest remains the sample average indirect effect 
+of exposure to a single versus no treated neighbors \eqref{eq:indirect_effect}
+\begin{equation*}
+    IE = \frac{1}{n_a} \sum_{i\in\cR_a} Y_i(0, 1) - Y_i(0,0).
+\end{equation*}
+
+\subsubsection*{Bias of the naive estimator}
+The naive HT estimator $\widehat{IE}$ remains as defined in \eqref{eq:IE_naive_HT}. Its expectation is $\mathbb{E}_{\bZ}\left[\widehat{IE}\right] = \frac{1}{n_a} \sum_{i \in \cR_a} \left( E_{i,1} - E_{i,0} \right)$, where
+\begin{align*}
+    E_{i,1} &= \mathbb{E}_{\bZ}\left[\frac{\mathbb{I}\{\widetilde{F}_i=1\}Y_i}{p_z} \right] \\
+    E_{i,0} &= \mathbb{E}_{\bZ}\left[\frac{\mathbb{I}\{\widetilde{F}_i=0\}Y_i}{1-p_z} \right].
+\end{align*}
+The issue is that observed exposures $\widetilde{F}_i=1$ 
+can corresponds to true exposures of either $F_i=1$ or $F_i=1+$,
+and observed exposures $\widetilde{F}_i=0$ can corresponds to true exposures of $F_i=0$, $F_i=1$, or $F_i=1+$.
+Therefore, the observed outcomes $Y_i$ under observed exposures 
+    $\widetilde{F}_i$ are mixtures of potential outcomes under different true exposures $F_i$.
+
+Define $S_{i, -e(i)} = \sum_{j \in \cR_e^{e(i)}} Z_j A_{ij}$ as the 
+ number of treated neighbors of alter $i$ \emph{other than} its own ego $e(i)$.
+  This represents the possible exposure from contamination between the ego-networks.
+
+\paragraph{Expectation for $E_{i,1}$:}
+If $\widetilde{F}_i=1$, then $Z_{e(i)}=1$. The true number of treated neighbors is $S_i = 1 + S_{i, -e(i)}$.
+Given that $Z_{e(i)}=1$,
+\begin{itemize}
+    \item The true exposure is $F_i=1$ if $S_i = 1$, which implies $S_{i, -e(i)} = 0$.
+    \item The true exposure is $F_i=1+$ if $S_i \ge 2$, which implies $S_{i, -e(i)} \ge 1$.
+\end{itemize}
+By Assumption~\ref{apdx.ass:consis_three_level},
+\begin{align*}
+    E_{i,1} &= \frac{1}{p_z} \mathbb{E}_{\bZ}\left[ 
+        \mathbb{I}\{\widetilde{F}_i=1, F_i=1\} Y_i(0, 1)
+         + \mathbb{I}\{\widetilde{F}_i=1, F_i=1+\}Y_i(0, 1+)
+             \right] \\
+        &=
+        \frac{1}{p_z} \mathbb{E}_{\bZ}\left[ 
+        \mathbb{I}\{Z_{e(i)}=1, S_{i, -e(i)}=0\} Y_i(0, 1)
+         + \mathbb{I}\{Z_{e(i)}=1, S_{i, -e(i)}\geq 1\}Y_i(0, 1+)
+             \right] \\
+    &= \Pr(S_{i, -e(i)}=0) Y_i(0, 1) + \Pr(S_{i, -e(i)} \geq 1) Y_i(0, 1+).
+\end{align*}
+The last step holds because $S_{i, -e(i)}$ is independent of $Z_{e(i)}$ under Assumption~\ref{ass:bernoulli_design},
+and $\Pr(Z_{e(i)}=1) = p_z$.
+
+\paragraph{Expectation for $E_{i,0}$:}
+If $\widetilde{F}_i=0$, then $Z_{e(i)}=0$. The true number of treated neighbors is $S_i = S_{i, -e(i)}$.
+Given that $Z_{e(i)}=0$,
+\begin{itemize}
+    \item The true exposure is $F_i=0$ if $S_i = 0$, which implies $S_{i, -e(i)} = 0$.
+    \item The true exposure is $F_i=1$ if $S_i = 1$, which implies $S_{i, -e(i)} = 1$.
+    \item The true exposure is $F_i=1+$ if $S_i \geq 2$, which implies $S_{i, -e(i)} \geq 2$.
+\end{itemize}
+Therefore,
+\begin{align*}
+    E_{i,0} &= 
+    \frac{1}{1-p_z} \mathbb{E}_{\bZ}\left[ 
+       \sum_{f \in \{0,1,1+\}} \mathbb{I}\{\widetilde{F}_i=0, F_i=f\} Y_i(0, f)
+        \right] 
+    \\ &= 
+    \Pr(S_{i, -e(i)}=0) Y_i(0, 0) + \Pr(S_{i, -e(i)}=1) Y_i(0, 1) + \Pr(S_{i, -e(i)} \ge 2) Y_i(0, 1+).
+\end{align*}
+
+\paragraph{Exposures probabilities.}
+As in Section~\ref{subsec:rho_param}, we assume conditional edge independence given $\rho^a_{ij}$,
+defined in \eqref{eq:sbm}.
+The random variable $S_{i, -e(i)}$ follows a Poisson-Binomial distribution
+ with $n_e-1$ parameters $\{p_z \rho^a_{ij}\}_{j \in \cR_e^{e(i)}}$. 
+ Let $\pi_{i,k}^* = \Pr(S_{i, -e(i)} = k)$. The required probabilities are
+\begin{align*}
+    \pi_{i,0}^* &= \Pr(S_{i, -e(i)} = 0) =
+     \prod_{j \in \cR_e^{e(i)}} (1 - p_z \rho^a_{ij}) \\
+    \pi_{i,1}^* &= \Pr(S_{i, -e(i)} = 1) = 
+    \sum_{j \in \cR_e^{e(i)}} 
+    \left[ p_z \rho^a_{ij}
+    \prod_{l \in \cR_e^{e(i)} \setminus \{j\}} (1 - p_z \rho^a_{il})
+     \right] \\
+    \pi_{i,1+}^* &= \Pr(S_{i, -e(i)} \geq 2) = 1 - \pi_{i,0}^* - \pi_{i,1}^*.
+\end{align*}
+For large $n_e$, analytic computation of $\pi_{i,1}^*$ can be challenging,
+but approximation methods exist \citep{hong2013}.
+
+
+\paragraph{Bias expression.}
+First, note that $\Pr(S_{i, -e(i)}\geq 1) = 1 - \Pr(S_{i, -e(i)}=0) = 1 - \pi_{i,0}^*$.
+Substituting these probabilities, the expectations of the two components of the naive estimator are:
+\begin{align}
+    E_{i,1} &= \pi_{i,0}^* Y_i(0, 1) + (1 - \pi_{i,0}^*) Y_i(0, 1+) \label{eq:apdx_e1} \\
+    E_{i,0} &= \pi_{i,0}^* Y_i(0, 0) + \pi_{i,1}^* Y_i(0, 1) + (1 - \pi_{i,0}^* - \pi_{i,1}^*)^* Y_i(0, 1+) \label{eq:apdx_e0}
+\end{align}
+The expectation of the naive estimator is:
+\begin{equation*}
+    \begin{aligned}
+        \mathbb{E}_{\bZ}\left[\widehat{IE}\right] &=
+        \frac{1}{n_e} \sum_{i \in \cR_a} \left( E_{i,1} - E_{i,0} \right)
+        \\ &=
+        \frac{1}{n_a} \sum_{i \in \cR_a} \left[ -\pi_{i,0}^* Y_i(0, 0) + 
+        (\pi_{i,0}^* - \pi_{i,1}^*) Y_i(0, 1) +
+         \pi_{i,1}^* Y_i(0, 1+) \right]
+         \\ &=
+         IE + \frac{1}{n_a} \sum_{i \in \cR_a} \left[
+         \pi_{i,1}^*\left\{ Y_i(0, 1+) - Y_i(0, 1) \right\}
+         - (1 - \pi_{i,0}^*) \left\{ Y_i(0, 1) - Y_i(0, 0) \right\}
+         \right].
+    \end{aligned}
+\end{equation*}
+Which implies that the naive estimator is also biased for the indirect effect estimand.
+The bias depends on the indirect effects of $1+$ exposures relative to $1$ exposures
+and of $1$ exposures relative to $0$ exposures,
+weighted by the exposure probabilities $\pi_{i,1}^*$ and $1 - \pi_{i,0}^*$, respectively.
+
+\subsubsection*{Bias-corrected estimator}
+The set of equations (\ref{eq:apdx_e1}) and (\ref{eq:apdx_e0}) forms a $2 \times 3$ linear system for the unknown potential outcomes $\{Y_i(0,0), Y_i(0,1), Y_i(0,1+)\}$, which is underdetermined. To achieve identification, we introduce an additional sensitivity parameter $\delta$ via a structural assumption on the potential outcomes, analogous to Assumption~\ref{ass:egos_kappa}.
+
+\begin{assumption}
+    \label{ass:alters_delta}
+    There exists a constant $\delta$ such that
+    $Y_i(0, 1+) - Y_i(0, 0) = \delta \left\{Y_i(0, 1) - Y_i(0, 0)\right\}$ for all alters $i \in \cR_a$.
+\end{assumption}
+This assumption states that the effect of $1+$ exposures (relative to no exposure) is proportional to the effect of a single exposure. Rearranging, we have
+$$
+Y_i(0, 1+) = (1-\delta) Y_i(0, 0) + \delta Y_i(0, 1).
+$$
+We substitute this into (\ref{eq:apdx_e1}) and (\ref{eq:apdx_e0}) to create a $2 \times 2$ system for the expectations of $Y_i(0,0)$ and $Y_i(0,1)$:
+\begin{align*}
+    E_{i,1} &= \left[ (1 - \pi_{i,0}^*) (1-\delta) \right] Y_i(0, 0) + \left[ \pi_{i,0}^* + (1 - \pi_{i,0}^*) \delta \right] Y_i(0, 1) \\
+    E_{i,0} &= \left[ \pi_{i,0}^* + \pi_{i,1+}^* (1-\delta) \right] Y_i(0, 0) + \left[ \pi_{i,1}^* + \pi_{i,1+}^* \delta \right] Y_i(0, 1)
+\end{align*}
+Let us define the coefficients of this linear system as:
+\begin{align*}
+    a_{11} &= (1 - \pi_{i,0}^*) (1-\delta) \\
+    a_{12} &= \pi_{i,0}^* + (1 - \pi_{i,0}^*) \delta \\
+    a_{21} &= \pi_{i,0}^* + \pi_{i,1+}^* (1-\delta) \\
+    a_{22} &= \pi_{i,1}^* + \pi_{i,1+}^* \delta
+\end{align*}
+The system is now $E_{i,1} = a_{11} Y_i(0,0) + a_{12} Y_i(0,1)$ and $E_{i,0} = a_{21} Y_i(0,0) + a_{22} Y_i(0,1)$. We can solve this system for $Y_i(0,0)$ and $Y_i(0,1)$ using standard algebra.
+
+Let $\det(\mathbf{M}_i) = a_{11} a_{22} - a_{12} a_{21}$ be the determinant of the coefficient matrix.
+The solutions for the expectations of the potential outcomes are:
+\begin{align*}
+    Y_i(0,0) &= \frac{a_{22} E_{i,1} - a_{12} E_{i,0}}{\det(\mathbf{M}_i)} \\
+    Y_i(0,1) &= \frac{a_{11} E_{i,0} - a_{21} E_{i,1}}{\det(\mathbf{M}_i)}
+\end{align*}
+Let $T_{i,1} = \frac{\mathbb{I}\{\widetilde{F}_i=1\}Y_i}{p_z}$ and $T_{i,0} = \frac{\mathbb{I}\{\widetilde{F}_i=0\}Y_i}{1-p_z}$ be the unit-level HT terms, where $\mathbb{E}_{\bZ}[T_{i,1}] = E_{i,1}$ and $\mathbb{E}_{\bZ}[T_{i,0}] = E_{i,0}$.
+
+We define the bias-corrected estimators $\widehat{Y_i(0, 0)}_{adj}$ and $\widehat{Y_i(0, 1)}_{adj}$ by replacing the expectations with their unbiased HT estimators:
+\begin{align}
+    \widehat{Y_i(0, 0)}_{adj} &= \frac{1}{\det(\mathbf{M}_i)} \left( a_{22} T_{i,1} - a_{12} T_{i,0} \right) \label{eq:apdx_y0_adj} \\
+    \widehat{Y_i(0, 1)}_{adj} &= \frac{1}{\det(\mathbf{M}_i)} \left( a_{11} T_{i,0} - a_{21} T_{i,1} \right) \label{eq:apdx_y1_adj}
+\end{align}
+The bias-corrected estimator for $IE_{1v0} = \frac{1}{n_a} \sum_{i \in \cR_a} (Y_i(0,1) - Y_i(0,0))$ is:
+$$
+    \widehat{IE}_{adj} = \frac{1}{n_a} \sum_{i \in \cR_a} \left( \widehat{Y_i(0, 1)}_{adj} - \widehat{Y_i(0, 0)}_{adj} \right)
+$$
+Substituting (\ref{eq:apdx_y0_adj}) and (\ref{eq:apdx_y1_adj}):
+\begin{align*}
+    \widehat{IE}_{adj} &= \frac{1}{n_a} \sum_{i \in \cR_a} \left[ \frac{1}{\det(\mathbf{M}_i)} \left( a_{11} T_{i,0} - a_{21} T_{i,1} \right) - \frac{1}{\det(\mathbf{M}_i)} \left( a_{22} T_{i,1} - a_{12} T_{i,0} \right) \right] \\
+    &= \frac{1}{n_a} \sum_{i \in \cR_a} \frac{1}{\det(\mathbf{M}_i)} \left[ (a_{11} + a_{12}) T_{i,0} - (a_{21} + a_{22}) T_{i,1} \right]
+\end{align*}
+We can simplify the terms $(a_{11} + a_{12})$ and $(a_{21} + a_{22})$:
+\begin{align*}
+    a_{11} + a_{12} &= (1 - \pi_{i,0}^*) (1-\delta) + \pi_{i,0}^* + (1 - \pi_{i,0}^*) \delta \\
+    &= (1 - \pi_{i,0}^*) - (1 - \pi_{i,0}^*)\delta + \pi_{i,0}^* + (1 - \pi_{i,0}^*)\delta = 1 \\
+    \\
+    a_{21} + a_{22} &= \pi_{i,0}^* + \pi_{i,1+}^* (1-\delta) + \pi_{i,1}^* + \pi_{i,1+}^* \delta \\
+    &= \pi_{i,0}^* + \pi_{i,1+}^* - \pi_{i,1+}^*\delta + \pi_{i,1}^* + \pi_{i,1+}^*\delta \\
+    &= \pi_{i,0}^* + \pi_{i,1}^* + \pi_{i,1+}^* = 1
+\end{align*}
+Remarkably, both sums simplify to 1. The bias-corrected estimator thus simplifies to:
+\begin{align*}
+    \widehat{IE}_{adj} &= \frac{1}{n_a} \sum_{i \in \cR_a} \frac{1}{\det(\mathbf{M}_i)} \left( T_{i,0} - T_{i,1} \right) \\
+    &= \frac{1}{n_a} \sum_{i \in \cR_a} \frac{-1}{\det(\mathbf{M}_i)} \left( T_{i,1} - T_{i,0} \right) \\
+    &= \frac{1}{n_a} \sum_{i \in \cR_a} \alpha_i^{a,*} \left[ \frac{\mathbb{I}\{\widetilde{F}_i=1\}Y_i}{p_z} - \frac{\mathbb{I}\{\widetilde{F}_i=0\}Y_i}{1 - p_z} \right]
+\end{align*}
+where $\alpha_i^{a,*} = \frac{-1}{\det(\mathbf{M}_i)} = \frac{1}{a_{12} a_{21} - a_{11} a_{22}}$ is the adjustment factor under the three-level exposure assumption. This shows the bias-corrected estimator is a re-weighting of the naive HT estimator, with weights $\alpha_i^{a,*}$ that depend on the sensitivity parameters $\boldsymbol{\rho}^a$ (which define $\pi_{i,k}^*$) and $\delta$.
+
+
 
 \section{Probabilistic bias analysis}
 \label{apdx.sec:pba}
