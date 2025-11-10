@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.9.10)  10 NOV 2025 10:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.9.10)  10 NOV 2025 11:51
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"/Users/barwein/Library/CloudStorage/Dropbox/My PC (LAPTOP-6NAJD2IQ)/Desktop/Gate/University/TAU/PhD/Writing/Drafts/Sampled networks/ENRT_SA/draft/enrt_draft.tex"
-(/Users/barwein/Library/CloudStorage/Dropbox/My PC (LAPTOP-6NAJD2IQ)/Desktop/Gate/University/TAU/PhD/Writing/Drafts/Sampled networks/ENRT_SA/draft/enrt_draft.tex
+**"/Users/barwein/Library/CloudStorage/Dropbox/My PC (LAPTOP-6NAJD2IQ)/Desktop/Gate/University/TAU/PhD/Writing/Drafts/Sampled networks/ENRT_SA/draft/crt_draft.tex"
+(/Users/barwein/Library/CloudStorage/Dropbox/My PC (LAPTOP-6NAJD2IQ)/Desktop/Gate/University/TAU/PhD/Writing/Drafts/Sampled networks/ENRT_SA/draft/crt_draft.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 (/usr/local/texlive/2025/texmf-dist/tex/latex/base/article.cls
@@ -704,8 +704,8 @@ Package: fxtargetlayoutcolor
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count353
 \l__pdf_internal_box=\box137
-) (./enrt_draft.aux)
-\openout1 = `enrt_draft.aux'.
+) (./crt_draft.aux)
+\openout1 = `crt_draft.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 178.
 LaTeX Font Info:    ... okay on input line 178.
@@ -726,9 +726,9 @@ LaTeX Font Info:    ... okay on input line 178.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 178.
 LaTeX Font Info:    ... okay on input line 178.
 Package hyperref Info: Link coloring ON on input line 178.
- (./enrt_draft.out) (./enrt_draft.out)
+ (./crt_draft.out) (./crt_draft.out)
 \@outlinefile=\write4
-\openout4 = `enrt_draft.out'.
+\openout4 = `crt_draft.out'.
 
  (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -759,180 +759,50 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 180.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Package hyperref Info: bookmark level for unknown fixme defaults to 0 on input line 193.
-FiXme Note: '\citet {Chao2023} allow for alters with observed exposures equal one to be in fact not exposed to the treated ego (the ego didn't deliver the treatment...), but we exclude such measurement problem by our design. Namely, we only have a one-sided misclassification for alters (0 instead of 1, but not vice versa).' on input line 193.
-
 
 [1
 
-{/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-<figures/population_and_ego_network.png, id=150, 794.4882pt x 429.0429pt>
-File: figures/population_and_ego_network.png Graphic file (type png)
-<use figures/population_and_ego_network.png>
-Package pdftex.def Info: figures/population_and_ego_network.png  used on input line 246.
-(pdftex.def)             Requested size: 292.0877pt x 157.7352pt.
+{/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+
+Package caption Warning: Unused \captionsetup[table] on input line 22.
+See the caption package documentation for explanation.
 
 
-[2 <./figures/population_and_ego_network.png>]
-
-[3]
-
-[4]
-
-[5]
-Overfull \hbox (12.44386pt too wide) in paragraph at lines 604--609
-\OT1/cmr/m/n/10 ma-tor [] can also be ex-tended to in-clude an out-come model. Let $\OML/cmm/m/it/10 ^^V[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 z\OT1/cmr/m/n/10 ) = \U/msb/m/n/10 E []$\OT1/cmr/m/n/10 .
- []
+Package caption Warning: Unused \captionsetup[figure] on input line 23.
+See the caption package documentation for explanation.
 
 
-
-[6]
-
-[7]
-FiXme Note: 'TODO: add reference' on input line 734.
-
-
-[8]
-FiXme Note: 'TODO: add ref' on input line 796.
-
-
-[9]
-
-[10]
-
-[11]
-<figures/hptn/sa_ie_plot_not_augmented.png, id=430, 578.16pt x 361.35pt>
-File: figures/hptn/sa_ie_plot_not_augmented.png Graphic file (type png)
-<use figures/hptn/sa_ie_plot_not_augmented.png>
-Package pdftex.def Info: figures/hptn/sa_ie_plot_not_augmented.png  used on input line 1088.
-(pdftex.def)             Requested size: 229.49976pt x 143.4347pt.
-<figures/hptn/sa_de_plot.png, id=433, 722.7pt x 433.62pt>
-File: figures/hptn/sa_de_plot.png Graphic file (type png)
-<use figures/hptn/sa_de_plot.png>
-Package pdftex.def Info: figures/hptn/sa_de_plot.png  used on input line 1100.
-(pdftex.def)             Requested size: 292.0877pt x 175.25122pt.
-
-
-[12 <./figures/hptn/sa_ie_plot_not_augmented.png>]
-<figures/hptn/pba_ie_not_augmented.png, id=443, 578.16pt x 361.35pt>
-File: figures/hptn/pba_ie_not_augmented.png Graphic file (type png)
-<use figures/hptn/pba_ie_not_augmented.png>
-Package pdftex.def Info: figures/hptn/pba_ie_not_augmented.png  used on input line 1155.
-(pdftex.def)             Requested size: 200.28781pt x 125.17867pt.
-<figures/hptn/pba_de_not_augmented.png, id=444, 578.16pt x 361.35pt>
-File: figures/hptn/pba_de_not_augmented.png Graphic file (type png)
-<use figures/hptn/pba_de_not_augmented.png>
-Package pdftex.def Info: figures/hptn/pba_de_not_augmented.png  used on input line 1161.
-(pdftex.def)             Requested size: 200.28781pt x 125.17867pt.
-
-
-[13 <./figures/hptn/sa_de_plot.png>] (./enrt_draft.bbl
-
-[14 <./figures/hptn/pba_ie_not_augmented.png> <./figures/hptn/pba_de_not_augmented.png>]
-
-[15])
-
-[16]
-Underfull \hbox (badness 10000) in paragraph at lines 1277--1282
-
- []
-
-
-
-[17]
-Underfull \hbox (badness 10000) in paragraph at lines 1339--1344
-
- []
-
-
-
-[18]
-
-[19]
-
-[20]
-Underfull \hbox (badness 10000) in paragraph at lines 1625--1630
-
- []
-
-
-Overfull \hbox (28.91495pt too wide) detected at line 1704
-[]
- []
-
-FiXme Note: 'TODO: add ref' on input line 1705.
-
-
-[21]
-
-[22]
-Overfull \hbox (5.25284pt too wide) in paragraph at lines 1850--1855
-\OT1/cmr/m/n/10 Which can be ap-prox-i-mated through Monte Carlo in-te-gra-tion by draw-ing $\OML/cmm/m/it/10 M$ \OT1/cmr/m/n/10 sam-ples $\OML/cmm/m/it/10 ^^Z[]; [] ; ^^Z[]$
- []
-
-
-
-[23]
-
-[24]
-
-[25]
-<figures/hptn/alter_per_egonet_histogram.png, id=594, 433.62pt x 289.08pt>
-File: figures/hptn/alter_per_egonet_histogram.png Graphic file (type png)
-<use figures/hptn/alter_per_egonet_histogram.png>
-Package pdftex.def Info: figures/hptn/alter_per_egonet_histogram.png  used on input line 2186.
-(pdftex.def)             Requested size: 166.90544pt x 111.27188pt.
-
-
-[26]
-<figures/hptn/sa_de_plot_aug_kappa2.png, id=605, 578.16pt x 361.35pt>
-File: figures/hptn/sa_de_plot_aug_kappa2.png Graphic file (type png)
-<use figures/hptn/sa_de_plot_aug_kappa2.png>
-Package pdftex.def Info: figures/hptn/sa_de_plot_aug_kappa2.png  used on input line 2216.
-(pdftex.def)             Requested size: 208.635pt x 130.39467pt.
-<figures/hptn/sa_ie_plot_augmented.png, id=606, 578.16pt x 361.35pt>
-File: figures/hptn/sa_ie_plot_augmented.png Graphic file (type png)
-<use figures/hptn/sa_ie_plot_augmented.png>
-Package pdftex.def Info: figures/hptn/sa_ie_plot_augmented.png  used on input line 2224.
-(pdftex.def)             Requested size: 208.635pt x 130.39467pt.
-<figures/hptn/pba_de_augmented.png, id=607, 578.16pt x 361.35pt>
-File: figures/hptn/pba_de_augmented.png Graphic file (type png)
-<use figures/hptn/pba_de_augmented.png>
-Package pdftex.def Info: figures/hptn/pba_de_augmented.png  used on input line 2231.
-(pdftex.def)             Requested size: 208.635pt x 130.39467pt.
-
-
-[27 <./figures/hptn/alter_per_egonet_histogram.png> <./figures/hptn/sa_de_plot_aug_kappa2.png> <./figures/hptn/sa_ie_plot_augmented.png>]
-
-FiXme Summary: Number of notes: 4,
+FiXme Summary: Number of notes: 0,
 (FiXme)        Number of warnings: 0,
 (FiXme)        Number of errors: 0,
 (FiXme)        Number of fatal errors: 0,
-(FiXme)        Total: 4.
+(FiXme)        Total: 0.
 
 
 
-[28 <./figures/hptn/pba_de_augmented.png>] (./enrt_draft.aux)
+[2]
+
+[3] (./crt_draft.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-Package rerunfilecheck Info: File `enrt_draft.out' has not changed.
-(rerunfilecheck)             Checksum: 2B333ADF5328EA5E85403C59ADFC3AB5;3715.
+Package rerunfilecheck Info: File `crt_draft.out' has not changed.
+(rerunfilecheck)             Checksum: 953243B5EF8F553DA43B53E1AEA6D0BA;111.
  ) 
 Here is how much of TeX's memory you used:
- 29339 strings out of 473190
- 590484 string characters out of 5715800
- 1012963 words of memory out of 5000000
- 51955 multiletter control sequences out of 15000+600000
- 571683 words of font info for 84 fonts, out of 8000000 for 9000
+ 28853 strings out of 473190
+ 580547 string characters out of 5715800
+ 982969 words of memory out of 5000000
+ 51615 multiletter control sequences out of 15000+600000
+ 569188 words of font info for 75 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 102i,19n,107p,1046b,706s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on enrt_draft.pdf (28 pages, 1727460 bytes).
+ 102i,12n,107p,808b,447s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on crt_draft.pdf (3 pages, 176453 bytes).
 PDF statistics:
- 761 PDF objects out of 1000 (max. 8388607)
- 658 compressed objects within 7 object streams
- 147 named destinations out of 1000 (max. 500000)
- 226 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 118 PDF objects out of 1000 (max. 8388607)
+ 80 compressed objects within 1 object stream
+ 11 named destinations out of 1000 (max. 500000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

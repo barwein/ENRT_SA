@@ -285,7 +285,6 @@ The exposures $F_i$ indicate whether at least one of the neighbors of unit $i$ i
 Assumption~\ref{ass:expos_map} implies that the exposure mapping is correctly specified \citep{Saevje2023},
 and that only treatments of neighbors affect the potential outcomes of unit $i$.
 This binary exposure mapping specification is common in the ENRT literature \citep{Buchanan2018,Chao2023,Fang2023}.
-
 By Assumption~\ref{ass:expos_map}, we can express the potential outcomes as
 $Y_i(\bZ)=Y_i(Z_i,F_i)$.
 Consequently, each unit has four effective potential outcomes,
@@ -309,7 +308,6 @@ The first is the sample average indirect effects of treatment on the alters
 \end{equation}
 Eq.~\eqref{eq:indirect_effect} represents the average effect on alters of being exposed to a treated neighbor compared to not being exposed.
 In Appendix~\ref{apdx_sec:proof}, we also consider the indirect effects on the relative risk scale, in the case of binary outcomes.
-
 The second estimand is the sample average direct effect of treatment on the egos
 \begin{equation}
     \label{eq:directed_effect} 
@@ -320,7 +318,6 @@ The second estimand is the sample average direct effect of treatment on the egos
 \end{equation}
 Eq.~\eqref{eq:directed_effect} represents the average effect on egos of being treated compared 
     to not being treated when not exposed to any treated neighbors.
-
 We explicitly separate the causal estimands for egos and alters.
 This separation resolve interpretation issues of other estimands \citep{Crawford2019}.
 Furthermore, by not conflating the two groups we avoid imposing additional assumptions and structure,
@@ -348,7 +345,7 @@ since it is connected to ego 1.
 
 By the ENRT design, the observed exposures of egos are $\widetilde{F}_i =0$ for all $i \in \cR_e$,
 while the observed exposures of alters can be either zero or one, depending on their ego's treatment status.
-Specifically, by Assumption~\ref{ass:bernoulli_design}, alters are exposed to a treated ego
+Specifically, by Assumption~\ref{ass:bernoulli_design}, alters are exposed to a treated ego in the observed network
 with probability $\Pr(\widetilde{F}_i=1 \mid i \in \cR_a) = p_z$.
 
 Researchers can estimate causal effect only with the observed exposures.
@@ -413,7 +410,7 @@ In that case, both estimators \eqref{eq:IE_naive_HT} and \eqref{eq:DE_naive_HT} 
     \end{equation*}
     where $\pi_i^a = \Pr(F_i=1\mid i\in \cR_a)$ and $\pi_i^e = \Pr(F_i=1 \mid i \in \cR_e)$ are the probabilities that an alter and ego, respectively, are exposed to at least one treated neighbor in the population network $\bA$.
 \end{proposition}
-When an alter is connected only to its own ego, $\pi_i^a=p_z$, and \eqref{eq:IE_naive_HT}
+When an alter is connected only to its own ego, then $\pi_i^a=p_z$, and \eqref{eq:IE_naive_HT}
  is a design-unbiased estimator of \eqref{eq:indirect_effect}.
 Otherwise, whenever an alter is connected to more than one ego in the population network,
  $\pi_i^a > p_z$, and the indirect effect estimator \eqref{eq:IE_naive_HT} based on
@@ -454,7 +451,7 @@ However, the observed outcomes of egos that are assigned to
  implying that observed outcomes of egos are possibly linked to four different potential outcomes,
   compared to only two among the alters.
 
-We develop a sensitivity framework that enables researchers to assess the impact of
+We develop a sensitivity analysis framework that enables researchers to assess the impact of
  possible contamination between ego-networks on the causal estimates.
 The framework provides bias-corrected estimators of the indirect and direct effects 
 that account for possible exposure misspecification due to the egocentric-network recruitment process. 
@@ -462,7 +459,7 @@ that account for possible exposure misspecification due to the egocentric-networ
  The bias-corrected indirect and direct effect estimators are a function of the
 exposure probabilities under the true population network $\pi_i^a$ and $\pi_i^e$, respectively.
 The structure of the egocentric sampling design and our setup 
-allow us to decompose $\pi_i^a$ and $\pi_i^e$ into basic
+enables us to decompose $\pi_i^a$ and $\pi_i^e$ into basic
  components that are straightforward to compute given specification
   of the \emph{expected number} or the \emph{probability} of missing alter--ego and ego--ego edges.
  The latter will form the basis of our sensitivity parameters, 
@@ -589,8 +586,8 @@ Given $\pi_i^e$ and $\kappa$, \eqref{eq:DE_corrected} is a design-unbiased estim
 \end{proposition}
 If $\pi_i^e=0$ or $\kappa=1$, the bias-corrected estimator will reduce to the naive HT estimator \eqref{eq:DE_naive_HT},
  and both will be unbiased.
- Namely, the naive estimator \eqref{eq:DE_naive_HT} is unbiased if there are no latent ego--ego edges or
- treatment and exposure interaction effects.
+ Namely, the naive estimator \eqref{eq:DE_naive_HT} is unbiased if there are no latent ego--ego edges
+  or if the interaction term between treatment and exposure is zero.
 
 Moreover, under Assumption~\ref{ass:egos_kappa}, the naive estimator $\widehat{IE}$ is
  attenuated \emph{away} from the null if $\kappa >1$, and attenuated \emph{towards} the null if
@@ -703,7 +700,7 @@ as well as specifications based on the expected number of missing edges.
             \pi_i^a &= p_z + (1-p_z)\left[1- (1-p_z\rho^a)^{n_e-1}\right].
         \end{aligned}
     \end{equation*}
-    For instance, if researchers suspect that 1\% of the possible ego--ego edges are missing,
+    For instance, if researchers suspect that each ego--ego edge is possible with probability $1\%$,
     they can set $\rho^e=0.01$. 
 \end{exmp}
 
@@ -724,9 +721,9 @@ as well as specifications based on the expected number of missing edges.
         \rho^a_{ij} = \rho^a(m^a) = \frac{m^a}{n_a(n_e-1)}.
     \end{equation*} 
     For instance, assume researchers suspect that each alter 
-    is connected to $k^a>0$ additional egos on average.
+    is connected to $k^a \geq 0$ additional egos on average.
     This can be represented by selecting $m^a = k^a \times n_a$.     
-    Similarly, if each ego is believed to be connected to $k^e>0$ additional egos on average,
+    Similarly, if each ego is believed to be connected to $k^e\geq 0$ additional egos on average,
     then $m^e = \frac{k^e \times n_e}{2}$.
 \end{exmp}
 
@@ -791,14 +788,14 @@ that define the edge-level probabilities \eqref{eq:sbm} and the parameter $\kapp
 Examples~\ref{exmp:pi_homo}-\ref{exmp:pi_hetero_number} provide practical guidelines on how
  to specify these parameters in practice.
 As the the true values of such parameters are unknown and can not be directly estimated from the data,
- researchers can resort to sensitivity analyses by exploring a range of plausible values.
+ researchers can resort to sensitivity analysis by exploring a range of plausible values.
  We consider here two approaches: grid sensitivity analysis (GSA) and probabilistic bias analysis (PBA).
  
  In GSA, researchers specify a grid of values for the sensitivity parameters 
  and compute the bias-corrected estimates for each combination
   of parameters \bwnote{TODO: add ref}.
  That results in a grid of bias-corrected estimates.
- Such estimates can be coupled with the associated confidence interval for each
+ Such estimates can be coupled with the associated confidence interval given each
  value of the sensitivity parameters in the specified grid. 
 
  In PBA, researchers specify a prior distribution for the
@@ -1065,7 +1062,7 @@ We report here the results for the estimators \eqref{eq:IE_corrected} and \eqref
 with both homogeneous and heterogeneous edge probabilities specifications and 
 nonparametric ego-network bootstrap with $10^4$ resamples.
 Results for the augmented estimators \eqref{eq:IE_corrected_aipw} and \eqref{eq:DE_corrected_aipw}
-are provided in Appendix~\ref{apdx.sec:data}, and were consistent with the not-augmented results.
+are provided in Appendix~\ref{apdx.sec:data}, and were consistent with the not-augmented results shown here.
 
 Figures~\ref{fig:hptn_sa_ie_augmented} and \ref{fig:hptn_sa_de_augmented}
  summarize the GSA results for indirect and direct effects, respectively.
@@ -1167,7 +1164,7 @@ Nevertheless, across all priors and edge probabilities specifications, the indir
     (left) using the estimator \eqref{eq:IE_corrected},
     and direct effects (right) using the estimator \eqref{eq:DE_corrected}.
     Results are shown for both homogeneous and heterogeneous edge probabilities specifications.
-    Different colors represent different prior distributions for the expected number of missing edges
+    Colors represent different prior distributions for the expected number of missing edges
     and the interaction sensitivity parameter $\kappa$.
     }
     \label{fig:hptn_pba_not_augmented}
