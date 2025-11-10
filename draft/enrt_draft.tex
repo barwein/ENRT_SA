@@ -1205,10 +1205,10 @@ Nevertheless, across all priors and edge probabilities specifications, the indir
           we can take $0, 1, 1+$ exposure levels.
           In this case, the estimands can be the same as before.
           However, the bias and bias-correction will be a bit more complex. 
-          Also, the exposure probabilities will be more complex to compute.
-          We can still compute them by noticing that 
-          $\sum_{j \neq i} Z_j A_{ij}$ is a Poisson-Binomial random variable,
-          and its PMF and probabilities can be approximated \citep{hong2013}.
+          Describe briefly the results of Appendix~\ref{apdx.sec:three_level_em}.
+          Mention the general setup, same estimands, but the requirement 
+          of additional sensitivity parameter that 
+          capture the marginal effect of exposure.        
     \item Transporting the in-sample exposure-contrast estimand to population-level estimands will balance the tradeoff between the difficulty of data acquisition under interference (full population network is often required) and policy relevance.
 \end{enumerate}
 
@@ -1822,7 +1822,7 @@ Thus, in practice, we expect that the estimator $\widehat{DE}$ is attenuated awa
 for most realistic scenarios.
 
 \section{Extension to three-level exposure mapping}
-\label{apd.sec:three_level_em}
+\label{apdx.sec:three_level_em}
 
 We extend the framework to a three-level exposure mapping for alters, $F_i \in \{0, 1, 1+\}$,
  indicating exposure to zero, exactly one, or two or more treated neighbors, respectively. 
@@ -1867,10 +1867,10 @@ of exposure to a single versus no treated neighbors \eqref{eq:indirect_effect}
 \end{equation*}
 
 \subsubsection*{Bias of the naive estimator}
-The naive HT estimator $\widehat{IE}$ remains as defined in \eqref{eq:IE_naive_HT}. Its expectation is $\mathbb{E}_{\bZ}\left[\widehat{IE}\right] = \frac{1}{n_a} \sum_{i \in \cR_a} \left( E_{i,1} - E_{i,0} \right)$, where
+The naive HT estimator $\widehat{IE}$ remains as defined in \eqref{eq:IE_naive_HT}. Its expectation is $\EX_{\bZ}\left[\widehat{IE}\right] = \frac{1}{n_a} \sum_{i \in \cR_a} \left( E_{i,1} - E_{i,0} \right)$, where
 \begin{align*}
-    E_{i,1} &= \mathbb{E}_{\bZ}\left[\frac{\mathbb{I}\{\widetilde{F}_i=1\}Y_i}{p_z} \right] \\
-    E_{i,0} &= \mathbb{E}_{\bZ}\left[\frac{\mathbb{I}\{\widetilde{F}_i=0\}Y_i}{1-p_z} \right].
+    E_{i,1} &= \EX_{\bZ}\left[\frac{\mathbb{I}\{\widetilde{F}_i=1\}Y_i}{p_z} \right] \\
+    E_{i,0} &= \EX_{\bZ}\left[\frac{\mathbb{I}\{\widetilde{F}_i=0\}Y_i}{1-p_z} \right].
 \end{align*}
 The issue is that observed exposures $\widetilde{F}_i=1$ 
 can corresponds to true exposures of either $F_i=1$ or $F_i=1+$,
@@ -1891,12 +1891,12 @@ Given that $Z_{e(i)}=1$,
 \end{itemize}
 By Assumption~\ref{apdx.ass:consis_three_level},
 \begin{align*}
-    E_{i,1} &= \frac{1}{p_z} \mathbb{E}_{\bZ}\left[ 
+    E_{i,1} &= \frac{1}{p_z} \EX_{\bZ}\left[ 
         \mathbb{I}\{\widetilde{F}_i=1, F_i=1\} Y_i(0, 1)
          + \mathbb{I}\{\widetilde{F}_i=1, F_i=1+\}Y_i(0, 1+)
              \right] \\
         &=
-        \frac{1}{p_z} \mathbb{E}_{\bZ}\left[ 
+        \frac{1}{p_z} \EX_{\bZ}\left[ 
         \mathbb{I}\{Z_{e(i)}=1, S_{i, -e(i)}=0\} Y_i(0, 1)
          + \mathbb{I}\{Z_{e(i)}=1, S_{i, -e(i)}\geq 1\}Y_i(0, 1+)
              \right] \\
@@ -1916,7 +1916,7 @@ Given that $Z_{e(i)}=0$,
 Therefore,
 \begin{align*}
     E_{i,0} &= 
-    \frac{1}{1-p_z} \mathbb{E}_{\bZ}\left[ 
+    \frac{1}{1-p_z} \EX_{\bZ}\left[ 
        \sum_{f \in \{0,1,1+\}} \mathbb{I}\{\widetilde{F}_i=0, F_i=f\} Y_i(0, f)
         \right] 
     \\ &= 
@@ -1946,14 +1946,16 @@ but approximation methods exist \citep{hong2013}.
 \paragraph{Bias expression.}
 First, note that $\Pr(S_{i, -e(i)}\geq 1) = 1 - \Pr(S_{i, -e(i)}=0) = 1 - \pi_{i,0}^*$.
 Substituting these probabilities, the expectations of the two components of the naive estimator are:
-\begin{align}
-    E_{i,1} &= \pi_{i,0}^* Y_i(0, 1) + (1 - \pi_{i,0}^*) Y_i(0, 1+) \label{eq:apdx_e1} \\
-    E_{i,0} &= \pi_{i,0}^* Y_i(0, 0) + \pi_{i,1}^* Y_i(0, 1) + (1 - \pi_{i,0}^* - \pi_{i,1}^*)^* Y_i(0, 1+) \label{eq:apdx_e0}
-\end{align}
+\begin{align*}
+    E_{i,1} &= \pi_{i,0}^* Y_i(0, 1) + (1 - \pi_{i,0}^*) Y_i(0, 1+)  \\
+    E_{i,0} &= \pi_{i,0}^* Y_i(0, 0) + \pi_{i,1}^* Y_i(0, 1) + 
+    (1 - \pi_{i,0}^* - \pi_{i,1}^*)^* Y_i(0, 1+) 
+\end{align*}
 The expectation of the naive estimator is:
-\begin{equation*}
+\begin{equation}
+    \label{apdx.eq:bias_three_level}
     \begin{aligned}
-        \mathbb{E}_{\bZ}\left[\widehat{IE}\right] &=
+        \EX_{\bZ}\left[\widehat{IE}\right] &=
         \frac{1}{n_e} \sum_{i \in \cR_a} \left( E_{i,1} - E_{i,0} \right)
         \\ &=
         \frac{1}{n_a} \sum_{i \in \cR_a} \left[ -\pi_{i,0}^* Y_i(0, 0) + 
@@ -1965,78 +1967,130 @@ The expectation of the naive estimator is:
          - (1 - \pi_{i,0}^*) \left\{ Y_i(0, 1) - Y_i(0, 0) \right\}
          \right].
     \end{aligned}
-\end{equation*}
+\end{equation}
 Which implies that the naive estimator is also biased for the indirect effect estimand.
 The bias depends on the indirect effects of $1+$ exposures relative to $1$ exposures
 and of $1$ exposures relative to $0$ exposures,
 weighted by the exposure probabilities $\pi_{i,1}^*$ and $1 - \pi_{i,0}^*$, respectively.
 
 \subsubsection*{Bias-corrected estimator}
-The set of equations (\ref{eq:apdx_e1}) and (\ref{eq:apdx_e0}) forms a $2 \times 3$ linear system for the unknown potential outcomes $\{Y_i(0,0), Y_i(0,1), Y_i(0,1+)\}$, which is underdetermined. To achieve identification, we introduce an additional sensitivity parameter $\delta$ via a structural assumption on the potential outcomes, analogous to Assumption~\ref{ass:egos_kappa}.
+The resulting expected value \eqref{apdx.eq:bias_three_level} forms a
+ $2 \times 3$ linear system for the unknown potential outcomes $\{Y_i(0,0), Y_i(0,1), Y_i(0,1+)\}$, which is underdetermined.
+  To achieve identification, we introduce an additional sensitivity parameter $\delta$ via a structural assumption on the potential outcomes, analogous to Assumption~\ref{ass:egos_kappa}.
 
 \begin{assumption}
     \label{ass:alters_delta}
     There exists a constant $\delta$ such that
     $Y_i(0, 1+) - Y_i(0, 0) = \delta \left\{Y_i(0, 1) - Y_i(0, 0)\right\}$ for all alters $i \in \cR_a$.
 \end{assumption}
-This assumption states that the effect of $1+$ exposures (relative to no exposure) is proportional to the effect of a single exposure. Rearranging, we have
-$$
-Y_i(0, 1+) = (1-\delta) Y_i(0, 0) + \delta Y_i(0, 1).
-$$
-We substitute this into (\ref{eq:apdx_e1}) and (\ref{eq:apdx_e0}) to create a $2 \times 2$ system for the expectations of $Y_i(0,0)$ and $Y_i(0,1)$:
-\begin{align*}
-    E_{i,1} &= \left[ (1 - \pi_{i,0}^*) (1-\delta) \right] Y_i(0, 0) + \left[ \pi_{i,0}^* + (1 - \pi_{i,0}^*) \delta \right] Y_i(0, 1) \\
-    E_{i,0} &= \left[ \pi_{i,0}^* + \pi_{i,1+}^* (1-\delta) \right] Y_i(0, 0) + \left[ \pi_{i,1}^* + \pi_{i,1+}^* \delta \right] Y_i(0, 1)
-\end{align*}
-Let us define the coefficients of this linear system as:
-\begin{align*}
-    a_{11} &= (1 - \pi_{i,0}^*) (1-\delta) \\
-    a_{12} &= \pi_{i,0}^* + (1 - \pi_{i,0}^*) \delta \\
-    a_{21} &= \pi_{i,0}^* + \pi_{i,1+}^* (1-\delta) \\
-    a_{22} &= \pi_{i,1}^* + \pi_{i,1+}^* \delta
-\end{align*}
-The system is now $E_{i,1} = a_{11} Y_i(0,0) + a_{12} Y_i(0,1)$ and $E_{i,0} = a_{21} Y_i(0,0) + a_{22} Y_i(0,1)$. We can solve this system for $Y_i(0,0)$ and $Y_i(0,1)$ using standard algebra.
+The sensitivity parameter $\delta$ in Assumption~\ref{ass:alters_delta} provides an intuitive way to model the dose-response relationship of alter exposure.
+ It is best interpreted through the \emph{marginal effect of additional exposure}.
+  The effect of first exposure is $Y_i(0, 1) - Y_i(0, 0)$.
+  The \emph{additional} effect of the second-and-higher exposure is $Y_i(0, 1+) - Y_i(0, 1)$.
+  Assummption~\ref{ass:alters_delta} implies a direct relationship
+  \begin{equation*}
+    Y_i(0, 1+) - Y_i(0, 1) = (\delta -1) \left\{Y_i(0, 1) - Y_i(0, 0)\right\}
+  \end{equation*}
+  Researchers can therefore specify plausible values for $\delta$ based on their domain knowledge
+\begin{itemize}
+    \item $\delta = 1$. The effect \emph{saturates} after one exposure, and any further contamination is irrelevant. This recovers the binary exposure model.
+    \item $\delta > 1$. There is a \emph{reincforcing} cumulative dose effect, where a second exposure adds benefit 
+        For example, $\delta=2$ implies the same marginal effect between first and second-and-higher exposure.
+        However, $\delta \in (1,2)$ implies that marginal effect between first and zero exposure
+        is higher than the marginal effect between second-or-higher and first exposure.
+    \item $\delta < 1$. Additional exposures \emph{diminish} the effect of the first.
+       For example, exposure to more than one treated neighbor may create confusion or mistrust, reducing the benefit of exposure. 
+\end{itemize}
+This framework allows researchers to conduct sensitivity analysis by 
+    specifying a plausible range for the marginal effect of exposures,
+     rather than the absolute value of $Y_i(0, 1+)$ (e.g., by deriving sharp, yet informative, bounds).
 
-Let $\det(\mathbf{M}_i) = a_{11} a_{22} - a_{12} a_{21}$ be the determinant of the coefficient matrix.
-The solutions for the expectations of the potential outcomes are:
+ Rearranging the statement in Assumption~\ref{ass:alters_delta}, we have
+\begin{equation}
+    \label{apdx.eq:alter_y_0_1plus}
+    Y_i(0, 1+) = (1-\delta) Y_i(0, 0) + \delta Y_i(0, 1).
+\end{equation}
+Using \eqref{apdx.eq:alter_y_0_1plus}, the expectation in \eqref{apdx.eq:bias_three_level} 
+can be written as,
+\begin{equation}
+    \label{apdx.eq:ex_ie_under_delta}
+    \EX_{\bZ}\left[\widehat{IE}\right] =
+    \frac{1}{n_a}
+    \sum_{i \in \cR_a}
+    \left[
+        \pi_{i,0}^* + \pi_{i,1}^*(\delta - 1)
+    \right]
+    \left[
+        Y_i(0,1) - Y_i(0,0)
+    \right],
+\end{equation}
+which implies the bias-corrected estimator of indirect effects under 
+the three-level exposures
+\begin{equation}
+    \label{apdx.eq:ie_adjust_three_level}
+    \widehat{IE}_{adj} =
+    \frac{1}{n_a}
+    \sum_{i \in \cR_a}
+    \frac{1}{
+        \pi_{i,0}^* + \pi_{i,1}^*(\delta - 1)
+    }
+    \left[
+    \frac{\mathbb{I}\{\widetilde{F}_i=1\}Y_i}{p_z} 
+    - 
+    \frac{\mathbb{I}\{\widetilde{F}_i=0\}Y_i}{1-p_z} 
+    \right].
+\end{equation}
+The adjusted estimator $\widehat{IE}_{adj}$ is design-unbiased for the indirect effect estimand $IE$
+\begin{equation*}
+    \EX_{\bZ}\left[\widehat{IE}_{adj}\right] = IE.
+\end{equation*}
+Moreover, \eqref{apdx.eq:ex_ie_under_delta} implies that the naive estimator $\widehat{IE}$ is unbiased 
+if 
+\begin{itemize}
+    \item $\pi_{i,0}^*=1$. This corresponds to no contamination between ego-networks
+     (no additional treated neighbors beyond the ego).
+     That is equivalent to $\rho^a_{ij} = 0$ for all alter--ego edges.
+    \item $\delta = 1  + \frac{1-\pi_{i,0}^*}{\pi_{i,1}^*} = \frac{2\pi_{i,1}^* + \pi_{i,1+}^*}{\pi_{i,1}^*}$ 
+    for all $i \in \cR_a$.
+         This implies that the marginal effect of additional exposure is exactly offset by the contamination between ego-networks.
+\end{itemize}
+Otherwise, if $Y_i(0,1) - Y_i(0,0) \geq 0$ for all alters $i \in \cR_a$, then
 \begin{align*}
-    Y_i(0,0) &= \frac{a_{22} E_{i,1} - a_{12} E_{i,0}}{\det(\mathbf{M}_i)} \\
-    Y_i(0,1) &= \frac{a_{11} E_{i,0} - a_{21} E_{i,1}}{\det(\mathbf{M}_i)}
+    \begin{cases}
+        \EX_{\bZ}\left[\widehat{IE}\right] \geq IE \geq 0, & 
+            \delta \geq \max_{i \in \cR_a}\left\{1 + \frac{1-\pi_{i,0}^*}{\pi_{i,1}^*}\right\}, \\
+        0 \leq \EX_{\bZ}\left[\widehat{IE}\right] \leq IE, & 
+            \delta \in \left( \max_{i \in \cR_a}\left\{ 
+                1 - \frac{\pi_{i,0}^*}{\pi_{i,1}^*} \right\}, 
+                \min_{i \in \cR_a}\left\{1 + \frac{1-\pi_{i,0}^*}{\pi_{i,1}^*}\right\} \right), \\
+        \EX_{\bZ}\left[\widehat{IE}\right] \leq 0 \leq IE, & 
+            \delta \leq \min_{i \in \cR_a}\left\{ 1 - \frac{\pi_{i,0}^*}{\pi_{i,1}^*} \right\}. 
+    \end{cases}
 \end{align*}
-Let $T_{i,1} = \frac{\mathbb{I}\{\widetilde{F}_i=1\}Y_i}{p_z}$ and $T_{i,0} = \frac{\mathbb{I}\{\widetilde{F}_i=0\}Y_i}{1-p_z}$ be the unit-level HT terms, where $\mathbb{E}_{\bZ}[T_{i,1}] = E_{i,1}$ and $\mathbb{E}_{\bZ}[T_{i,0}] = E_{i,0}$.
+Similarly, if $Y_i(0,1) - Y_i(0,0) \leq 0$ for all alters $i \in \cR_a$, we obtain the opposite inequalities.
+Therefore, given monotonicity (in either direction) of the potential outcomes $Y_i(0,1)$ and $Y_i(0,0)$, 
+the estimator $\widehat{IE}$ is either attenuated away, towards, or changes sign relative to the true indirect effect $IE$,
+ depending on the value of the sensitivity parameter $\delta$.
 
-We define the bias-corrected estimators $\widehat{Y_i(0, 0)}_{adj}$ and $\widehat{Y_i(0, 1)}_{adj}$ by replacing the expectations with their unbiased HT estimators:
-\begin{align}
-    \widehat{Y_i(0, 0)}_{adj} &= \frac{1}{\det(\mathbf{M}_i)} \left( a_{22} T_{i,1} - a_{12} T_{i,0} \right) \label{eq:apdx_y0_adj} \\
-    \widehat{Y_i(0, 1)}_{adj} &= \frac{1}{\det(\mathbf{M}_i)} \left( a_{11} T_{i,0} - a_{21} T_{i,1} \right) \label{eq:apdx_y1_adj}
-\end{align}
-The bias-corrected estimator for $IE_{1v0} = \frac{1}{n_a} \sum_{i \in \cR_a} (Y_i(0,1) - Y_i(0,0))$ is:
-$$
-    \widehat{IE}_{adj} = \frac{1}{n_a} \sum_{i \in \cR_a} \left( \widehat{Y_i(0, 1)}_{adj} - \widehat{Y_i(0, 0)}_{adj} \right)
-$$
-Substituting (\ref{eq:apdx_y0_adj}) and (\ref{eq:apdx_y1_adj}):
-\begin{align*}
-    \widehat{IE}_{adj} &= \frac{1}{n_a} \sum_{i \in \cR_a} \left[ \frac{1}{\det(\mathbf{M}_i)} \left( a_{11} T_{i,0} - a_{21} T_{i,1} \right) - \frac{1}{\det(\mathbf{M}_i)} \left( a_{22} T_{i,1} - a_{12} T_{i,0} \right) \right] \\
-    &= \frac{1}{n_a} \sum_{i \in \cR_a} \frac{1}{\det(\mathbf{M}_i)} \left[ (a_{11} + a_{12}) T_{i,0} - (a_{21} + a_{22}) T_{i,1} \right]
-\end{align*}
-We can simplify the terms $(a_{11} + a_{12})$ and $(a_{21} + a_{22})$:
-\begin{align*}
-    a_{11} + a_{12} &= (1 - \pi_{i,0}^*) (1-\delta) + \pi_{i,0}^* + (1 - \pi_{i,0}^*) \delta \\
-    &= (1 - \pi_{i,0}^*) - (1 - \pi_{i,0}^*)\delta + \pi_{i,0}^* + (1 - \pi_{i,0}^*)\delta = 1 \\
-    \\
-    a_{21} + a_{22} &= \pi_{i,0}^* + \pi_{i,1+}^* (1-\delta) + \pi_{i,1}^* + \pi_{i,1+}^* \delta \\
-    &= \pi_{i,0}^* + \pi_{i,1+}^* - \pi_{i,1+}^*\delta + \pi_{i,1}^* + \pi_{i,1+}^*\delta \\
-    &= \pi_{i,0}^* + \pi_{i,1}^* + \pi_{i,1+}^* = 1
-\end{align*}
-Remarkably, both sums simplify to 1. The bias-corrected estimator thus simplifies to:
-\begin{align*}
-    \widehat{IE}_{adj} &= \frac{1}{n_a} \sum_{i \in \cR_a} \frac{1}{\det(\mathbf{M}_i)} \left( T_{i,0} - T_{i,1} \right) \\
-    &= \frac{1}{n_a} \sum_{i \in \cR_a} \frac{-1}{\det(\mathbf{M}_i)} \left( T_{i,1} - T_{i,0} \right) \\
-    &= \frac{1}{n_a} \sum_{i \in \cR_a} \alpha_i^{a,*} \left[ \frac{\mathbb{I}\{\widetilde{F}_i=1\}Y_i}{p_z} - \frac{\mathbb{I}\{\widetilde{F}_i=0\}Y_i}{1 - p_z} \right]
-\end{align*}
-where $\alpha_i^{a,*} = \frac{-1}{\det(\mathbf{M}_i)} = \frac{1}{a_{12} a_{21} - a_{11} a_{22}}$ is the adjustment factor under the three-level exposure assumption. This shows the bias-corrected estimator is a re-weighting of the naive HT estimator, with weights $\alpha_i^{a,*}$ that depend on the sensitivity parameters $\boldsymbol{\rho}^a$ (which define $\pi_{i,k}^*$) and $\delta$.
+Similarly to the augmented bias-corrected estimator \eqref{eq:IE_corrected_aipw},
+we can define an augmented version of the three-level exposure bias-corrected estimator
+by adding outcome models for the conditional expectations
+$\mu_i^a(f) = \EX \left[Y_i \mid \widetilde{F}_i = f, \bX_i, i \in \cR_a \right]$ for $f \in \{0,1\}$.
+Also, variane estimation for $\widehat{IE}_{adj}$ can be done using
+the same approaches described in Section~\ref{apdx_sec:proof} for the bias-corrected 
+indirect effects estimators under two-level exposures.
 
-
+\subsection*{Applying the sensitivity analysis}
+The bias-corrected estimator \eqref{apdx.eq:ie_adjust_three_level}
+can be used in the same way as the bias-corrected estimators 
+under two-level exposure mapping described in Section~\ref{subsec:practice}.
+That is, researchers can specify plausible ranges for the sensitivity parameters
+$\rho^a_{ij}$ and $\delta$ based on their domain knowledge,
+and condust grid sensitivity analysis or probabilistic bias analysis.
+The main difference is the additional sensitivity parameter $\delta$,
+and the a bit more complicated computation of the exposure probabilities $\pi_{i,0}^*$ and $\pi_{i,1}^*$.
+The latter can be easily computed in \texttt{R} using the approximations 
+developed by \citet{hong2013} and are implemented in several packages.
 
 \section{Probabilistic bias analysis}
 \label{apdx.sec:pba}
