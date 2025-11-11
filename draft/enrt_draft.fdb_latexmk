@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex enrt_draft"] 1762848753.87785 "enrt_draft.aux" "enrt_draft.bbl" "enrt_draft" 1762848905.4448 0
+["bibtex enrt_draft"] 1762863712.24493 "enrt_draft.aux" "enrt_draft.bbl" "enrt_draft" 1762863906.11416 0
   "./all_biblo.bib" 1762698049.50729 219035 aba7df1bce9dc5c9c3a0bff95e752266 ""
   "/usr/local/texlive/2025/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "enrt_draft.aux" 1762848905.23944 26179 8c981dae40d34e52ded30b3a2d0026ae "pdflatex"
+  "enrt_draft.aux" 1762863905.91254 26437 e1299d5d1a904f4c26debd5db3274742 "pdflatex"
   (generated)
   "enrt_draft.bbl"
   "enrt_draft.blg"
   (rewritten before read)
-["pdflatex"] 1762848902.93168 "/Users/barwein/Library/CloudStorage/Dropbox/My PC (LAPTOP-6NAJD2IQ)/Desktop/Gate/University/TAU/PhD/Writing/Drafts/Sampled networks/ENRT_SA/draft/enrt_draft.tex" "enrt_draft.pdf" "enrt_draft" 1762848905.44494 0
-  "/Users/barwein/Library/CloudStorage/Dropbox/My PC (LAPTOP-6NAJD2IQ)/Desktop/Gate/University/TAU/PhD/Writing/Drafts/Sampled networks/ENRT_SA/draft/enrt_draft.tex" 1762848902.76672 119232 ad4a9421c631dcc4b98cfc068b6791d3 ""
+["pdflatex"] 1762863903.57495 "/Users/barwein/Library/CloudStorage/Dropbox/My PC (LAPTOP-6NAJD2IQ)/Desktop/Gate/University/TAU/PhD/Writing/Drafts/Sampled networks/ENRT_SA/draft/enrt_draft.tex" "enrt_draft.pdf" "enrt_draft" 1762863906.1143 0
+  "/Users/barwein/Library/CloudStorage/Dropbox/My PC (LAPTOP-6NAJD2IQ)/Desktop/Gate/University/TAU/PhD/Writing/Drafts/Sampled networks/ENRT_SA/draft/enrt_draft.tex" 1762863903.37629 122574 e6e4a4e16d300c3594ba027c05400cae ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1136768653 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -241,10 +241,10 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1757514573 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1757514520 3345726 b8db0ef6a7892e454259cca4e786d964 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "enrt_draft.aux" 1762848905.23944 26179 8c981dae40d34e52ded30b3a2d0026ae "pdflatex"
-  "enrt_draft.bbl" 1762848753.95422 8358 00a2af1634918f6ea5fe2275699ab130 "bibtex enrt_draft"
-  "enrt_draft.out" 1762848905.24292 3977 2ef6f7c31f82dcc24e6e71cf6c767e65 "pdflatex"
-  "enrt_draft.tex" 1762848902.76672 119232 ad4a9421c631dcc4b98cfc068b6791d3 ""
+  "enrt_draft.aux" 1762863905.91254 26437 e1299d5d1a904f4c26debd5db3274742 "pdflatex"
+  "enrt_draft.bbl" 1762863712.32901 8358 00a2af1634918f6ea5fe2275699ab130 "bibtex enrt_draft"
+  "enrt_draft.out" 1762863905.9139 3977 2ef6f7c31f82dcc24e6e71cf6c767e65 "pdflatex"
+  "enrt_draft.tex" 1762863903.37629 122574 e6e4a4e16d300c3594ba027c05400cae ""
   "figures/hptn/alter_per_egonet_histogram.png" 1762079267.66412 47934 1ecd8cd868e492abf37858ba86a85562 ""
   "figures/hptn/pba_de_augmented.png" 1762079875.46056 76268 c53d17882a320aba599d8ce1bae90c8d ""
   "figures/hptn/pba_de_not_augmented.png" 1762079875.66436 75939 903478a40021f6783a11c908e8df32da ""

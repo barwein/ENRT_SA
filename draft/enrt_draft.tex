@@ -1196,21 +1196,54 @@ Nevertheless, across all priors and edge probabilities specifications, the indir
 
 \section{Discussion}
 \label{sec:discussion}
+In this paper, we developed sensitivity analysis methods to assess the impact of contamination
+between ego-networks on the causal estimates in ego-centric network randomized trials.
+Such trials are increasingly used to evaluate interventions in hard-to-reach populations,
+where full network information is often unavailable or difficult to obtain.
+Our methods build on a general formulation of contamination
+as exposure misclassification due to missing network edges,
+and provide bias-corrected estimators for both indirect and direct effects.
+The bias-corrected estimators depend on sensitivity parameters that
+characterize the contamination process at the edge-level and
+ the interaction magnitude between treatments and exposures for the direct effects.
+We provided practical guidelines for specifying these sensitivity parameters
+and described two sensitivity analysis approaches: grid sensitivity analysis and probabilistic bias analysis.
+We illustrated our methods through a simulation study and an analysis of the HPTN 037 trial, 
+showing that the indirect effects may be under-estimated and the direct effects over-estimated
+when contamination is ignored.
 
-\begin{enumerate}
-    \item In the case of homogeneous edge probabilities, it is possible to estimate $\pi^a_i$ (but not $\pi^e_i$) if we have validation data à la \citet{Chao2023}. They did it only for IE, and only on summary-level data.
-    \item Extension to observational studies is tricky as non-recruited units can be treated as well... Discuss the limitations here.
-    \item Extension to three level exposure mapping. 
-          Instead of looking at exposures as zero or at least one treated alter,
-          we can take $0, 1, 1+$ exposure levels.
-          In this case, the estimands can be the same as before.
-          However, the bias and bias-correction will be a bit more complex. 
-          Describe briefly the results of Appendix~\ref{apdx.sec:three_level_em}.
-          Mention the general setup, same estimands, but the requirement 
-          of additional sensitivity parameter that 
-          capture the marginal effect of exposure.        
-    \item Transporting the in-sample exposure-contrast estimand to population-level estimands will balance the tradeoff between the difficulty of data acquisition under interference (full population network is often required) and policy relevance.
-\end{enumerate}
+We assumed a two-level exposure mappings specification, indicating 
+whether a unit is connected to at least one treated neighbor (Assumption~\ref{ass:expos_map}).
+This specification makes senses when there is no contamination 
+between ego-networks or when the treatment effect is saturated at one treated neighbor.
+That is, when exposure to additional treated neighbors does not further affect the outcome.
+In Appendix~\ref{apdx.sec:three_level_em}, we extend our methods to a three-level exposure mapping specification,
+ distinguishing between no treated neighbors, one treated neighbor, and two or more treated neighbors.
+In this case, for example, alter with observed exposure level of one treated neighbor
+may have true exposure level of one or two-and-more treated neighbors.
+For the same indirect effects estimand \eqref{eq:indirect_effect},
+we derive the bias expressions for the naive estimator \eqref{eq:IE_naive_HT}.
+We further provide bias-corrected estimators that depend on additional sensitivity parameter 
+that capture the marginal effect of exposure,
+ analogously to $\kappa$ in Assumption~\ref{ass:egos_kappa}. 
+We show that the the two-level exposure mapping model is a special case of the three-level model
+with saturation of effects after the first exposure. 
+
+Ego-centric network randomized trial is a promising design 
+that allows for the estimation of spillovers and indirect effects 
+without the requirement for sociocentric network measurements. 
+By that, it enables researchers to estimate causal effects under interference 
+with limited network data.
+However, extending these designs to observational studies 
+where units are sampled from a larger network (e.g., through ego-centric sampling),
+but treatments are not randomly assigned by the researchers is problematic.
+The primary concern is that non-recruited units 
+can be treated as well, leading to treatment interference between
+recruited and non-recruited units. Since information on the edges connecting 
+such units in the population is rarely available,
+ addressing interference in observational studies with
+  ego-centric sampling remains a significant challenge.
+
 
 \bibliographystyle{apalike}
 \bibliography{all_biblo}
@@ -1739,7 +1772,7 @@ Alternatively, it is also possible to estimate the variance of $\widehat{DE}_{ad
 
 \paragraph{Attenuation and interplay between $\kappa$ and $\pi_i^e$.}
 Consider first the case homogeneous exposure probabilities $\pi_i^e = \pi^e$ for all $i\in\cR_e$.
-Then, $\widehat{DE}_{adj} = \frac{1}{1+\pi^e(\kappa-1)}\widehat{DE}$. 
+Then, $\widehat{DE}_{adj} = \frac{1}{2+\pi^e(\kappa-1)}\widehat{DE}$. 
 Thus, if $1 + \pi^e(\kappa-1) > 1 \Rightarrow \kappa > 1 - \frac{1}{\pi^e}$, 
     then $\text{sign}(\widehat{DE}_{adj}) = \text{sign}(\widehat{DE})$.
 Otherwise, if $\kappa < 1 - \frac{1}{\pi^e}$, then $\text{sign}(\widehat{DE}_{adj}) = -\text{sign}(\widehat{DE})$.
@@ -1824,7 +1857,7 @@ for most realistic scenarios.
 \section{Extension to three-level exposure mapping}
 \label{apdx.sec:three_level_em}
 
-We extend the framework to a three-level exposure mapping for alters, $F_i \in \{0, 1, 1+\}$,
+We extend the framework to a three-level exposure mapping for alters, $F_i \in \{0, 1, 2+\}$,
  indicating exposure to zero, exactly one, or two or more treated neighbors, respectively. 
  We consider only the indirect effect estimand and estimators.
  We derive bias expressions for the naive HT estimator
@@ -1847,18 +1880,18 @@ The modified exposure mapping (Assumption~\ref{ass:expos_map}) is
         \begin{cases}
             0, & S_i = 0 \\
             1, & S_i = 1 \\
-            1+, & S_i \ge 2
+            2+, & S_i \ge 2
         \end{cases}
     \end{equation*}
     For any $\bz, \bz' \in \mathcal{Z}$, 
     if $z_i = z'_i$ and $F(\bz_{-i},\bA) = F(\bz'_{-i},\bA)$, then $Y_i(\bz) = Y_i(\bz')$.
 \end{assumption}
-By Assumption~\ref{apdx.ass:expos_map_three_level}, we can write $Y_i(\bZ) = Y_i(Z_i, F_i)$, where $F_i \in \{0, 1, 1+\}$.
+By Assumption~\ref{apdx.ass:expos_map_three_level}, we can write $Y_i(\bZ) = Y_i(Z_i, F_i)$, where $F_i \in \{0, 1, 2+\}$.
 Thus, each unit now have six potential outcomes, instead of four.
 The modified consistency (Assumption~\ref{ass:consis}) is
 \begin{assumption}[Consistency (Three-Level)]
 \label{apdx.ass:consis_three_level}
-$Y_i = \sum_{z \in \{0,1\}}\sum_{f \in \{0, 1, 1+\}}Y_i(0,f) \mathbb{I}\left\{Z_i=0, F_i=f\right\}$.
+$Y_i = \sum_{z \in \{0,1\}}\sum_{f \in \{0, 1, 2+\}}Y_i(0,f) \mathbb{I}\left\{Z_i=0, F_i=f\right\}$.
 \end{assumption}
 The estimand of interest remains the sample average indirect effect 
 of exposure to a single versus no treated neighbors \eqref{eq:indirect_effect}
@@ -1873,8 +1906,8 @@ The naive HT estimator $\widehat{IE}$ remains as defined in \eqref{eq:IE_naive_H
     E_{i,0} &= \EX_{\bZ}\left[\frac{\mathbb{I}\{\widetilde{F}_i=0\}Y_i}{1-p_z} \right].
 \end{align*}
 The issue is that observed exposures $\widetilde{F}_i=1$ 
-can corresponds to true exposures of either $F_i=1$ or $F_i=1+$,
-and observed exposures $\widetilde{F}_i=0$ can corresponds to true exposures of $F_i=0$, $F_i=1$, or $F_i=1+$.
+can corresponds to true exposures of either $F_i=1$ or $F_i=2+$,
+and observed exposures $\widetilde{F}_i=0$ can corresponds to true exposures of $F_i=0$, $F_i=1$, or $F_i=2+$.
 Therefore, the observed outcomes $Y_i$ under observed exposures 
     $\widetilde{F}_i$ are mixtures of potential outcomes under different true exposures $F_i$.
 
@@ -1887,20 +1920,20 @@ If $\widetilde{F}_i=1$, then $Z_{e(i)}=1$. The true number of treated neighbors 
 Given that $Z_{e(i)}=1$,
 \begin{itemize}
     \item The true exposure is $F_i=1$ if $S_i = 1$, which implies $S_{i, -e(i)} = 0$.
-    \item The true exposure is $F_i=1+$ if $S_i \ge 2$, which implies $S_{i, -e(i)} \ge 1$.
+    \item The true exposure is $F_i=2+$ if $S_i \ge 2$, which implies $S_{i, -e(i)} \ge 1$.
 \end{itemize}
 By Assumptions~\ref{apdx.ass:expos_map_three_level}-\ref{apdx.ass:consis_three_level},
 \begin{align*}
     E_{i,1} &= \frac{1}{p_z} \EX_{\bZ}\left[ 
         \mathbb{I}\{\widetilde{F}_i=1, F_i=1\} Y_i(0, 1)
-         + \mathbb{I}\{\widetilde{F}_i=1, F_i=1+\}Y_i(0, 1+)
+         + \mathbb{I}\{\widetilde{F}_i=1, F_i=2+\}Y_i(0, 2+)
              \right] \\
         &=
         \frac{1}{p_z} \EX_{\bZ}\left[ 
         \mathbb{I}\{Z_{e(i)}=1, S_{i, -e(i)}=0\} Y_i(0, 1)
-         + \mathbb{I}\{Z_{e(i)}=1, S_{i, -e(i)}\geq 1\}Y_i(0, 1+)
+         + \mathbb{I}\{Z_{e(i)}=1, S_{i, -e(i)}\geq 1\}Y_i(0, 2+)
              \right] \\
-    &= \Pr(S_{i, -e(i)}=0) Y_i(0, 1) + \Pr(S_{i, -e(i)} \geq 1) Y_i(0, 1+).
+    &= \Pr(S_{i, -e(i)}=0) Y_i(0, 1) + \Pr(S_{i, -e(i)} \geq 1) Y_i(0, 2+).
 \end{align*}
 The last step holds because $S_{i, -e(i)}$ is independent of $Z_{e(i)}$ under Assumption~\ref{ass:bernoulli_design},
 and $\Pr(Z_{e(i)}=1) = p_z$.
@@ -1911,16 +1944,16 @@ Given that $Z_{e(i)}=0$,
 \begin{itemize}
     \item The true exposure is $F_i=0$ if $S_i = 0$, which implies $S_{i, -e(i)} = 0$.
     \item The true exposure is $F_i=1$ if $S_i = 1$, which implies $S_{i, -e(i)} = 1$.
-    \item The true exposure is $F_i=1+$ if $S_i \geq 2$, which implies $S_{i, -e(i)} \geq 2$.
+    \item The true exposure is $F_i=2+$ if $S_i \geq 2$, which implies $S_{i, -e(i)} \geq 2$.
 \end{itemize}
 Therefore,
 \begin{align*}
     E_{i,0} &= 
     \frac{1}{1-p_z} \EX_{\bZ}\left[ 
-       \sum_{f \in \{0,1,1+\}} \mathbb{I}\{\widetilde{F}_i=0, F_i=f\} Y_i(0, f)
+       \sum_{f \in \{0,1,2+\}} \mathbb{I}\{\widetilde{F}_i=0, F_i=f\} Y_i(0, f)
         \right] 
     \\ &= 
-    \Pr(S_{i, -e(i)}=0) Y_i(0, 0) + \Pr(S_{i, -e(i)}=1) Y_i(0, 1) + \Pr(S_{i, -e(i)} \ge 2) Y_i(0, 1+).
+    \Pr(S_{i, -e(i)}=0) Y_i(0, 0) + \Pr(S_{i, -e(i)}=1) Y_i(0, 1) + \Pr(S_{i, -e(i)} \ge 2) Y_i(0, 2+).
 \end{align*}
 
 \paragraph{Exposures probabilities.}
@@ -1937,7 +1970,7 @@ The random variable $S_{i, -e(i)}$ follows a Poisson-Binomial distribution
     \left[ p_z \rho^a_{ij}
     \prod_{l \in \cR_e^{e(i)} \setminus \{j\}} (1 - p_z \rho^a_{il})
      \right] \\
-    \pi_{i,1+}^* &= \Pr(S_{i, -e(i)} \geq 2) = 1 - \pi_{i,0}^* - \pi_{i,1}^*.
+    \pi_{i,2+}^* &= \Pr(S_{i, -e(i)} \geq 2) = 1 - \pi_{i,0}^* - \pi_{i,1}^*.
 \end{align*}
 For large $n_e$, analytic computation of $\pi_{i,1}^*$ can be challenging,
 but approximation methods exist \citep{hong2013}.
@@ -1947,9 +1980,9 @@ but approximation methods exist \citep{hong2013}.
 First, note that $\Pr(S_{i, -e(i)}\geq 1) = 1 - \Pr(S_{i, -e(i)}=0) = 1 - \pi_{i,0}^*$.
 Substituting these probabilities, the expectations of the two components of the naive estimator are:
 \begin{align*}
-    E_{i,1} &= \pi_{i,0}^* Y_i(0, 1) + (1 - \pi_{i,0}^*) Y_i(0, 1+)  \\
+    E_{i,1} &= \pi_{i,0}^* Y_i(0, 1) + (1 - \pi_{i,0}^*) Y_i(0, 2+)  \\
     E_{i,0} &= \pi_{i,0}^* Y_i(0, 0) + \pi_{i,1}^* Y_i(0, 1) + 
-    (1 - \pi_{i,0}^* - \pi_{i,1}^*)^* Y_i(0, 1+) 
+    (1 - \pi_{i,0}^* - \pi_{i,1}^*)^* Y_i(0, 2+) 
 \end{align*}
 The expectation of the naive estimator is:
 \begin{equation}
@@ -1960,22 +1993,22 @@ The expectation of the naive estimator is:
         \\ &=
         \frac{1}{n_a} \sum_{i \in \cR_a} \left[ -\pi_{i,0}^* Y_i(0, 0) + 
         (\pi_{i,0}^* - \pi_{i,1}^*) Y_i(0, 1) +
-         \pi_{i,1}^* Y_i(0, 1+) \right]
+         \pi_{i,1}^* Y_i(0, 2+) \right]
          \\ &=
          IE + \frac{1}{n_a} \sum_{i \in \cR_a} \left[
-         \pi_{i,1}^*\left\{ Y_i(0, 1+) - Y_i(0, 1) \right\}
+         \pi_{i,1}^*\left\{ Y_i(0, 2+) - Y_i(0, 1) \right\}
          - (1 - \pi_{i,0}^*) \left\{ Y_i(0, 1) - Y_i(0, 0) \right\}
          \right].
     \end{aligned}
 \end{equation}
 Which implies that the naive estimator is also biased for the indirect effect estimand.
-The bias depends on the indirect effects of $1+$ exposures relative to $1$ exposures
+The bias depends on the indirect effects of $2+$ exposures relative to $1$ exposures
 and of $1$ exposures relative to $0$ exposures,
 weighted by the exposure probabilities $\pi_{i,1}^*$ and $1 - \pi_{i,0}^*$, respectively.
 
 \subsubsection*{Bias-corrected estimator}
 The resulting expected value \eqref{apdx.eq:bias_three_level} is a linear combination of the 
-unknown potential outcomes $\{Y_i(0,0), Y_i(0,1), Y_i(0,1+)\}$.
+unknown potential outcomes $\{Y_i(0,0), Y_i(0,1), Y_i(0,2+)\}$.
 The problem is that the observed data do not provide enough information to identify all three potential outcomes
 for each alter $i \in \cR_a$.
 To achieve identification, we introduce an additional sensitivity parameter $\delta$ via 
@@ -1983,15 +2016,15 @@ a structural assumption on the potential outcomes, analogous to Assumption~\ref{
 \begin{assumption}
     \label{ass:alters_delta}
     There exists a constant $\delta$ such that
-    $Y_i(0, 1+) - Y_i(0, 0) = \delta \left\{Y_i(0, 1) - Y_i(0, 0)\right\}$ for all alters $i \in \cR_a$.
+    $Y_i(0, 2+) - Y_i(0, 0) = \delta \left\{Y_i(0, 1) - Y_i(0, 0)\right\}$ for all alters $i \in \cR_a$.
 \end{assumption}
 The sensitivity parameter $\delta$ in Assumption~\ref{ass:alters_delta} provides an intuitive way to model the dose-response relationship of alter exposure.
  It is best interpreted through the \emph{marginal effect of additional exposure}.
   The effect of first exposure is $Y_i(0, 1) - Y_i(0, 0)$.
-  The \emph{additional} effect of the second-and-higher exposure is $Y_i(0, 1+) - Y_i(0, 1)$.
+  The \emph{additional} effect of the second-and-higher exposure is $Y_i(0, 2+) - Y_i(0, 1)$.
   Assummption~\ref{ass:alters_delta} implies a direct relationship
   \begin{equation*}
-    Y_i(0, 1+) - Y_i(0, 1) = (\delta -1) \left\{Y_i(0, 1) - Y_i(0, 0)\right\}
+    Y_i(0, 2+) - Y_i(0, 1) = (\delta -1) \left\{Y_i(0, 1) - Y_i(0, 0)\right\}
   \end{equation*}
   Researchers can therefore specify plausible values for $\delta$ based on their domain knowledge.
 \begin{itemize}
@@ -2005,11 +2038,11 @@ The sensitivity parameter $\delta$ in Assumption~\ref{ass:alters_delta} provides
 \end{itemize}
 This framework allows researchers to conduct sensitivity analysis by 
     specifying a plausible range for the marginal effect of exposures,
-     rather than the absolute value of $Y_i(0, 1+)$ (e.g., by deriving sharp, yet informative, bounds).
+     rather than the absolute value of $Y_i(0, 2+)$ (e.g., by deriving sharp, yet informative, bounds).
  Rearranging the statement in Assumption~\ref{ass:alters_delta}, we have
 \begin{equation}
     \label{apdx.eq:alter_y_0_1plus}
-    Y_i(0, 1+) = (1-\delta) Y_i(0, 0) + \delta Y_i(0, 1).
+    Y_i(0, 2+) = (1-\delta) Y_i(0, 0) + \delta Y_i(0, 1).
 \end{equation}
 Using \eqref{apdx.eq:alter_y_0_1plus}, the expectation in \eqref{apdx.eq:bias_three_level} 
 can be written as,
@@ -2051,21 +2084,50 @@ if
     \item $\pi_{i,0}^*=1$. This corresponds to no contamination between ego-networks
      (no additional treated neighbors beyond the ego).
      That is equivalent to $\rho^a_{ij} = 0$ for all alter--ego edges.
-    \item $\delta = 1  + \frac{1-\pi_{i,0}^*}{\pi_{i,1}^*} = 2 + \frac{\pi_{i,1+}^*}{\pi_{i,1}^*}$ 
+    \item $\delta = 1  + \frac{1-\pi_{i,0}^*}{\pi_{i,1}^*} = 2 + \frac{\pi_{i,2+}^*}{\pi_{i,1}^*}$ 
     for all $i \in \cR_a$.
          This implies that the marginal effect of additional exposure is exactly offset by the contamination between ego-networks.
 \end{itemize}
+
+\paragraph{Relation to the two-level exposure model.}
+Note that if we set $\delta=1$ in \eqref{apdx.eq:ie_adjust_three_level},
+then $Y_i(0,2+) = Y_i(0,1)$, and 
+the additional exposure level $2+$ collapses into level $1$.
+Recall that $\pi_i^a = \Pr(F_i=1 \mid i \in \cR_a)$ is the probability
+that alter $i$ is exposed to \emph{at least} one treated neighbor under the two-level exposure mapping.
+We can write 
+\begin{equation*}
+    \begin{aligned}
+        1 - \pi_i^a 
+        &= \Pr(F_i=0 \mid Z_{e(i)}=1 \in \cR_a)\Pr(Z_{e(i)}=1 \mid i \in \cR_a) 
+        \\ & \quad +
+        \Pr(F_i=0 \mid Z_{e(i)}=0 \in \cR_a)\Pr(Z_{e(i)}=0 \mid i \in \cR_a) 
+        \\  &= 
+         \Pr(S_{i, -e(i)}=0)(1-p_z)
+         \\ &= 
+          \pi_{i,0}^* (1-p_z).
+    \end{aligned}
+\end{equation*}
+That is, $\pi_{i,0}^* = \frac{1 - \pi_i^a}{1-p_z}$.
+Substituting this into \eqref{apdx.eq:ie_adjust_three_level} with $\delta=1$,
+we recover the bias-corrected estimator for the two-level exposure mapping
+given in \eqref{eq:IE_corrected}.
+Therefore, the two-level exposure model can be 
+viewed as a special case of the three-level exposure model
+with saturation of effects after the first exposure.
+
+\paragraph{Attenuation and interplay between $\delta$ and $\pi_{i,k}^*$.}
 If $Y_i(0,1) - Y_i(0,0) \geq 0$ for all alters $i \in \cR_a$, then
 \begin{align*}
     \begin{cases}
         \EX_{\bZ}\left[\widehat{IE}\right] \geq IE \geq 0, & 
-            \delta \geq \max_{i \in \cR_a}\left\{2 + \frac{\pi_{i,1+}^*}{\pi_{i,1}^*}\right\}, \\
+            \delta \geq \max_{i \in \cR_a}\left\{2 + \frac{\pi_{i,2+}^*}{\pi_{i,1}^*}\right\}, \\
         0 \leq \EX_{\bZ}\left[\widehat{IE}\right] \leq IE, & 
             \delta \in \left( \max_{i \in \cR_a}\left\{ 
-              2 - \frac{1 - \pi_{i,1+}^*}{\pi_{i,1}^*} \right\}, 
-                \min_{i \in \cR_a}\left\{2 + \frac{\pi_{i,1+}^*}{\pi_{i,1}^*}\right\} \right), \\
+              2 - \frac{1 - \pi_{i,2+}^*}{\pi_{i,1}^*} \right\}, 
+                \min_{i \in \cR_a}\left\{2 + \frac{\pi_{i,2+}^*}{\pi_{i,1}^*}\right\} \right), \\
         \EX_{\bZ}\left[\widehat{IE}\right] \leq 0 \leq IE, & 
-            \delta \leq \min_{i \in \cR_a}\left\{ 2 - \frac{1 - \pi_{i,1+}^*}{\pi_{i,1}^*} \right\}. 
+            \delta \leq \min_{i \in \cR_a}\left\{ 2 - \frac{1 - \pi_{i,2+}^*}{\pi_{i,1}^*} \right\}. 
     \end{cases}
 \end{align*}
 Similarly, if $Y_i(0,1) - Y_i(0,0) \leq 0$ for all alters $i \in \cR_a$, we obtain the opposite inequalities.
