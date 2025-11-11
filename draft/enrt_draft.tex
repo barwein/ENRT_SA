@@ -1854,7 +1854,7 @@ The modified exposure mapping (Assumption~\ref{ass:expos_map}) is
     if $z_i = z'_i$ and $F(\bz_{-i},\bA) = F(\bz'_{-i},\bA)$, then $Y_i(\bz) = Y_i(\bz')$.
 \end{assumption}
 By Assumption~\ref{apdx.ass:expos_map_three_level}, we can write $Y_i(\bZ) = Y_i(Z_i, F_i)$, where $F_i \in \{0, 1, 1+\}$.
-Thus, each unit not have six potential outcomes, instead of four.
+Thus, each unit now have six potential outcomes, instead of four.
 The modified consistency (Assumption~\ref{ass:consis}) is
 \begin{assumption}[Consistency (Three-Level)]
 \label{apdx.ass:consis_three_level}
@@ -1889,7 +1889,7 @@ Given that $Z_{e(i)}=1$,
     \item The true exposure is $F_i=1$ if $S_i = 1$, which implies $S_{i, -e(i)} = 0$.
     \item The true exposure is $F_i=1+$ if $S_i \ge 2$, which implies $S_{i, -e(i)} \ge 1$.
 \end{itemize}
-By Assumption~\ref{apdx.ass:consis_three_level},
+By Assumptions~\ref{apdx.ass:expos_map_three_level}-\ref{apdx.ass:consis_three_level},
 \begin{align*}
     E_{i,1} &= \frac{1}{p_z} \EX_{\bZ}\left[ 
         \mathbb{I}\{\widetilde{F}_i=1, F_i=1\} Y_i(0, 1)
@@ -1974,10 +1974,12 @@ and of $1$ exposures relative to $0$ exposures,
 weighted by the exposure probabilities $\pi_{i,1}^*$ and $1 - \pi_{i,0}^*$, respectively.
 
 \subsubsection*{Bias-corrected estimator}
-The resulting expected value \eqref{apdx.eq:bias_three_level} forms a
- $2 \times 3$ linear system for the unknown potential outcomes $\{Y_i(0,0), Y_i(0,1), Y_i(0,1+)\}$, which is underdetermined.
-  To achieve identification, we introduce an additional sensitivity parameter $\delta$ via a structural assumption on the potential outcomes, analogous to Assumption~\ref{ass:egos_kappa}.
-
+The resulting expected value \eqref{apdx.eq:bias_three_level} is a linear combination of the 
+unknown potential outcomes $\{Y_i(0,0), Y_i(0,1), Y_i(0,1+)\}$.
+The problem is that the observed data do not provide enough information to identify all three potential outcomes
+for each alter $i \in \cR_a$.
+To achieve identification, we introduce an additional sensitivity parameter $\delta$ via 
+a structural assumption on the potential outcomes, analogous to Assumption~\ref{ass:egos_kappa}.
 \begin{assumption}
     \label{ass:alters_delta}
     There exists a constant $\delta$ such that
@@ -1991,10 +1993,10 @@ The sensitivity parameter $\delta$ in Assumption~\ref{ass:alters_delta} provides
   \begin{equation*}
     Y_i(0, 1+) - Y_i(0, 1) = (\delta -1) \left\{Y_i(0, 1) - Y_i(0, 0)\right\}
   \end{equation*}
-  Researchers can therefore specify plausible values for $\delta$ based on their domain knowledge
+  Researchers can therefore specify plausible values for $\delta$ based on their domain knowledge.
 \begin{itemize}
     \item $\delta = 1$. The effect \emph{saturates} after one exposure, and any further contamination is irrelevant. This recovers the binary exposure model.
-    \item $\delta > 1$. There is a \emph{reincforcing} cumulative dose effect, where a second exposure adds benefit 
+    \item $\delta > 1$. There is a \emph{reinforcing} cumulative dose effect, where a second exposure adds benefit. 
         For example, $\delta=2$ implies the same marginal effect between first and second-and-higher exposure.
         However, $\delta \in (1,2)$ implies that marginal effect between first and zero exposure
         is higher than the marginal effect between second-or-higher and first exposure.
@@ -2004,7 +2006,6 @@ The sensitivity parameter $\delta$ in Assumption~\ref{ass:alters_delta} provides
 This framework allows researchers to conduct sensitivity analysis by 
     specifying a plausible range for the marginal effect of exposures,
      rather than the absolute value of $Y_i(0, 1+)$ (e.g., by deriving sharp, yet informative, bounds).
-
  Rearranging the statement in Assumption~\ref{ass:alters_delta}, we have
 \begin{equation}
     \label{apdx.eq:alter_y_0_1plus}
@@ -2050,21 +2051,21 @@ if
     \item $\pi_{i,0}^*=1$. This corresponds to no contamination between ego-networks
      (no additional treated neighbors beyond the ego).
      That is equivalent to $\rho^a_{ij} = 0$ for all alter--ego edges.
-    \item $\delta = 1  + \frac{1-\pi_{i,0}^*}{\pi_{i,1}^*} = \frac{2\pi_{i,1}^* + \pi_{i,1+}^*}{\pi_{i,1}^*}$ 
+    \item $\delta = 1  + \frac{1-\pi_{i,0}^*}{\pi_{i,1}^*} = 2 + \frac{\pi_{i,1+}^*}{\pi_{i,1}^*}$ 
     for all $i \in \cR_a$.
          This implies that the marginal effect of additional exposure is exactly offset by the contamination between ego-networks.
 \end{itemize}
-Otherwise, if $Y_i(0,1) - Y_i(0,0) \geq 0$ for all alters $i \in \cR_a$, then
+If $Y_i(0,1) - Y_i(0,0) \geq 0$ for all alters $i \in \cR_a$, then
 \begin{align*}
     \begin{cases}
         \EX_{\bZ}\left[\widehat{IE}\right] \geq IE \geq 0, & 
-            \delta \geq \max_{i \in \cR_a}\left\{1 + \frac{1-\pi_{i,0}^*}{\pi_{i,1}^*}\right\}, \\
+            \delta \geq \max_{i \in \cR_a}\left\{2 + \frac{\pi_{i,1+}^*}{\pi_{i,1}^*}\right\}, \\
         0 \leq \EX_{\bZ}\left[\widehat{IE}\right] \leq IE, & 
             \delta \in \left( \max_{i \in \cR_a}\left\{ 
-                1 - \frac{\pi_{i,0}^*}{\pi_{i,1}^*} \right\}, 
-                \min_{i \in \cR_a}\left\{1 + \frac{1-\pi_{i,0}^*}{\pi_{i,1}^*}\right\} \right), \\
+              2 - \frac{1 - \pi_{i,1+}^*}{\pi_{i,1}^*} \right\}, 
+                \min_{i \in \cR_a}\left\{2 + \frac{\pi_{i,1+}^*}{\pi_{i,1}^*}\right\} \right), \\
         \EX_{\bZ}\left[\widehat{IE}\right] \leq 0 \leq IE, & 
-            \delta \leq \min_{i \in \cR_a}\left\{ 1 - \frac{\pi_{i,0}^*}{\pi_{i,1}^*} \right\}. 
+            \delta \leq \min_{i \in \cR_a}\left\{ 2 - \frac{1 - \pi_{i,1+}^*}{\pi_{i,1}^*} \right\}. 
     \end{cases}
 \end{align*}
 Similarly, if $Y_i(0,1) - Y_i(0,0) \leq 0$ for all alters $i \in \cR_a$, we obtain the opposite inequalities.
@@ -2076,7 +2077,7 @@ Similarly to the augmented bias-corrected estimator \eqref{eq:IE_corrected_aipw}
 we can define an augmented version of the three-level exposure bias-corrected estimator
 by adding outcome models for the conditional expectations
 $\mu_i^a(f) = \EX \left[Y_i \mid \widetilde{F}_i = f, \bX_i, i \in \cR_a \right]$ for $f \in \{0,1\}$.
-Also, variane estimation for $\widehat{IE}_{adj}$ can be done using
+Variance estimation for $\widehat{IE}_{adj}$ can be done using
 the same approaches described in Section~\ref{apdx_sec:proof} for the bias-corrected 
 indirect effects estimators under two-level exposures.
 
@@ -2087,7 +2088,7 @@ under two-level exposure mapping described in Section~\ref{subsec:practice}.
 That is, researchers can specify plausible ranges for the sensitivity parameters
 $\rho^a_{ij}$ and $\delta$ based on their domain knowledge,
 and condust grid sensitivity analysis or probabilistic bias analysis.
-The main difference is the additional sensitivity parameter $\delta$,
+The main difference is the specification of the additional sensitivity parameter $\delta$,
 and the a bit more complicated computation of the exposure probabilities $\pi_{i,0}^*$ and $\pi_{i,1}^*$.
 The latter can be easily computed in \texttt{R} using the approximations 
 developed by \citet{hong2013} and are implemented in several packages.
