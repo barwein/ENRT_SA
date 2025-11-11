@@ -179,7 +179,7 @@ shorten >= 3pt, preaction = {decorate}
 \maketitle
 
 
-\section{Porblem setup}
+\section{Problem setup}
 Consider a CRT with one stage randomization. Assume there are clusters
 $C_1, \ldots, C_K$ in the population, where $K$ is the total number of clusters.
 Let $n_k$ be the size of cluster $C_k$, and $N = \sum_{k=1}^K n_k$ be the total population size.
@@ -212,7 +212,7 @@ Assume that the observed outcomes $Y_i$ are generated from one of the potential 
 $Y_i = \sum_{z,f \in \{0,1\}}Y_i(z,f) \mathbb{I}\left\{Z_i=z, F_i=f\right\}$ .    
 \end{assumption}
 
-The causal estimand is the sample average treatment effects. Using our setup and notations it reduced to
+The causal estimand is the sample average treatment effects. Using our setup and notations is it reduced to
 \begin{equation}
     \label{eq:ate}
     ATE = \frac{1}{N}\sum_{i=1}^N Y_i(1, 1) - Y_i(0, 0) = 
@@ -365,45 +365,134 @@ then $\EX_{\bZ}[\widehat{ATE}] \leq ATE$, and if
 $Y_i(0,1) \leq Y_i(0,0)$ for all $i$,
 then $\EX_{\bZ}[\widehat{ATE}] \geq ATE$.
 
-\paragraph{Bias-corrected estimator.}
-An unbiased estimator for the ATE can be obtained by correcting the bias of the HT estimator.
-Define the bias-corrected estimator as  
-\begin{equation}
-    \label{eq:ate_corrected}
+\subsection*{Bias-corrected estimator}
+Similarly to the direct effects in the ENRT design,
+we don't have any information about $Y_i(0,1)$ in the observed data.
+We have to make an additional structrual assumption to proceed. 
+One approach is to assume 
+\begin{assumption}
+    \label{ass:po_prop}
+    There exists a constant $\delta$ such that for all $i=1,\ldots,N$,
+    \begin{equation*}
+        Y_i(0,1) - Y_i(0,0) = 
+    \delta\left\{
+        Y_i(1,1) - Y_i(0,0).
+    \right\}
+    \end{equation*} 
+\end{assumption}
+The sensitivity parameter can be interpreted as the ratio between indirect 
+effects (given no direct treatment) to the overall or average effects
+$\delta = \frac{IE_i}{ATE_i}$:
+\begin{itemize}
+    \item $\delta=0$: no indirect effects. Contamination from other clusters 
+                   has no different effect.
+    \item $\delta=1$: indirect effects are equal to the overall effects.
+             Direct treatment $Z_i=1$ has no additional benefit beyond indirect exposure.
+   \item $\delta \in (0,1)$. Indirect effect is positive but smaller than the total effect.
+\end{itemize}
+We can decompose 
+\begin{equation*}
+   \begin{aligned}
+    ATE_i &= Y_i(1,1) - Y_i(0,0) 
+    \\ &= \left\{Y_i(1,1) - Y_i(0,1) \right\} + \left\{Y_i(0,1) - Y_i(0,0) \right\}
+    \\ &= DE_i + IE_i,
+   \end{aligned}
+\end{equation*}
+thus, under Assumption~\ref{ass:po_prop}, 
+\begin{equation*}
+        ATE_i = DE_i + \delta ATE_i \Rightarrow DE_i = (1-\delta) ATE_i.
+\end{equation*}
+So assumptions about $\delta$ are also about the decomposition of 
+the overall ATE into a direct and indirect parts. 
+We didn't limit $\delta \in [0,1]$ in Assumption~\ref{ass:po_prop},
+which in theory allows extrapolations. This can modified accordingly.
+
+By Assumption~\ref{ass:po_prop}, $Y_i(0,1) = \delta Y_i(1,1) + (1-\delta)Y_i(0,0)$.
+Substituting it into the expected value of the naive estimator yield
+\begin{equation*}
     \begin{aligned}
-        \widehat{ATE}_{corrected} 
-        &=
-        \widehat{ATE} 
-        +
+        \EX_{\bZ}[\widehat{ATE}] &=
+         ATE
+        -
         \frac{1}{N}
         \sum_{i=1}^{N}
         \frac{
-            \pi_i - p_z
+            \pi_i-p_z 
         }{
             1-p_z
         }
+        \left(\delta Y_i(1,1) + (1-\delta)Y_i(0,0)
+         - Y_i(0,0)\right)
+         \\&= 
+         ATE
+         -
+         \frac{1}{N}
+        \sum_{i=1}^{N}
+        \frac{
+            \delta(\pi_i-p_z)
+        }{
+            1-p_z
+        }
+        \left(Y_i(1,1) - Y_i(0,0)\right)
+        \\ &=
+        \frac{1}{N}
+        \sum_{i=1}^{N}
         \left[
-            \frac{\mathbb{I}\{Z_i=0, F_i=0\}Y_i}{
-                \Pr(Z_i=0, F_i=0)
-            }
-            -
-            \frac{\mathbb{I}\{Z_i=0, F_i=1\}Y_i}{
-                \Pr(Z_i=0, F_i=1)
-            }
-            \right].
+         1 - 
+       \frac{
+            \delta(\pi_i-p_z)
+        }{
+            1-p_z
+        }
+        \left(Y_i(1,1) - Y_i(0,0)\right)  
+        \right] 
+        \\ &=
+        \frac{1}{N}
+        \sum_{i=1}^{N}
+        \frac{
+            1 - p_z(1-\delta) - \delta \pi_i
+        }{
+            1-p_z
+        }
+        \left(Y_i(1,1) - Y_i(0,0)\right).
     \end{aligned}
+\end{equation*}
+Which motivates the bias-corrected estimator
+\begin{equation}
+    \label{eq:ate_ht_crt_bc}
+        \widehat{ATE}_{adj} =
+        \frac{1}{N}
+        \sum_{i=1}^{N}
+        \frac{1 - p_z}{
+             1 - p_z(1-\delta) - \delta \pi_i
+        }
+        \left[
+        \frac{  
+        \mathbb{I}\{Z_i=1\}Y_i}{p_z}
+        -
+        \frac{
+        \mathbb{I}\{Z_i=0\}Y_i}{1 - p_z}
+        \right].
 \end{equation}
-The problem is that we don't have any information in the observed data about
-$Y_i(0,1)$, as we don't know which units in the control clusters have $F_i=1$.
-Assuming (conditional) edge independence in the population network,
-we can express $\pi_i$ as a function of the individual edge probabilities. 
-Using this specification, we can simulate contamination,
-compute the probabilities $\Pr(Z_i=0, F_i=f)$ for $f\in\{0,1\}$,
-obtain the units with $F_i=1$ in control clusters,
- and compute the bias-corrected estimator \eqref{eq:ate_corrected}.
-This enables us to combine the simple (yet general) simulation-based sensitivity analysis approach 
-with analytical expression of the bias-corrected estimator.
+Which satisfies $\EX_{\bZ}[\widehat{ATE}_{adj}] = ATE$.
+Notice that the case of $\delta=1$ recovers the bias-corrected indirect 
+effect estimator in the ENRT design.
 
+Eq.~\eqref{eq:ate_ht_crt_bc} motivates a two-parameter sensitivity analysis
+for contamination in CRTs. The parameters are $\delta$ and $\pi_i$.
+Under conditional edge independence assumptions, we can express $\pi_i$ as a function of
+the individual-level contamination probabilities (see the ENRT paper).
+Such specification can take into account prior knowledge about 
+contamination from which clusters to which clusters is feasible.
+For example, contamination between geographically distant clusters is less likely,
+or contamination between hospitals in different health networks is not possible.
+For $\delta$, I think it is reasonable to limit it to $[0,1]$ in practice,
+as discussed above.
 
+Extending \eqref{eq:ate_ht_crt_bc} to include an outcome model 
+$\mu_i(z) = \EX[Y_i \mid Z_i=z, \bX_i]$ is straightforward,
+and be done as in the ENRT paper.
+Similarly, the variance estimators derived in the ENRT paper 
+for the indirect effect estimator is cluster-robust and can be adapted to the CRT case.
 
 \end{document}
