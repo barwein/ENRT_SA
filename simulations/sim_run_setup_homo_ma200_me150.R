@@ -1,12 +1,9 @@
-
 # Source files
-source("src/sensitivity_params.R")
-source("src/sensitivity_analysis.R")
-source("src/pba.R")
 source("simulations/dgp.R")
 source("simulations/sim_one_iter.R")
 
 # load libraries
+library(ENRTsensitivity)
 library(data.table)
 
 # Params setup

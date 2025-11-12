@@ -8,9 +8,11 @@ library(ggplot2)
 library(latex2exp)
 library(kableExtra)
 
-source("src/sensitivity_analysis.R")
-source("src/pba.R")
-source("src/sensitivity_params.R")
+library(ENRTsensitivity)
+
+# source("src/sensitivity_analysis.R")
+# source("src/pba.R")
+# source("src/sensitivity_params.R")
 source("HPTN_037/hptn_plot_functions.R")
 
 # Global parameters

@@ -1,10 +1,7 @@
 
 # Source
 source("simulations/dgp.R")
-source("src/sensitivity_analysis.R")
-source("src/pba.R")
-source("src/sensitivity_params.R")
-
+library(ENRTsensitivity)
 
 #' Function that run one iter of the simulation
 #' First, it simulate the trial (randomize treaments Z assignment to egos)

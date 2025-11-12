@@ -1,8 +1,8 @@
 
 library(data.table)
 
-#' Create Population with Independent Latent Edges and True Estimands
-#'
+#' @title Create Population with Independent Latent Edges and True Estimands
+#' @description
 #' Generates the true population network A, the observed network A_tilde,
 #' the potential outcomes (using specified naming), and calculates the
 #' true sample average IE and DE (Risk Difference).
@@ -26,6 +26,9 @@ library(data.table)
 #'
 #' @return A list containing A, A_tilde, po_egos, po_alters, X_e, X_a,
 #'         ego_id_a_map, n_e, n_a, IE_RD, and DE_RD.
+#'         
+#' @keywords simulation
+#'          
 create_population <- function(X_e,
                               X_a,
                               alters_per_ego,
