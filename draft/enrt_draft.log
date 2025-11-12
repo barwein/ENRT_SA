@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.9.10)  12 NOV 2025 14:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.9.10)  12 NOV 2025 14:20
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -768,7 +768,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 <figures/population_and_ego_network.png, id=254, 794.4882pt x 429.0429pt>
 File: figures/population_and_ego_network.png Graphic file (type png)
 <use figures/population_and_ego_network.png>
-Package pdftex.def Info: figures/population_and_ego_network.png  used on input line 336.
+Package pdftex.def Info: figures/population_and_ego_network.png  used on input line 337.
 (pdftex.def)             Requested size: 292.0877pt x 157.7352pt.
 
 
@@ -779,7 +779,7 @@ Package pdftex.def Info: figures/population_and_ego_network.png  used on input l
 [5]
 
 [6]
-Overfull \hbox (12.44386pt too wide) in paragraph at lines 694--699
+Overfull \hbox (12.44386pt too wide) in paragraph at lines 695--700
 \OT1/cmr/m/n/10 ma-tor [] can also be ex-tended to in-clude an out-come model. Let $\OML/cmm/m/it/10 ^^V[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 z\OT1/cmr/m/n/10 ) = \U/msb/m/n/10 E []$\OT1/cmr/m/n/10 .
  []
 
@@ -799,12 +799,12 @@ Overfull \hbox (12.44386pt too wide) in paragraph at lines 694--699
 <figures/hptn/sa_ie_plot_not_augmented.png, id=532, 578.16pt x 361.35pt>
 File: figures/hptn/sa_ie_plot_not_augmented.png Graphic file (type png)
 <use figures/hptn/sa_ie_plot_not_augmented.png>
-Package pdftex.def Info: figures/hptn/sa_ie_plot_not_augmented.png  used on input line 1178.
+Package pdftex.def Info: figures/hptn/sa_ie_plot_not_augmented.png  used on input line 1179.
 (pdftex.def)             Requested size: 229.49976pt x 143.4347pt.
 <figures/hptn/sa_de_plot.png, id=535, 722.7pt x 433.62pt>
 File: figures/hptn/sa_de_plot.png Graphic file (type png)
 <use figures/hptn/sa_de_plot.png>
-Package pdftex.def Info: figures/hptn/sa_de_plot.png  used on input line 1190.
+Package pdftex.def Info: figures/hptn/sa_de_plot.png  used on input line 1191.
 (pdftex.def)             Requested size: 292.0877pt x 175.25122pt.
 
 
@@ -812,12 +812,12 @@ Package pdftex.def Info: figures/hptn/sa_de_plot.png  used on input line 1190.
 <figures/hptn/pba_ie_not_augmented.png, id=547, 578.16pt x 361.35pt>
 File: figures/hptn/pba_ie_not_augmented.png Graphic file (type png)
 <use figures/hptn/pba_ie_not_augmented.png>
-Package pdftex.def Info: figures/hptn/pba_ie_not_augmented.png  used on input line 1245.
+Package pdftex.def Info: figures/hptn/pba_ie_not_augmented.png  used on input line 1246.
 (pdftex.def)             Requested size: 200.28781pt x 125.17867pt.
 <figures/hptn/pba_de_not_augmented.png, id=548, 578.16pt x 361.35pt>
 File: figures/hptn/pba_de_not_augmented.png Graphic file (type png)
 <use figures/hptn/pba_de_not_augmented.png>
-Package pdftex.def Info: figures/hptn/pba_de_not_augmented.png  used on input line 1251.
+Package pdftex.def Info: figures/hptn/pba_de_not_augmented.png  used on input line 1252.
 (pdftex.def)             Requested size: 200.28781pt x 125.17867pt.
 
 
@@ -835,14 +835,14 @@ Underfull \hbox (badness 1454) in paragraph at lines 153--156
 [17])
 
 [18]
-Underfull \hbox (badness 10000) in paragraph at lines 1406--1413
+Underfull \hbox (badness 10000) in paragraph at lines 1407--1414
 
  []
 
 
 
 [19]
-Underfull \hbox (badness 10000) in paragraph at lines 1470--1475
+Underfull \hbox (badness 10000) in paragraph at lines 1471--1476
 
  []
 
@@ -853,12 +853,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 1470--1475
 [21]
 
 [22]
-Underfull \hbox (badness 10000) in paragraph at lines 1756--1761
+Underfull \hbox (badness 10000) in paragraph at lines 1757--1762
 
  []
 
 
-Overfull \hbox (28.91495pt too wide) detected at line 1835
+Overfull \hbox (28.91495pt too wide) detected at line 1836
 []
  []
 
@@ -867,12 +867,12 @@ Overfull \hbox (28.91495pt too wide) detected at line 1835
 [23]
 
 [24]
-Overfull \hbox (23.776pt too wide) in paragraph at lines 1984--1985
+Overfull \hbox (23.776pt too wide) in paragraph at lines 1985--1986
 []\OT1/cmr/bx/n/10 Assumption B.2 \OT1/cmr/m/n/10 (Con-sis-tency (Three--Level))\OT1/cmr/bx/n/10 . []$\OML/cmm/m/it/10 Y[] \OT1/cmr/m/n/10 = [][] [][] \OML/cmm/m/it/10 Y[]\OT1/cmr/m/n/10 (0\OML/cmm/m/it/10 ; f\OT1/cmr/m/n/10 )\U/msb/m/n/10 I []$\OT1/cmr/m/it/10 . 
  []
 
 
-Overfull \hbox (42.93132pt too wide) in paragraph at lines 1993--1994
+Overfull \hbox (42.93132pt too wide) in paragraph at lines 1994--1995
 \OT1/cmr/m/n/10 The naive HT es-ti-ma-tor $[]$ re-mains as de-fined in []. Its ex-pec-ta-tion is $\U/msb/m/n/10 E[] [] \OT1/cmr/m/n/10 = [] [][] []$,
  []
 
@@ -881,7 +881,7 @@ Overfull \hbox (42.93132pt too wide) in paragraph at lines 1993--1994
 [25]
 
 [26]
-Overfull \hbox (1.68867pt too wide) in paragraph at lines 2108--2110
+Overfull \hbox (1.68867pt too wide) in paragraph at lines 2109--2111
 []\OT1/cmr/bx/n/10 Assumption B.3. []\OT1/cmr/m/it/10 There ex-ists a con-stant $\OML/cmm/m/it/10 ^^N$ \OT1/cmr/m/it/10 such that $\OML/cmm/m/it/10 Y[]\OT1/cmr/m/n/10 (0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 2+) \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 Y[]\OT1/cmr/m/n/10 (0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0) = \OML/cmm/m/it/10 ^^N []$
  []
 
@@ -890,7 +890,7 @@ Overfull \hbox (1.68867pt too wide) in paragraph at lines 2108--2110
 [27]
 
 [28]
-Overfull \hbox (5.25284pt too wide) in paragraph at lines 2282--2287
+Overfull \hbox (5.25284pt too wide) in paragraph at lines 2283--2288
 \OT1/cmr/m/n/10 Which can be ap-prox-i-mated through Monte Carlo in-te-gra-tion by draw-ing $\OML/cmm/m/it/10 M$ \OT1/cmr/m/n/10 sam-ples $\OML/cmm/m/it/10 ^^Z[]; [] ; ^^Z[]$
  []
 
@@ -904,12 +904,12 @@ Overfull \hbox (5.25284pt too wide) in paragraph at lines 2282--2287
 <figures/hptn/alter_per_egonet_histogram.png, id=767, 433.62pt x 289.08pt>
 File: figures/hptn/alter_per_egonet_histogram.png Graphic file (type png)
 <use figures/hptn/alter_per_egonet_histogram.png>
-Package pdftex.def Info: figures/hptn/alter_per_egonet_histogram.png  used on input line 2618.
+Package pdftex.def Info: figures/hptn/alter_per_egonet_histogram.png  used on input line 2619.
 (pdftex.def)             Requested size: 166.90544pt x 111.27188pt.
 <figures/hptn/sa_de_plot_aug_kappa2.png, id=772, 578.16pt x 361.35pt>
 File: figures/hptn/sa_de_plot_aug_kappa2.png Graphic file (type png)
 <use figures/hptn/sa_de_plot_aug_kappa2.png>
-Package pdftex.def Info: figures/hptn/sa_de_plot_aug_kappa2.png  used on input line 2648.
+Package pdftex.def Info: figures/hptn/sa_de_plot_aug_kappa2.png  used on input line 2649.
 (pdftex.def)             Requested size: 208.635pt x 130.39467pt.
 
 
@@ -917,12 +917,12 @@ Package pdftex.def Info: figures/hptn/sa_de_plot_aug_kappa2.png  used on input l
 <figures/hptn/sa_ie_plot_augmented.png, id=781, 578.16pt x 361.35pt>
 File: figures/hptn/sa_ie_plot_augmented.png Graphic file (type png)
 <use figures/hptn/sa_ie_plot_augmented.png>
-Package pdftex.def Info: figures/hptn/sa_ie_plot_augmented.png  used on input line 2656.
+Package pdftex.def Info: figures/hptn/sa_ie_plot_augmented.png  used on input line 2657.
 (pdftex.def)             Requested size: 208.635pt x 130.39467pt.
 <figures/hptn/pba_de_augmented.png, id=782, 578.16pt x 361.35pt>
 File: figures/hptn/pba_de_augmented.png Graphic file (type png)
 <use figures/hptn/pba_de_augmented.png>
-Package pdftex.def Info: figures/hptn/pba_de_augmented.png  used on input line 2663.
+Package pdftex.def Info: figures/hptn/pba_de_augmented.png  used on input line 2664.
 (pdftex.def)             Requested size: 208.635pt x 130.39467pt.
 
 
@@ -951,7 +951,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  102i,19n,107p,915b,620s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on enrt_draft.pdf (33 pages, 1774499 bytes).
+Output written on enrt_draft.pdf (33 pages, 1774570 bytes).
 PDF statistics:
  942 PDF objects out of 1000 (max. 8388607)
  830 compressed objects within 9 object streams
