@@ -7,45 +7,45 @@ Warning--can't use both author and editor fields in Fox2021
 Warning--there's a number but no volume in leung2025cluster
 Warning--can't use both volume and number fields in Toulis2013
 Warning--empty journal in Yauck2022
-You've used 49 entries,
+You've used 48 entries,
             1935 wiz_defined-function locations,
-            808 strings with 14513 characters,
-and the built_in function-call counts, 21171 in all, are:
-= -- 2034
-> -- 1072
-< -- 29
-+ -- 382
-- -- 376
-* -- 1898
-:= -- 3725
-add.period$ -- 150
-call.type$ -- 49
-change.case$ -- 428
-chr.to.int$ -- 49
-cite$ -- 53
-duplicate$ -- 725
-empty$ -- 1330
-format.name$ -- 445
-if$ -- 4051
+            800 strings with 14392 characters,
+and the built_in function-call counts, 20808 in all, are:
+= -- 1996
+> -- 1065
+< -- 28
++ -- 380
+- -- 374
+* -- 1867
+:= -- 3663
+add.period$ -- 147
+call.type$ -- 48
+change.case$ -- 422
+chr.to.int$ -- 48
+cite$ -- 52
+duplicate$ -- 711
+empty$ -- 1300
+format.name$ -- 442
+if$ -- 3980
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 53
-newline$ -- 248
-num.names$ -- 147
-pop$ -- 354
+missing$ -- 52
+newline$ -- 243
+num.names$ -- 144
+pop$ -- 351
 preamble$ -- 1
-purify$ -- 433
+purify$ -- 427
 quote$ -- 0
-skip$ -- 576
+skip$ -- 565
 stack$ -- 0
-substring$ -- 1380
-swap$ -- 101
+substring$ -- 1343
+swap$ -- 100
 text.length$ -- 4
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 282
+type$ -- 276
 warning$ -- 4
-while$ -- 158
+while$ -- 154
 width$ -- 0
-write$ -- 633
+write$ -- 620
 (There were 4 warnings)
