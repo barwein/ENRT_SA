@@ -4,45 +4,48 @@ The top-level auxiliary file: enrt_draft.aux
 The style file: apalike.bst
 Database file #1: all_biblo.bib
 Warning--can't use both author and editor fields in Fox2021
-You've used 26 entries,
+Warning--there's a number but no volume in leung2025cluster
+Warning--can't use both volume and number fields in Toulis2013
+Warning--empty journal in Yauck2022
+You've used 49 entries,
             1935 wiz_defined-function locations,
-            667 strings with 11288 characters,
-and the built_in function-call counts, 12890 in all, are:
-= -- 1201
-> -- 803
-< -- 8
-+ -- 298
-- -- 292
-* -- 1225
-:= -- 2280
-add.period$ -- 81
-call.type$ -- 26
-change.case$ -- 275
-chr.to.int$ -- 26
-cite$ -- 27
-duplicate$ -- 392
-empty$ -- 723
-format.name$ -- 322
-if$ -- 2428
+            808 strings with 14513 characters,
+and the built_in function-call counts, 21171 in all, are:
+= -- 2034
+> -- 1072
+< -- 29
++ -- 382
+- -- 376
+* -- 1898
+:= -- 3725
+add.period$ -- 150
+call.type$ -- 49
+change.case$ -- 428
+chr.to.int$ -- 49
+cite$ -- 53
+duplicate$ -- 725
+empty$ -- 1330
+format.name$ -- 445
+if$ -- 4051
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 27
-newline$ -- 135
-num.names$ -- 78
-pop$ -- 227
+missing$ -- 53
+newline$ -- 248
+num.names$ -- 147
+pop$ -- 354
 preamble$ -- 1
-purify$ -- 276
+purify$ -- 433
 quote$ -- 0
-skip$ -- 315
+skip$ -- 576
 stack$ -- 0
-substring$ -- 780
-swap$ -- 61
-text.length$ -- 1
+substring$ -- 1380
+swap$ -- 101
+text.length$ -- 4
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 152
-warning$ -- 1
-while$ -- 86
+type$ -- 282
+warning$ -- 4
+while$ -- 158
 width$ -- 0
-write$ -- 342
-(There was 1 warning)
+write$ -- 633
+(There were 4 warnings)

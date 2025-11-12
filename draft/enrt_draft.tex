@@ -169,9 +169,12 @@ shorten >= 3pt, preaction = {decorate}
 \FXRegisterAuthor{bw}{bwe}{BW}
 
 
-\title{Sensitivity analysis for contamination in egocentric-network randomized trials with interference}
+\title{\textbf{Sensitivity analysis for contamination in egocentric-network randomized trials with interference}}
 
-\author{BW}
+\author{Bar Weinstein and Daniel Nevo  
+\vspace{.1cm} \\
+Department  of Statistics and Operations Research , Tel Aviv University
+}
 % date is current date
 \date{\today}
 
@@ -184,17 +187,102 @@ shorten >= 3pt, preaction = {decorate}
 
 \section{Introduction}
 \label{sec:intro}
-\begin{itemize}
-    \item Interference in sociocentric networks is a very common setup. Difficult and expensive data acquisition. Sampled networks are often the only available information. Egocentric sampling provide a logistically feasible and accessible design to causal inference under interference.
-    \item Missing edges due to the sampling process.
-    leads to misspecification of the network structure. Observed exposures are not equal to true ones. Results in bias.
-    \item Egocentric-network randomized trial (ENRT) is becoming increasingly common. This design is commonly used in various studies, such as HIV prevention \citep{Latkin2009, Latkin2013, Booth2016, Miller2018}, substance addiction \citep{Sherman2009}, and mental health \citep{Asmus2017, Desrosiers2020}. A similar design in which the alters, and not the egos, are randomized to treatment is utilized in online A/B testing \citep{SaintJacques2019}.
-    \item HPTN 037 study previously analyzed by \citet{Latkin2009, Latkin2013}. \citet{Simmons2015} assessed possible contamination between ego-networks using recall data collected from participants as validation data after the study. Their approach only considered possible contamination and did not evaluate its impact on the causal estimates.
-    \item  Egocentric-network randomized trial that assume the \textbf{non-overlapping networks} assumption \citep{Buchanan2018, Buchanan_2024, Chao2023, Fang2023}. We relax it and consider similar estimands. \bwnote{\citet{Chao2023} allow for alters with observed exposures equal one to be in fact not exposed to the treated ego (the ego didn't deliver the treatment...), but we exclude such measurement problem by our design. Namely, we only have a one-sided misclassification for alters (0 instead of 1, but not vice versa).}
-    \item Sensitivity analysis for unmeasured confounding and principal stratification under interference \citep{vanderweele2015}. Relation to classical sensitivity analysis method (ADD REF). 
-    \item Possible extensions to Probabilistic bias analysis (PBA) -- in this case, modify the title to 'Bias analysis \ldots'.
-    \item Interference with sampled data. Mostly random node or snowball sampling with linear-in-models in econometric literature.  
-\end{itemize}
+In causal inference and the design of experiments it is commonly assumed that there is no interference between units,
+ that is, the treatment assigned to one unit does not affect the outcomes of other units \citep{Cox1958,Hernan2020}.
+However, researchers are often interested in settings where 
+the treatment of interest can spill over from treated units to untreated ones,
+leading to interference between units.
+For example, in infectious disease epidemiology,
+ vaccinating some individuals may provide protection to unvaccinated individuals \citep{Halloran1991}.
+ The term interference encompasses a wide range of transmission mechanisms,
+ including social influence, information diffusion, contagion, and infectious disease spread.
+ To estimate causal effects under interference, 
+researchers often rely on detailed information about the network structure
+that encodes the relationships between units.
+Such data is typically assumed to be on a complete sociocentric network, 
+where a finite population of units and all their 
+connections are observed \citep{Hudgens2008, aronow_estimating_2017, Forastiere2020,Tchetgen2020,Ogburn2022}.
+The finite population can be composed of a collection of disjoint clusters or a single connected network.
+However, collecting complete sociocentric network data is often logistically challenging and expensive,
+leading to the use of sampled networks in practice. 
+
+A common sampling design is \emph{egocentric network sampling} \citep{marsden2002egocentric,Perry2018},
+where a set of egos (indexes) are sampled from the population,
+    and each ego recruits a subset of its neighbors in the population network as alters (non-indexes).
+The observed network is then composed of disjoint ego-networks.
+This design is attractive due to its logistical feasibility and accessibility.
+Such egocentric sampling can be combined with randomized experiments,
+where treatments are randomly assigned to the recruited egos, 
+resulting in an \emph{egocentric-network randomized trial} (ENRT) \citep{Buchanan2018,Buchanan_2024,Chao2023,Fang2023}.
+ENRTs are increasingly used in various studies, 
+such as HIV prevention \citep{Latkin2009, Latkin2013, Booth2016, Miller2018}, 
+substance addiction \citep{Sherman2009}, 
+and mental health \citep{Asmus2017, Desrosiers2020}.
+
+However, alters may be connected to multiple egos in the population network,
+and egos may be connected to other egos, resulting in contamination between ego-networks \citep{Torgerson2001}.
+Thus, the egocentric sampling process may lead to missing edges in the observed network,
+    leading to misspecification of the interference structure \citep{Weinstein2023}.
+Previous analyses of ENRTs typically assumed that the ego-networks
+are \emph{non-overlapping} in the population network \citep{Buchanan2018,Buchanan_2024,Chao2023,Fang2023}.
+That is, alters are connected only to one ego, and egos are not connected to other egos.
+Such assumption may not hold in practice and be difficult to verify with the observed data alone.
+
+In this paper, we relax the non-overlapping networks assumption and allow for the possibility of overlapping ego-networks.
+Under a randomization-based inference paradigm, where the only source of randomness is the treatment assignment,
+ we show that the commonly used Horvitz-Thompson estimators of the indirect and direct effects
+ based on the observed data are biased whenever there is contamination between ego-networks.
+We develop a sensitivity analysis framework to assess the impact of possible contamination between ego-networks on the causal estimates.
+We provide bias-corrected estimators of the indirect and direct effects in the presence of contamination
+between ego-networks.
+The bias-corrected estimators depend on sensitivity parameters that encode 
+the expected number or the probability of missing alter--ego and ego--ego edges in the population network.
+These parameters can be specified using covariates and prior knowledge about suspected contamination. 
+For the direct effects on egos, we require an additional sensitivity parameter
+that relates to the magnitude of the treatment and exposure interaction effect on the egos.
+We provide practical guidelines on how to specify these parameters in practice,
+under various scenarios.
+We propose both a grid sensitivity analysis \citep{greenland1996basic,rosenbaum2005sensitivity}
+ and a probabilistic bias analysis \citep{Greenland2005,Lash2014,Fox2021}
+to assess the robustness of the causal estimates to possible contamination.
+% In the first, bias-corrected estimators are computed over a grid of sensitivity parameter values,
+% while in the second, prior distributions are specified for the sensitivity parameters,
+%     and posterior distributions for the causal estimates are obtained via Monte Carlo.
+The proposed framework is illustrated through simulations and a real-world application.
+
+The HIV Prevention Trials Network (HPTN) 037 study \citep{Latkin2009}
+is used as a motivating example throughout the paper.
+HPTN 037 is an ENRT that aimed to evaluate the efficacy of a peer education intervention
+to reduce HIV risk behaviors among people who injects drugs. 
+In it, treated egos were trained on prevention of risky behaviors and encouraged to share this information with their alters.
+We re-analyze the HPTN 037 study, assessing the robustness of the causal estimates to possible contamination between ego-networks.
+
+Our work relates to several strands of literature.
+First, it contributes to the growing literature on causal inference under interference 
+where the true network structure is latent and only proxies exists \citep{Toulis2013,Li2021,Hardy2019,boucher2021estimating,weinstein2025}.
+Second, it adds to the literature of interfernce with sampled network data 
+which has primarly focused on random node sampling or snowball sampling designs 
+under linear-in-means parameteric models \citep{chandrasekhar2011econometrics, Sewell2017, Yauck2022,marray2024}.
+Third, in contributes to the literature on senstivity analysis under interference,
+which has mainly focused on unmeasured confounding \citep{VanderWeele2014},
+or on settings where offline network is latent and only online network is observed \citep{Egami2020}.
+Finally, it relates to the literature on cross-cluster contamination in cluster-randomized trials,
+which often reccomend changing the clusters boundaries to reduce contamination \citep{Hayes2017},
+or more recently, develop data-driven methods for clusters construction \citep{leung2025cluster}.
+
+The rest of the paper is organized as follows.
+In Section~\ref{sec:egocentric_rct}, we introduce the setup of ENRTs,
+    define the causal estimands of interest,
+    and show that the commonly used estimators based on the observed data are biased under contamination.
+In Section~\ref{sec:sa}, we develop a sensitivity analysis framework for contamination between ego-networks,
+    providing bias-corrected estimators of the indirect and direct effects.
+  We provide practical guidelines on how to specify the sensitivity parameters in practice.
+In Section~\ref{sec:sim}, we illustrate the proposed framework via simulations.
+In Section~\ref{sec:data}, we re-analyze the HPTN 037 study,
+    assessing the robustness of the causal estimates to possible contamination.
+Finally, we conclude with a discussion in Section~\ref{sec:discussion}.  
+\bwnote{TODO:} The R package XXX that implements the proposed sensitivity analysis is available at YYY.
+
 
 \section{Egocentric-network randomized trials}
 \label{sec:egocentric_rct}
@@ -731,7 +819,7 @@ as well as specifications based on the expected number of missing edges.
     \label{exmp:pi_hetero}
     Examples~\ref{exmp:pi_homo}-\ref{exmp:pi_number} can be extended to incorporate unit-level 
         characteristics through covariates $\bX_i$. 
-    A well-known result in network science is homophily \bwnote{TODO: add reference},
+    A well-known result in network science is homophily \citep{mcpherson2001homophily},
       which states that units with similar characteristics 
       are more likely to interact. 
     The covariates similarity can be captured through a distance function.
@@ -793,7 +881,7 @@ As the the true values of such parameters are unknown and can not be directly es
  
  In GSA, researchers specify a grid of values for the sensitivity parameters 
  and compute the bias-corrected estimates for each combination
-  of parameters \bwnote{TODO: add ref}.
+  of parameters \citep{greenland1996basic,rosenbaum2005sensitivity}.
  That results in a grid of bias-corrected estimates.
  Such estimates can be coupled with the associated confidence interval given each
  value of the sensitivity parameters in the specified grid. 
@@ -1743,7 +1831,7 @@ Write
     \sum_{i \in \cR_a}
     \alpha_i^e \phi_i^e.
 \end{align*}
-We assume that the outcome models $\mu^e_i(z)$ are estimated through cross-fitting (\bwnote{TODO: add ref}) and therefore assumed to be independent of $\bZ$. We ignore the sampling uncertainty associated with estimating the outcome models. 
+We assume that the outcome models $\mu^e_i(z)$ are estimated through cross-fitting \citep{Chernozhukov2018} and therefore assumed to be independent of $\bZ$. We ignore the sampling uncertainty associated with estimating the outcome models. 
 We estimate the variance using the empirical estimate
 \begin{equation*}
     \begin{aligned}

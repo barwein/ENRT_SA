@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.9.10)  11 NOV 2025 14:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.9.10)  12 NOV 2025 11:52
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -707,25 +707,25 @@ File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 ) (./enrt_draft.aux)
 \openout1 = `enrt_draft.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 178.
-LaTeX Font Info:    ... okay on input line 178.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 178.
-LaTeX Font Info:    ... okay on input line 178.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 178.
-LaTeX Font Info:    ... okay on input line 178.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 178.
-LaTeX Font Info:    ... okay on input line 178.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 178.
-LaTeX Font Info:    ... okay on input line 178.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 178.
-LaTeX Font Info:    ... okay on input line 178.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 178.
-LaTeX Font Info:    ... okay on input line 178.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 178.
-LaTeX Font Info:    ... okay on input line 178.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 178.
-LaTeX Font Info:    ... okay on input line 178.
-Package hyperref Info: Link coloring ON on input line 178.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 181.
+LaTeX Font Info:    ... okay on input line 181.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 181.
+LaTeX Font Info:    ... okay on input line 181.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 181.
+LaTeX Font Info:    ... okay on input line 181.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 181.
+LaTeX Font Info:    ... okay on input line 181.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 181.
+LaTeX Font Info:    ... okay on input line 181.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 181.
+LaTeX Font Info:    ... okay on input line 181.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 181.
+LaTeX Font Info:    ... okay on input line 181.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 181.
+LaTeX Font Info:    ... okay on input line 181.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 181.
+LaTeX Font Info:    ... okay on input line 181.
+Package hyperref Info: Link coloring ON on input line 181.
  (./enrt_draft.out) (./enrt_draft.out)
 \@outlinefile=\write4
 \openout4 = `enrt_draft.out'.
@@ -751,128 +751,118 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 180.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 183.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 180.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 183.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Package hyperref Info: bookmark level for unknown fixme defaults to 0 on input line 193.
-FiXme Note: '\citet {Chao2023} allow for alters with observed exposures equal one to be in fact not exposed to the treated ego (the ego didn't deliver the treatment...), but we exclude such measurement problem by our design. Namely, we only have a one-sided misclassification for alters (0 instead of 1, but not vice versa).' on input line 193.
-
 
 [1
 
-{/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-<figures/population_and_ego_network.png, id=154, 794.4882pt x 429.0429pt>
+{/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Package hyperref Info: bookmark level for unknown fixme defaults to 0 on input line 284.
+FiXme Note: 'TODO:' on input line 284.
+
+
+[2]
+<figures/population_and_ego_network.png, id=252, 794.4882pt x 429.0429pt>
 File: figures/population_and_ego_network.png Graphic file (type png)
 <use figures/population_and_ego_network.png>
-Package pdftex.def Info: figures/population_and_ego_network.png  used on input line 246.
+Package pdftex.def Info: figures/population_and_ego_network.png  used on input line 334.
 (pdftex.def)             Requested size: 292.0877pt x 157.7352pt.
 
 
-[2 <./figures/population_and_ego_network.png>]
-
-[3]
+[3 <./figures/population_and_ego_network.png>]
 
 [4]
 
 [5]
-Overfull \hbox (12.44386pt too wide) in paragraph at lines 604--609
+
+[6]
+Overfull \hbox (12.44386pt too wide) in paragraph at lines 692--697
 \OT1/cmr/m/n/10 ma-tor [] can also be ex-tended to in-clude an out-come model. Let $\OML/cmm/m/it/10 ^^V[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 z\OT1/cmr/m/n/10 ) = \U/msb/m/n/10 E []$\OT1/cmr/m/n/10 .
  []
 
 
 
-[6]
-
 [7]
-FiXme Note: 'TODO: add reference' on input line 734.
-
 
 [8]
-FiXme Note: 'TODO: add ref' on input line 796.
 
-
-[9]
+[9{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
 
 [10]
 
 [11]
-<figures/hptn/sa_ie_plot_not_augmented.png, id=434, 578.16pt x 361.35pt>
+
+[12]
+<figures/hptn/sa_ie_plot_not_augmented.png, id=530, 578.16pt x 361.35pt>
 File: figures/hptn/sa_ie_plot_not_augmented.png Graphic file (type png)
 <use figures/hptn/sa_ie_plot_not_augmented.png>
-Package pdftex.def Info: figures/hptn/sa_ie_plot_not_augmented.png  used on input line 1088.
+Package pdftex.def Info: figures/hptn/sa_ie_plot_not_augmented.png  used on input line 1176.
 (pdftex.def)             Requested size: 229.49976pt x 143.4347pt.
-<figures/hptn/sa_de_plot.png, id=437, 722.7pt x 433.62pt>
+<figures/hptn/sa_de_plot.png, id=533, 722.7pt x 433.62pt>
 File: figures/hptn/sa_de_plot.png Graphic file (type png)
 <use figures/hptn/sa_de_plot.png>
-Package pdftex.def Info: figures/hptn/sa_de_plot.png  used on input line 1100.
+Package pdftex.def Info: figures/hptn/sa_de_plot.png  used on input line 1188.
 (pdftex.def)             Requested size: 292.0877pt x 175.25122pt.
 
 
-[12 <./figures/hptn/sa_ie_plot_not_augmented.png>]
-<figures/hptn/pba_ie_not_augmented.png, id=447, 578.16pt x 361.35pt>
+[13 <./figures/hptn/sa_ie_plot_not_augmented.png>]
+<figures/hptn/pba_ie_not_augmented.png, id=545, 578.16pt x 361.35pt>
 File: figures/hptn/pba_ie_not_augmented.png Graphic file (type png)
 <use figures/hptn/pba_ie_not_augmented.png>
-Package pdftex.def Info: figures/hptn/pba_ie_not_augmented.png  used on input line 1155.
+Package pdftex.def Info: figures/hptn/pba_ie_not_augmented.png  used on input line 1243.
 (pdftex.def)             Requested size: 200.28781pt x 125.17867pt.
-<figures/hptn/pba_de_not_augmented.png, id=448, 578.16pt x 361.35pt>
+<figures/hptn/pba_de_not_augmented.png, id=546, 578.16pt x 361.35pt>
 File: figures/hptn/pba_de_not_augmented.png Graphic file (type png)
 <use figures/hptn/pba_de_not_augmented.png>
-Package pdftex.def Info: figures/hptn/pba_de_not_augmented.png  used on input line 1161.
+Package pdftex.def Info: figures/hptn/pba_de_not_augmented.png  used on input line 1249.
 (pdftex.def)             Requested size: 200.28781pt x 125.17867pt.
 
 
-[13 <./figures/hptn/sa_de_plot.png>] (./enrt_draft.bbl
+[14 <./figures/hptn/sa_de_plot.png>] (./enrt_draft.bbl
 
-[14 <./figures/hptn/pba_ie_not_augmented.png> <./figures/hptn/pba_de_not_augmented.png>]
-
-[15])
+[15 <./figures/hptn/pba_ie_not_augmented.png> <./figures/hptn/pba_de_not_augmented.png>]
 
 [16]
-Underfull \hbox (badness 10000) in paragraph at lines 1316--1323
-
+Underfull \hbox (badness 1454) in paragraph at lines 153--156
+[]\OT1/cmr/m/n/10 Marray, K. (2024).  Es-ti-mat-ing spillovers from sam-pled con-nec-tions.  \OT1/cmr/m/it/10 arXiv preprint
  []
 
 
 
-[17]
-Underfull \hbox (badness 10000) in paragraph at lines 1380--1385
-
- []
-
-
+[17])
 
 [18]
+Underfull \hbox (badness 10000) in paragraph at lines 1404--1411
+
+ []
+
+
 
 [19]
+Underfull \hbox (badness 10000) in paragraph at lines 1468--1473
+
+ []
+
+
 
 [20]
-Underfull \hbox (badness 10000) in paragraph at lines 1666--1671
-
- []
-
-
-Overfull \hbox (28.91495pt too wide) detected at line 1745
-[]
- []
-
-FiXme Note: 'TODO: add ref' on input line 1746.
-
 
 [21]
 
 [22]
-Overfull \hbox (23.776pt too wide) in paragraph at lines 1894--1895
-[]\OT1/cmr/bx/n/10 Assumption B.2 \OT1/cmr/m/n/10 (Con-sis-tency (Three--Level))\OT1/cmr/bx/n/10 . []$\OML/cmm/m/it/10 Y[] \OT1/cmr/m/n/10 = [][] [][] \OML/cmm/m/it/10 Y[]\OT1/cmr/m/n/10 (0\OML/cmm/m/it/10 ; f\OT1/cmr/m/n/10 )\U/msb/m/n/10 I []$\OT1/cmr/m/it/10 . 
+Underfull \hbox (badness 10000) in paragraph at lines 1754--1759
+
  []
 
 
-Overfull \hbox (42.93132pt too wide) in paragraph at lines 1903--1904
-\OT1/cmr/m/n/10 The naive HT es-ti-ma-tor $[]$ re-mains as de-fined in []. Its ex-pec-ta-tion is $\U/msb/m/n/10 E[] [] \OT1/cmr/m/n/10 = [] [][] []$,
+Overfull \hbox (28.91495pt too wide) detected at line 1833
+[]
  []
 
 
@@ -880,8 +870,13 @@ Overfull \hbox (42.93132pt too wide) in paragraph at lines 1903--1904
 [23]
 
 [24]
-Overfull \hbox (1.68867pt too wide) in paragraph at lines 2018--2020
-[]\OT1/cmr/bx/n/10 Assumption B.3. []\OT1/cmr/m/it/10 There ex-ists a con-stant $\OML/cmm/m/it/10 ^^N$ \OT1/cmr/m/it/10 such that $\OML/cmm/m/it/10 Y[]\OT1/cmr/m/n/10 (0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 2+) \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 Y[]\OT1/cmr/m/n/10 (0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0) = \OML/cmm/m/it/10 ^^N []$
+Overfull \hbox (23.776pt too wide) in paragraph at lines 1982--1983
+[]\OT1/cmr/bx/n/10 Assumption B.2 \OT1/cmr/m/n/10 (Con-sis-tency (Three--Level))\OT1/cmr/bx/n/10 . []$\OML/cmm/m/it/10 Y[] \OT1/cmr/m/n/10 = [][] [][] \OML/cmm/m/it/10 Y[]\OT1/cmr/m/n/10 (0\OML/cmm/m/it/10 ; f\OT1/cmr/m/n/10 )\U/msb/m/n/10 I []$\OT1/cmr/m/it/10 . 
+ []
+
+
+Overfull \hbox (42.93132pt too wide) in paragraph at lines 1991--1992
+\OT1/cmr/m/n/10 The naive HT es-ti-ma-tor $[]$ re-mains as de-fined in []. Its ex-pec-ta-tion is $\U/msb/m/n/10 E[] [] \OT1/cmr/m/n/10 = [] [][] []$,
  []
 
 
@@ -889,8 +884,8 @@ Overfull \hbox (1.68867pt too wide) in paragraph at lines 2018--2020
 [25]
 
 [26]
-Overfull \hbox (5.25284pt too wide) in paragraph at lines 2192--2197
-\OT1/cmr/m/n/10 Which can be ap-prox-i-mated through Monte Carlo in-te-gra-tion by draw-ing $\OML/cmm/m/it/10 M$ \OT1/cmr/m/n/10 sam-ples $\OML/cmm/m/it/10 ^^Z[]; [] ; ^^Z[]$
+Overfull \hbox (1.68867pt too wide) in paragraph at lines 2106--2108
+[]\OT1/cmr/bx/n/10 Assumption B.3. []\OT1/cmr/m/it/10 There ex-ists a con-stant $\OML/cmm/m/it/10 ^^N$ \OT1/cmr/m/it/10 such that $\OML/cmm/m/it/10 Y[]\OT1/cmr/m/n/10 (0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 2+) \OMS/cmsy/m/n/10 ^^@ \OML/cmm/m/it/10 Y[]\OT1/cmr/m/n/10 (0\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 0) = \OML/cmm/m/it/10 ^^N []$
  []
 
 
@@ -898,42 +893,51 @@ Overfull \hbox (5.25284pt too wide) in paragraph at lines 2192--2197
 [27]
 
 [28]
+Overfull \hbox (5.25284pt too wide) in paragraph at lines 2280--2285
+\OT1/cmr/m/n/10 Which can be ap-prox-i-mated through Monte Carlo in-te-gra-tion by draw-ing $\OML/cmm/m/it/10 M$ \OT1/cmr/m/n/10 sam-ples $\OML/cmm/m/it/10 ^^Z[]; [] ; ^^Z[]$
+ []
+
+
 
 [29]
-<figures/hptn/alter_per_egonet_histogram.png, id=661, 433.62pt x 289.08pt>
+
+[30]
+
+[31]
+<figures/hptn/alter_per_egonet_histogram.png, id=766, 433.62pt x 289.08pt>
 File: figures/hptn/alter_per_egonet_histogram.png Graphic file (type png)
 <use figures/hptn/alter_per_egonet_histogram.png>
-Package pdftex.def Info: figures/hptn/alter_per_egonet_histogram.png  used on input line 2528.
+Package pdftex.def Info: figures/hptn/alter_per_egonet_histogram.png  used on input line 2616.
 (pdftex.def)             Requested size: 166.90544pt x 111.27188pt.
-<figures/hptn/sa_de_plot_aug_kappa2.png, id=666, 578.16pt x 361.35pt>
+<figures/hptn/sa_de_plot_aug_kappa2.png, id=771, 578.16pt x 361.35pt>
 File: figures/hptn/sa_de_plot_aug_kappa2.png Graphic file (type png)
 <use figures/hptn/sa_de_plot_aug_kappa2.png>
-Package pdftex.def Info: figures/hptn/sa_de_plot_aug_kappa2.png  used on input line 2558.
+Package pdftex.def Info: figures/hptn/sa_de_plot_aug_kappa2.png  used on input line 2646.
 (pdftex.def)             Requested size: 208.635pt x 130.39467pt.
 
 
-[30 <./figures/hptn/alter_per_egonet_histogram.png>]
-<figures/hptn/sa_ie_plot_augmented.png, id=675, 578.16pt x 361.35pt>
+[32 <./figures/hptn/alter_per_egonet_histogram.png>]
+<figures/hptn/sa_ie_plot_augmented.png, id=780, 578.16pt x 361.35pt>
 File: figures/hptn/sa_ie_plot_augmented.png Graphic file (type png)
 <use figures/hptn/sa_ie_plot_augmented.png>
-Package pdftex.def Info: figures/hptn/sa_ie_plot_augmented.png  used on input line 2566.
+Package pdftex.def Info: figures/hptn/sa_ie_plot_augmented.png  used on input line 2654.
 (pdftex.def)             Requested size: 208.635pt x 130.39467pt.
-<figures/hptn/pba_de_augmented.png, id=676, 578.16pt x 361.35pt>
+<figures/hptn/pba_de_augmented.png, id=781, 578.16pt x 361.35pt>
 File: figures/hptn/pba_de_augmented.png Graphic file (type png)
 <use figures/hptn/pba_de_augmented.png>
-Package pdftex.def Info: figures/hptn/pba_de_augmented.png  used on input line 2573.
+Package pdftex.def Info: figures/hptn/pba_de_augmented.png  used on input line 2661.
 (pdftex.def)             Requested size: 208.635pt x 130.39467pt.
 
 
-FiXme Summary: Number of notes: 4,
+FiXme Summary: Number of notes: 1,
 (FiXme)        Number of warnings: 0,
 (FiXme)        Number of errors: 0,
 (FiXme)        Number of fatal errors: 0,
-(FiXme)        Total: 4.
+(FiXme)        Total: 1.
 
 
 
-[31 <./figures/hptn/sa_de_plot_aug_kappa2.png> <./figures/hptn/sa_ie_plot_augmented.png> <./figures/hptn/pba_de_augmented.png>] (./enrt_draft.aux)
+[33 <./figures/hptn/sa_de_plot_aug_kappa2.png> <./figures/hptn/sa_ie_plot_augmented.png> <./figures/hptn/pba_de_augmented.png>] (./enrt_draft.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -942,18 +946,18 @@ Package rerunfilecheck Info: File `enrt_draft.out' has not changed.
 (rerunfilecheck)             Checksum: 2EF6F7C31F82DCC24E6E71CF6C767E65;3977.
  ) 
 Here is how much of TeX's memory you used:
- 29373 strings out of 473190
- 591169 string characters out of 5715800
- 1013716 words of memory out of 5000000
- 51973 multiletter control sequences out of 15000+600000
- 571851 words of font info for 85 fonts, out of 8000000 for 9000
+ 29468 strings out of 473190
+ 593076 string characters out of 5715800
+ 1014585 words of memory out of 5000000
+ 52043 multiletter control sequences out of 15000+600000
+ 572158 words of font info for 86 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 102i,19n,107p,915b,706s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on enrt_draft.pdf (31 pages, 1765216 bytes).
+ 102i,19n,107p,915b,645s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
+Output written on enrt_draft.pdf (33 pages, 1769744 bytes).
 PDF statistics:
- 835 PDF objects out of 1000 (max. 8388607)
- 724 compressed objects within 8 object streams
- 162 named destinations out of 1000 (max. 500000)
+ 941 PDF objects out of 1000 (max. 8388607)
+ 829 compressed objects within 9 object streams
+ 187 named destinations out of 1000 (max. 500000)
  234 words of extra memory for PDF output out of 10000 (max. 10000000)
 

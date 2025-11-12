@@ -15,6 +15,11 @@ Booth, R.~E., Davis, J.~M., Dvoryak, S., Brewster, J.~T., Lisovska, O., Strathde
 \newblock {HIV} incidence among people who inject drugs ({PWIDs}) in {Ukraine}: results from a clustered randomised trial.
 \newblock {\em The Lancet HIV}, 3(10):e482--e489.
 
+\bibitem[Boucher and Houndetoungan, 2022]{boucher2021estimating}
+Boucher, V. and Houndetoungan, E.~A. (2022).
+\newblock Estimating peer effects using partial network data.
+\newblock {\em Centre de recherche sur les risques les enjeux {\'e}conomiques et les politiques}.
+
 \bibitem[Buchanan et~al., 2024]{Buchanan_2024}
 Buchanan, A.~L., Hernández-Ramírez, R.~U., Lok, J.~J., Vermund, S.~H., Friedman, S.~R., Forastiere, L., and Spiegelman, D. (2024).
 \newblock Assessing direct and spillover effects of intervention packages in network-randomized studies.
@@ -24,6 +29,11 @@ Buchanan, A.~L., Hernández-Ramírez, R.~U., Lok, J.~J., Vermund, S.~H., Friedma
 Buchanan, A.~L., Vermund, S.~H., Friedman, S.~R., and Spiegelman, D. (2018).
 \newblock Assessing {Individual} and {Disseminated} {Effects} in {Network}-{Randomized} {Studies}.
 \newblock {\em American Journal of Epidemiology}, 187(11):2449--2459.
+
+\bibitem[Chandrasekhar and Lewis, 2011]{chandrasekhar2011econometrics}
+Chandrasekhar, A. and Lewis, R. (2011).
+\newblock Econometrics of sampled networks.
+\newblock {\em Unpublished manuscript, MIT.[422]}.
 
 \bibitem[Chao et~al., 2025]{Chao2023}
 Chao, A., Spiegelman, D., Buchanan, A., and Forastiere, L. (2025).
@@ -35,6 +45,11 @@ Chernozhukov, V., Chetverikov, D., Demirer, M., Duflo, E., Hansen, C., Newey, W.
 \newblock Double/debiased machine learning for treatment and structural parameters.
 \newblock {\em The Econometrics Journal}, 21(1):C1--C68.
 
+\bibitem[Cox, 1958]{Cox1958}
+Cox, D.~R. (1958).
+\newblock {\em Planning of experiments}.
+\newblock Wiley, New York.
+
 \bibitem[Crawford et~al., 2019]{Crawford2019}
 Crawford, F.~W., Morozova, O., Buchanan, A.~L., and Spiegelman, D. (2019).
 \newblock Interpretation of the {Individual} {Effect} {Under} {Treatment} {Spillover}.
@@ -44,6 +59,11 @@ Crawford, F.~W., Morozova, O., Buchanan, A.~L., and Spiegelman, D. (2019).
 Desrosiers, A., Kumar, P., Dayal, A., Alex, L., Akram, A., and Betancourt, T. (2020).
 \newblock Diffusion and spillover effects of an evidence-based mental health intervention among peers and caregivers of high risk youth in {Sierra} {Leone}: study protocol.
 \newblock {\em BMC Psychiatry}, 20(1):85.
+
+\bibitem[Egami, 2020]{Egami2020}
+Egami, N. (2020).
+\newblock Spillover effects in the presence of unobserved networks.
+\newblock {\em Political Analysis}, 29(3):287--316.
 
 \bibitem[Fang et~al., 2025]{Fang2023}
 Fang, J., Spiegelman, D., Buchanan, A.~L., and Forastiere, L. (2025).
@@ -60,15 +80,44 @@ Fox, M.~P. (2021).
 \newblock {\em Applying Quantitative Bias Analysis to Epidemiologic Data}.
 \newblock Statistics for Biology and Health. Springer, Cham, 2nd ed. 2021. edition.
 
+\bibitem[Greenland, 1996]{greenland1996basic}
+Greenland, S. (1996).
+\newblock Basic methods for sensitivity analysis of biases.
+\newblock {\em International journal of epidemiology}, 25(6):1107--1116.
+
 \bibitem[Greenland, 2005]{Greenland2005}
 Greenland, S. (2005).
 \newblock Multiple-{Bias} {Modelling} for {Analysis} of {Observational} {Data}.
 \newblock {\em Journal of the Royal Statistical Society Series A: Statistics in Society}, 168(2):267--306.
 
+\bibitem[Halloran and Struchiner, 1991]{Halloran1991}
+Halloran, M.~E. and Struchiner, C.~J. (1991).
+\newblock Study designs for dependent happenings.
+\newblock {\em Epidemiology}, 2(5):331--338.
+
+\bibitem[Hardy et~al., 2019]{Hardy2019}
+Hardy, M., Heath, R.~M., Lee, W., and McCormick, T.~H. (2019).
+\newblock Estimating spillovers using imprecisely measured networks.
+
+\bibitem[Hayes and Moulton, 2017]{Hayes2017}
+Hayes, R.~J. and Moulton, L.~H. (2017).
+\newblock {\em Cluster Randomised Trials}.
+\newblock CRC PR INC.
+
+\bibitem[Hernán and Robins, 2020]{Hernan2020}
+Hernán, M. and Robins, J. (2020).
+\newblock {\em Causal Inference: What If}.
+\newblock Boca Raton: Chapman \& Hall/CRC.
+
 \bibitem[Hong, 2013]{hong2013}
 Hong, Y. (2013).
 \newblock On computing the distribution function for the poisson binomial distribution.
 \newblock {\em Computational Statistics \& Data Analysis}, 59:41--51.
+
+\bibitem[Hudgens and Halloran, 2008]{Hudgens2008}
+Hudgens, M.~G. and Halloran, M.~E. (2008).
+\newblock Toward causal inference with interference.
+\newblock {\em Journal of the American Statistical Association}, 103(482):832--842.
 
 \bibitem[Lash et~al., 2014]{Lash2014}
 Lash, T.~L., Fox, M.~P., MacLehose, R.~F., Maldonado, G., McCandless, L.~C., and Greenland, S. (2014).
@@ -86,10 +135,34 @@ Latkin, C.~A., Donnell, D., Metzger, D., Sherman, S., Aramrattna, A., Davis-Voge
 \newblock The efficacy of a network intervention to reduce {HIV} risk behaviors among drug users and risk partners in {Chiang} {Mai}, {Thailand} and {Philadelphia}, {USA}.
 \newblock {\em Social Science \& Medicine}, 68(4):740--748.
 
+\bibitem[Leung, 2025]{leung2025cluster}
+Leung, M.~P. (2025).
+\newblock Cluster-randomized trials with cross-cluster interference.
+\newblock {\em Journal of the American Statistical Association}, (just-accepted):1--20.
+
+\bibitem[Li et~al., 2021]{Li2021}
+Li, W., Sussman, D.~L., and Kolaczyk, E.~D. (2021).
+\newblock Causal inference under network interference with noise.
+
 \bibitem[Manski, 2013]{Manski2013}
 Manski, C.~F. (2013).
 \newblock Identification of treatment response with social interactions.
 \newblock {\em The Econometrics Journal}, 16(1):S1--S23.
+
+\bibitem[Marray, 2024]{marray2024}
+Marray, K. (2024).
+\newblock Estimating spillovers from sampled connections.
+\newblock {\em arXiv preprint arXiv:2410.17154}.
+
+\bibitem[Marsden, 2002]{marsden2002egocentric}
+Marsden, P.~V. (2002).
+\newblock Egocentric and sociocentric measures of network centrality.
+\newblock {\em Social networks}, 24(4):407--422.
+
+\bibitem[McPherson et~al., 2001]{mcpherson2001homophily}
+McPherson, M., Smith-Lovin, L., and Cook, J.~M. (2001).
+\newblock Birds of a feather: Homophily in social networks.
+\newblock {\em Annual review of sociology}, 27(1):415--444.
 
 \bibitem[Miller et~al., 2018]{Miller2018}
 Miller, W.~C., Hoffman, I.~F., Hanscom, B.~S., Ha, T.~V., Dumchev, K., Djoerban, Z., Rose, S.~M., Latkin, C.~A., Metzger, D.~S., Lancaster, K.~E., Go, V.~F., Dvoriak, S., Mollan, K.~R., Reifeis, S.~A., Piwowar-Manning, E.~M., Richardson, P., Hudgens, M.~G., Hamilton, E.~L., Sugarman, J., Eshleman, S.~H., Susami, H., Chu, V.~A., Djauzi, S., Kiriazova, T., Bui, D.~D., Strathdee, S.~A., and Burns, D.~N. (2018).
@@ -97,10 +170,25 @@ Miller, W.~C., Hoffman, I.~F., Hanscom, B.~S., Ha, T.~V., Dumchev, K., Djoerban,
 \newblock {\em The Lancet}, 392(10149):747--759.
 \newblock Publisher: Elsevier.
 
-\bibitem[Saint-Jacques et~al., 2019]{SaintJacques2019}
-Saint-Jacques, G., Varshney, M., Simpson, J., and Xu, Y. (2019).
-\newblock Using {Ego}-{Clusters} to {Measure} {Network} {Effects} at {LinkedIn}.
-\newblock arXiv:1903.08755 [cs, stat].
+\bibitem[Ogburn et~al., 2022]{Ogburn2022}
+Ogburn, E.~L., Sofrygin, O., Díaz, I., and van~der Laan, M.~J. (2022).
+\newblock Causal inference for social network data.
+\newblock {\em Journal of the American Statistical Association}, pages 1--46.
+
+\bibitem[Perry et~al., 2018]{Perry2018}
+Perry, B.~L., Pescosolido, B.~A., and Borgatti, S.~P. (2018).
+\newblock {\em Egocentric {Network} {Analysis}: {Foundations}, {Methods}, and {Models}}.
+\newblock Structural {Analysis} in the {Social} {Sciences}. Cambridge University Press, Cambridge.
+
+\bibitem[Rosenbaum, 2005]{rosenbaum2005sensitivity}
+Rosenbaum, P.~R. (2005).
+\newblock Sensitivity analysis in observational studies.
+\newblock {\em Encyclopedia of statistics in behavioral science}, 4:1809--1814.
+
+\bibitem[Sewell, 2017]{Sewell2017}
+Sewell, D.~K. (2017).
+\newblock Network autocorrelation models with egocentric data.
+\newblock {\em Social Networks}, 49:113--123.
 
 \bibitem[Sherman et~al., 2009]{Sherman2009}
 Sherman, S.~G., Sutcliffe, C., Srirojn, B., Latkin, C.~A., Aramratanna, A., and Celentano, D.~D. (2009).
@@ -122,14 +210,39 @@ Sävje, F. (2023).
 \newblock Causal inference with misspecified exposure mappings: separating definitions and assumptions.
 \newblock {\em Biometrika}.
 
-\bibitem[VanderWeele et~al., 2015]{vanderweele2015}
-VanderWeele, T.~J., Tchetgen, E. J.~T., and Halloran, M.~E. (2015).
+\bibitem[{Tchetgen Tchetgen} et~al., 2020]{Tchetgen2020}
+{Tchetgen Tchetgen}, E.~J., Fulcher, I.~R., and Shpitser, I. (2020).
+\newblock Auto-g-computation of causal effects on a network.
+\newblock {\em Journal of the American Statistical Association}, 116(534):833--844.
+
+\bibitem[Torgerson, 2001]{Torgerson2001}
+Torgerson, D.~J. (2001).
+\newblock Contamination in trials: is cluster randomisation the answer?
+\newblock {\em {BMJ}}, 322(7282):355--357.
+
+\bibitem[Toulis and Kao, 2013]{Toulis2013}
+Toulis, P. and Kao, E. (2013).
+\newblock Estimation of causal peer influence effects.
+\newblock In {\em Proceedings of the 30th International Conference on Machine Learning}, volume~28 of {\em Proceedings of Machine Learning Research}, pages 1489--1497, Atlanta, Georgia, USA. PMLR.
+
+\bibitem[VanderWeele et~al., 2014]{VanderWeele2014}
+VanderWeele, T.~J., Tchetgen, E. J.~T., and Halloran, M.~E. (2014).
 \newblock Interference and sensitivity analysis.
-\newblock {\em Statistical science: a review journal of the Institute of Mathematical Statistics}, 29(4):687.
+\newblock {\em Statistical Science}, 29(4).
 
 \bibitem[Weinstein and Nevo, 2023]{Weinstein2023}
 Weinstein, B. and Nevo, D. (2023).
 \newblock Causal inference with misspecified network interference structure.
 \newblock {\em arXiv preprint arXiv:2302.11322}.
+
+\bibitem[Weinstein and Nevo, 2025]{weinstein2025}
+Weinstein, B. and Nevo, D. (2025).
+\newblock Bayesian estimation of causal effects using proxies of a latent interference network.
+\newblock {\em arXiv preprint arXiv:2505.08395}.
+
+\bibitem[Yauck, 2022]{Yauck2022}
+Yauck, M. (2022).
+\newblock On the {Estimation} of {Peer} {Effects} for {Sampled} {Networks}.
+\newblock arXiv:2208.09102 [econ, stat].
 
 \end{thebibliography}
