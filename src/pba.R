@@ -7,9 +7,10 @@ source("src/sensitivity_params.r")
 library(data.table)
 library(parallel)
 
-#' Perform Probabilistic Bias Analysis (PBA) for contamination in ENRT
-#'
-#' This function performs a PBA by integrating over uncertainty in sensitivity
+#' @title Perform Probabilistic Bias Analysis (PBA) for contamination in ENRT
+#' @description
+#' This function performs a PBA as described in Section 3.4 of the paper.
+#' It integrates over uncertainty in sensitivity
 #' parameters and sampling uncertainty. It uses a single Monte Carlo loop to
 #' efficiently generate distributions for two types of uncertainty:
 #' 1.  **Bias-Only Uncertainty:** Reflects uncertainty from the sensitivity
@@ -65,7 +66,90 @@ library(parallel)
 #'
 #' @return A list containing two data.tables: `IE_results` and `DE_results`.
 #'         Each table provides the mean and quantiles for both the
-#'         'bias_only' and 'total' uncertainty distributions (RD only).
+#'         'bias_only' and 'total' uncertainty distributions.
+#'
+#' @export
+#' #' @examples
+#' \dontrun{
+#' # --- 1. Simulate HPTN-037-like data (same as enrt_sa) ---
+#' set.seed(42)
+#' n_e <- 150
+#' n_a <- 263
+#' pz <- 0.5
+#'
+#' # (Egos)
+#' X_e <- matrix(rnorm(n_e * 2), n_e, 2, dimnames = list(NULL, c("X1", "X2")))
+#' Z_e <- rbinom(n_e, 1, pz)
+#' Y_e <- rbinom(n_e, 1, 0.3 + 0.1 * Z_e - 0.2 * X_e[,1])
+#'
+#' # (Alters)
+#' ego_id_a <- sample(1:n_e, n_a, replace = TRUE)
+#' X_a <- matrix(rnorm(n_a * 2), n_a, 2, dimnames = list(NULL, c("X1", "X2")))
+#' F_a <- Z_e[ego_id_a] # Observed exposure
+#' Y_a <- rbinom(n_a, 1, 0.4 - 0.1 * F_a + 0.1 * X_a[,2])
+#'
+#' # --- 2. Define Prior Distributions and Arguments ---
+#'
+#' # Priors for IE (Homogeneous m_a, Example 2)
+#' # Use a Poisson(200) prior for m_a 
+#' prior_ie_func <- function() {
+#'   round(rpois(1, 200)) # Sample a single m_a value
+#' }
+#'
+#' # Arguments for pi_homo (for alters)
+#' pi_args_ie_list <- list(
+#'   n_e = n_e,
+#'   n_a = n_a,
+#'   type = "alter",
+#'   pz = pz
+#' )
+#'
+#' # Priors for DE (Homogeneous m_e and kappa)
+#' # Use Poisson(150) for m_e and Uniform(1, 3) for kappa.
+#' prior_de_func <- function() {
+#'   list(
+#'     pi_param = round(rpois(1, 150)), # Sampled m_e
+#'     kappa = runif(1, 1, 3)           # Sampled kappa
+#'   )
+#' }
+#'
+#' # Arguments for pi_homo (for egos)
+#' pi_args_de_list <- list(
+#'   n_e = n_e,
+#'   type = "ego",
+#'   pz = pz
+#' )
+#'
+#' # --- 3. Run the Probabilistic Bias Analysis ---
+#'
+#' # Using augmented estimators (logistic regression)
+#' # and 2D Monte Carlo (bootstrap = TRUE)
+#'
+#' pba_results <- enrt_pba(
+#'   Y_e = Y_e, Y_a = Y_a, X_e = X_e, X_a = X_a,
+#'   Z_e = Z_e, F_a = F_a, ego_id_a = ego_id_a,
+#'   reg_model_egos = glm, reg_model_alters = glm,
+#'   formula_egos = Y ~ Z + X1 + X2,
+#'   formula_alters = Y ~ F + X1 + X2,
+#'   bootstrap = TRUE,
+#'   B = 1000, # Recommend 1e3 to 1e4 for full analysis
+#'   pz = pz,
+#'   n_cores = 2, # Use 2 cores
+#'   prior_func_ie = prior_ie_func,
+#'   pi_func_ie = pi_homo,
+#'   pi_args_ie = pi_args_ie_list,
+#'   pi_param_name_ie = "m_vec", # Name of arg to pass sampled value to
+#'   prior_func_de = prior_de_func,
+#'   pi_func_de = pi_homo,
+#'   pi_args_de = pi_args_de_list,
+#'   pi_param_name_de = "m_vec", # Name of arg to pass pi_param to
+#'   family = binomial(link = "logit") # Passed to glm()
+#' )
+#'
+#' # View the 95% intervals for bias-only and total uncertainty
+#' print(pba_results$IE_results)
+#' print(pba_results$DE_results)
+#' }
 #'
 enrt_pba <- function(Y_e,
                      Y_a,

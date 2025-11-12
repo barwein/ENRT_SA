@@ -12,7 +12,58 @@ source("src/utils.R")
 
 # Homogeneous case --------------------------------------------------------
 
-
+#' @title Calculate Homogeneous Exposure Probabilities (pi)
+#' @description
+#' Calculates the probability of exposure to at least one treated ego ($\pi_i$)
+#' under a homogeneous contamination model. This model assumes that the
+#' probability of a latent edge (or the number of latent edges) is uniform
+#' across all possible ego-ego or alter-ego pairs.
+#'
+#' This function is used to generate sensitivity parameters for `enrt_sa` and
+#' `enrt_pba` based on "Example 1 (Homogeneous probabilities)" and
+#' "Example 2 (Homogeneous number of edges)" from the paper.
+#'
+#' @param rho_vec A numeric vector of homogeneous edge probabilities, $\rho^e$ or
+#'  $\rho^a$. Each value should be in [0, 1].
+#' @param m_vec A numeric vector of the expected number of missing edges, $m^e$ or
+#'   $m^a$. Values must be non-negative.
+#' @param n_e The total number of egos in the sample.
+#' @param n_a The total number of alters in the sample (required if `type = "alter"`
+#'   and `m_vec` is used).
+#' @param type A string, either `"ego"` or `"alter"`.
+#' * If `"ego"`, calculates $\pi_i^e = 1 - (1 - p_z \rho^e)^{n_e - 1}$.
+#'  * If `"alter"`, calculates $\pi_i^a = p_z + (1 - p_z)[1 - (1 - p_z \rho^a)^{n_e - 1}]$.
+#' @param pz The known probability of an ego being assigned to treatment, $Pr(Z=1)$.
+#'
+#' @return A named list where each element is a scalar $\pi$ value.
+#'   The names of the list correspond to the values from `rho_vec` or `m_vec`.
+#'
+#' @export
+#'
+#' @examples
+#' # --- Example 1: Homogeneous Probabilities ---
+#' # Assume 150 egos, pz = 0.5
+#' # What is the exposure probability for egos if each ego-ego edge
+#' # has a 0.5%, 1%, or 2% probability of existing?
+#'
+#' pi_e_list <- pi_homo(rho_vec = c(0.005, 0.01, 0.02),
+#'                      n_e = 150,
+#'                      type = "ego",
+#'                      pz = 0.5)
+#' print(pi_e_list)
+#'
+#' # --- Example 2: Homogeneous Number of Edges ---
+#' # Assume 150 egos, 263 alters, pz = 0.5
+#' # What is the exposure probability for alters if we expect
+#' # m_a = 100, 200, or 300 total expected missing alter-ego edges?
+#'
+#' pi_a_list <- pi_homo(m_vec = c(100, 200, 300),
+#'                      n_e = 150,
+#'                      n_a = 263,
+#'                      type = "alter",
+#'                      pz = 0.5)
+#' print(pi_a_list)
+#'
 pi_homo <- function(rho_vec = NULL,
                     m_vec = NULL,
                     n_e,
@@ -71,6 +122,87 @@ pi_homo <- function(rho_vec = NULL,
 
 # Heterogeneous case ------------------------------------------------------
 
+#' @title Calculate Heterogeneous Exposure Probabilities (pi)
+#' @description
+#' Calculates the probability of exposure to at least one treated ego ($\pi_i$)
+#' under a heterogeneous contamination model. This model assumes that the
+#' probability of a latent edge depends on unit-level covariates $X$,
+#' typically through a distance or similarity function.
+#'
+#' This function generates sensitivity parameters for `enrt_sa` and
+#' `enrt_pba` based on "Example 3 (Heterogeneous probabilities)" and
+#' "Example 4 (Heterogeneous number of missing edges)" from the paper.
+#'
+#' @param X_e A numeric matrix of covariates for the egos (n_e rows).
+#' @param X_a A numeric matrix of covariates for the alters (n_a rows).
+#'   If `NULL`, the function calculates ego-ego probabilities ($\pi_i^e$).
+#'   If provided, it calculates alter-ego probabilities ($\pi_i^a$).
+#' @param m_vec A numeric vector of the expected number of missing edges, $m^e$ or
+#'   $m^a$. Used for "Example 4". If `NULL` (default),
+#'   the function uses the "Example 3" model.
+#' @param gamma A numeric vector of sensitivity parameters ($\gamma^e$ or $\gamma^a$)
+#'   that control the influence of covariate similarity.
+#'   If `m_vec` is provided, `gamma` must be a single scalar.
+#' @param dist A string specifying the distance function.
+#'   Supported: `"norm"` (Lp norm), `"cosine"`, `"inner"`.
+#' @param ego_index A numeric vector mapping each alter to their ego's index.
+#'   Required only when `type_ == "alter"` (i.e., `X_a` is not `NULL`).
+#'   This is used to exclude distances to an alter's *own* ego.
+#' @param pz The known probability of an ego being assigned to treatment, $Pr(Z=1)$.
+#' @param p The power for the Lp norm (`dist = "norm"`), e.g., `p=2` for
+#'   Euclidean (default) or `p=1` for Manhattan.
+#' @param return_rho_ij Logical. If `TRUE` and `m_vec` is used, returns a
+#'   list containing both the 'pi' vectors and the 'rho' (edge probability)
+#'   matrices.
+#'
+#' @return
+#' If `m_vec` is `NULL`: A named list where each element is a *vector*
+#'   of $\pi_i$ values (length n_e or n_a). The names correspond to `gamma` values.
+#' If `m_vec` is not `NULL`: A named list where each element is a *vector*
+#'   of $\pi_i$ values. The names correspond to `m_vec` values.
+#'
+#' @export
+#'
+#' @examples
+#' # --- Simulate data for examples ---
+#' set.seed(123)
+#' n_e <- 50
+#' n_a <- 100
+#' pz <- 0.5
+#' X_e <- matrix(rnorm(n_e * 2), ncol = 2, dimnames = list(NULL, c("X1", "X2")))
+#' X_a <- matrix(rnorm(n_a * 2), ncol = 2, dimnames = list(NULL, c("X1", "X2")))
+#' ego_id_a <- sample(1:n_e, n_a, replace = TRUE) # Map alters to egos
+#'
+#' # --- Example 3: Heterogeneous Probabilities (Egos) ---
+#' # Calculate pi_e vectors based on covariate similarity (gamma)
+#'
+#' pi_e_list_hetero <- pi_hetero(X_e = X_e,
+#'                               gamma = c(0.5, 1.0, 2.0),
+#'                               dist = "norm",
+#'                               p = 2,
+#'                               pz = pz)
+#'
+#' # Each element is a vector of length n_e
+#' sapply(pi_e_list_hetero, length)
+#' sapply(pi_e_list_hetero, mean)
+#'
+#' # --- Example 4: Heterogeneous Number of Edges (Alters) ---
+#' # Calculate pi_a vectors based on an expected number of missing edges (m_a),
+#' # where edge probability is weighted by covariate similarity (gamma = 1).
+#'
+#' pi_a_list_hetero <- pi_hetero(X_e = X_e,
+#'                               X_a = X_a,
+#'                               m_vec = c(50, 100),
+#'                               gamma = 1.0,
+#'                               dist = "norm",
+#'                               ego_index = ego_id_a,
+#'                               p = 2,
+#'                               pz = pz)
+#'
+#' # Each element is a vector of length n_a
+#' sapply(pi_a_list_hetero, length)
+#' sapply(pi_a_list_hetero, mean)
+#'
 pi_hetero <- function(X_e,
                       X_a = NULL,
                       m_vec = NULL,
@@ -80,10 +212,6 @@ pi_hetero <- function(X_e,
                       pz = 0.5,
                       p = 1,
                       return_rho_ij = FALSE){
-  #' @title Heterogeneous pi values
-  #' @param return_rho_ij [Logical] If TRUE, returns a list containing
-  #'        both 'pi' (exposure probs) and 'rho' (edge prob matrices).
-  #'        Only implemented for the 'm_vec' (Example 4) case.
   
   type_ <- ifelse(is.null(X_a), "ego", "alter")
   

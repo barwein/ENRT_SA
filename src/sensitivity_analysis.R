@@ -9,11 +9,17 @@ source("src/sa_bootstrap_wrap.R")
 source("src/sa_single_iter.R")
 source("src/outcomes_models.R")
 
-#' End-to-End Sensitivity Analysis for Egocentric-Network Randomized Trials
+#' @title Run a Grid Sensitivity Analysis (GSA) for ENRT
+#' @description
+#' This function performs a Grid Sensitivity Analysis (GSA) as described
+#' in Section 3.4 of the paper.
+#' It calculates bias-corrected point estimates, variance, and confidence
+#' intervals for the Indirect Effect (IE) and Direct Effect (DE) over a
+#' user-specified grid of sensitivity parameters.
 #'
-#' This is the main user-facing function. It calculates bias-corrected
-#' point estimates for IE and DE, along with variance estimates, and constructs
-#' confidence intervals using a normal approximation.
+#' This is the primary function for GSA. It can use either empirical
+#' variance estimates (fast) or a non-parametric ego-network bootstrap
+#' (more robust).
 #'
 #' @param Y_e A numeric vector of outcomes for the egos.
 #' @param Y_a A numeric vector of outcomes for the alters.
@@ -55,7 +61,93 @@ source("src/outcomes_models.R")
 #'   \item{ie_rd_plot}{A ggplot object for the Indirect Effect (RD), or `NULL`.}
 #'   \item{de_rd_plot}{A ggplot object for the Direct Effect (RD), or `NULL`.}
 #' }
+#' 
 #' @export
+#' 
+#' @examples
+#' \dontrun{
+#' # --- 1. Simulate HPTN-037-like data ---
+#' set.seed(42)
+#' n_e <- 150
+#' n_a <- 263
+#' pz <- 0.5
+#'
+#' # (Egos)
+#' X_e <- matrix(rnorm(n_e * 2), n_e, 2, dimnames = list(NULL, c("X1", "X2")))
+#' Z_e <- rbinom(n_e, 1, pz)
+#' Y_e <- rbinom(n_e, 1, 0.3 + 0.1 * Z_e - 0.2 * X_e[,1])
+#'
+#' # (Alters)
+#' ego_id_a <- sample(1:n_e, n_a, replace = TRUE)
+#' X_a <- matrix(rnorm(n_a * 2), n_a, 2, dimnames = list(NULL, c("X1", "X2")))
+#' F_a <- Z_e[ego_id_a] # Observed exposure
+#' Y_a <- rbinom(n_a, 1, 0.4 - 0.1 * F_a + 0.1 * X_a[,2])
+#'
+#' # --- 2. Define Sensitivity Parameter Grids ---
+#'
+#' # Specification 1: Homogeneous (Example 2)
+#' # Grid of m_a values for alters
+#' m_a_grid_homo <- seq(0, 400, by = 50)
+#' pi_list_ae_homo <- pi_homo(m_vec = m_a_grid_homo, n_e = n_e, n_a = n_a,
+#'                            type = "alter", pz = pz)
+#'
+#' # Grid of m_e values for egos
+#' m_e_grid_homo <- seq(0, 300, by = 50)
+#' pi_list_ee_homo <- pi_homo(m_vec = m_e_grid_homo, n_e = n_e,
+#'                            type = "ego", pz = pz)
+#'
+#' # Specification 2: Heterogeneous (Example 4)
+#' # Use same m grids, but with covariate adjustment
+#' pi_list_ae_hetero <- pi_hetero(X_e = X_e, X_a = X_a, m_vec = m_a_grid_homo,
+#'                                gamma = 1, dist = "norm", p = 2,
+#'                                ego_index = ego_id_a, pz = pz)
+#' pi_list_ee_hetero <- pi_hetero(X_e = X_e, m_vec = m_e_grid_homo, gamma = 1,
+#'                                dist = "norm", p = 2, pz = pz)
+#'
+#' # --- 3. Format Parameter Lists for enrt_sa ---
+#'
+#' pi_lists_ae <- list(
+#'   Homo = pi_list_ae_homo,
+#'   Hetero = pi_list_ae_hetero
+#' )
+#'
+#' pi_lists_ee <- list(
+#'   Homo = pi_list_ee_homo,
+#'   Hetero = pi_list_ee_hetero
+#' )
+#'
+#' # Kappa grid for DE
+#' kappa_grid <- seq(1, 3, by = 0.5)
+#'
+#' # --- 4. Run the Grid Sensitivity Analysis ---
+#'
+#' # Using augmented estimators (logistic regression)
+#' # and empirical variance (bootstrap = FALSE)
+#'
+#' sa_results <- enrt_sa(
+#'   Y_e = Y_e, Y_a = Y_a, X_e = X_e, X_a = X_a,
+#'   Z_e = Z_e, F_a = F_a, ego_id_a = ego_id_a,
+#'   reg_model_egos = glm, reg_model_alters = glm,
+#'   formula_egos = Y ~ Z + X1 + X2,
+#'   formula_alters = Y ~ F + X1 + X2,
+#'   pi_lists_ego_ego = pi_lists_ee,
+#'   pi_lists_alter_ego = pi_lists_ae,
+#'   kappa_vec = kappa_grid,
+#'   pz = pz,
+#'   bootstrap = FALSE,
+#'   n_cores = 1,
+#'   family = binomial(link = "logit") # Passed to glm()
+#' )
+#'
+#' # View results
+#' print(sa_results$null_results$IE)
+#' print(sa_results$sa_results$IE)
+#'
+#' # Show plots
+#' # print(sa_results$ie_rd_plot)
+#' # print(sa_results$de_rd_plot)
+#' }
+#'
 enrt_sa <- function(Y_e,
                     Y_a,
                     X_e = NULL,
