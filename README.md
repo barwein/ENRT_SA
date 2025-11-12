@@ -11,5 +11,5 @@ Before running the replication scripts, you must install the `ENRTsensitivity` p
 
 ```r
 # install.packages("devtools")
-devtools::install_github("YOUR-USERNAME/ENRT_sensitivity")
+devtools::install_github("barwein/ENRTsensitivity")
 ```
