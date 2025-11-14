@@ -1,5 +1,5 @@
 
-\documentclass{article}[12pt]
+\documentclass[11pt]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
@@ -378,6 +378,9 @@ The exposures $F_i$ indicate whether at least one of the neighbors of unit $i$ i
 Assumption~\ref{ass:expos_map} implies that the exposure mapping is correctly specified \citep{Saevje2023},
 and that only treatments of neighbors affect the potential outcomes of unit $i$.
 This binary exposure mapping specification is common in the ENRT literature \citep{Buchanan2018,Chao2023,Fang2023}.
+For clarity, we present the main results under this binary specification, 
+but extend our framework to a three-level exposure mapping specification distinguishing
+between zero, one, or two-and-more treated neighbors in Appendix~\ref{apdx.sec:three_level_em}.
 By Assumption~\ref{ass:expos_map}, we can express the potential outcomes as
 $Y_i(\bZ)=Y_i(Z_i,F_i)$.
 Consequently, each unit has four effective potential outcomes,
@@ -682,7 +685,7 @@ If $\pi_i^e=0$ or $\kappa=1$, the bias-corrected estimator will reduce to the na
  Namely, the naive estimator \eqref{eq:DE_naive_HT} is unbiased if there are no latent ego--ego edges
   or if the interaction term between treatment and exposure is zero.
 
-Moreover, under Assumption~\ref{ass:egos_kappa}, the naive estimator $\widehat{IE}$ is
+Moreover, under Assumption~\ref{ass:egos_kappa}, the naive estimator $\widehat{DE}$ is
  attenuated \emph{away} from the null if $\kappa >1$, and attenuated \emph{towards} the null if
    $\kappa \in \left( \max_{i \in \cR_e}\left\{1 - \frac{1}{\pi_i^e}\right\}, 1 \right)$. 
    See Appendix~\ref{apdx_sec:proof} for details.
@@ -737,7 +740,7 @@ the experimental design (Assumption~\ref{ass:bernoulli_design}),
 the probabilities $\pi_i^a$ and $\pi_i^e$ depend 
 only on alter--ego or ego--ego edges in the population network $\bA$.
 In the observed network $\widetilde{\bA}$, each alter $i \in \cR_a$ is connected only to its ego $e(i) \in \cR_e$.
-Let $\cR_e^{j} = \cR_e \setminus \{j\}$ be the set of all egos other than $j \in \cR_e$.
+Let $\cR_e^{i} = \cR_e \setminus \{i\}$ be the set of all egos other than $i \in \cR_e$.
 The latent alter--ego edges $\left\{A_{ij} : i \in \cR_a, j \in \cR_e^{e(i)} \right\}$,
 and ego--ego edges $\left\{A_{ij}: i \neq j \in \cR_e\right\}$ 
     are the missing edges from $\widetilde{\bA}$
@@ -1380,7 +1383,8 @@ Recall that the HT estimator of the indirect effects based on the observed data 
     \mathbb{I}\{\widetilde{F}_i=0\}Y_i}{1 - p_z} 
     \right]
 \end{equation*}
-By the assumed experimental design (Assumption~\ref{ass:bernoulli_design}), the probability that an alter is assigned to treatment is zero, that is, $\Pr(Z_i =0 \mid i\in \cR_a)=0$. Also, $Z_i$ and $\widetilde{F}_i = F(\bZ_{-i},\widetilde{\bA})$ are independent. Thus, the event $\mathbb{I}\{\widetilde{F}_i=f\}$ is equal with probability one to  $\mathbb{I}\{Z_i=0,\widetilde{F}_i=f\}$ among the alters $i \in \cR_a$.
+By the assumed experimental design (Assumption~\ref{ass:bernoulli_design}), the probability that an alter is assigned to treatment is zero,
+ that is, $\Pr(Z_i =1 \mid i\in \cR_a)=0$. Also, $Z_i$ and $\widetilde{F}_i = F(\bZ_{-i},\widetilde{\bA})$ are independent. Thus, the event $\mathbb{I}\{\widetilde{F}_i=f\}$ is equal with probability one to  $\mathbb{I}\{Z_i=0,\widetilde{F}_i=f\}$ among the alters $i \in \cR_a$.
 Starting with the first inner term, for $i \in \cR_a$,
 \begin{equation}
     \label{apdx.eq:alter_0_1}
@@ -1829,11 +1833,11 @@ Write
     \right],
     \\ &=
     \frac{1}{n_a}
-    \sum_{i \in \cR_a}
+    \sum_{i \in \cR_e}
     \frac{1}{1 + \pi_i^e(\kappa-1)} \phi_i^e
     \\ &=
     \frac{1}{n_a}
-    \sum_{i \in \cR_a}
+    \sum_{i \in \cR_e}
     \alpha_i^e \phi_i^e.
 \end{align*}
 We assume that the outcome models $\mu^e_i(z)$ are estimated through cross-fitting \citep{Chernozhukov2018} and therefore assumed to be independent of $\bZ$. We ignore the sampling uncertainty associated with estimating the outcome models. 
@@ -2082,7 +2086,7 @@ The expectation of the naive estimator is:
     \label{apdx.eq:bias_three_level}
     \begin{aligned}
         \EX_{\bZ}\left[\widehat{IE}\right] &=
-        \frac{1}{n_e} \sum_{i \in \cR_a} \left( E_{i,1} - E_{i,0} \right)
+        \frac{1}{n_a} \sum_{i \in \cR_a} \left( E_{i,1} - E_{i,0} \right)
         \\ &=
         \frac{1}{n_a} \sum_{i \in \cR_a} \left[ -\pi_{i,0}^* Y_i(0, 0) + 
         (\pi_{i,0}^* - \pi_{i,1}^*) Y_i(0, 1) +
