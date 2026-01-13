@@ -296,10 +296,12 @@ pba_ie_plot <- function(pba_ie_data,
       y = "Estimated IE",
       title = "Indirect Effect"
     ) +
-    theme_bw(base_size = 15)  +
-    theme(legend.position = "bottom",
-          axis.text.x = element_text(size = 15, face = "bold"),
-          legend.text = element_text(size = 16)) 
+  theme_bw(base_size = 14)  +
+  theme(legend.position = "bottom",
+        axis.text.x = element_text(size = 14, face = "bold"),
+        legend.text = element_text(size = 15),
+        axis.text.y = element_text(size = 14)) 
+
   
   return(pba_ie_plot_aug)
   
@@ -383,7 +385,8 @@ pba_de_plot <- function(pba_de_data,
     theme_bw(base_size = 14)  +
     theme(legend.position = "bottom",
           axis.text.x = element_text(size = 14, face = "bold"),
-          legend.text = element_text(size = 14)) 
+          legend.text = element_text(size = 15),
+          axis.text.y = element_text(size = 14)) 
   
   return(pba_de_plot_aug)
   

@@ -277,8 +277,8 @@ spec_labels <- c(
   # "hetero" = TeX("Heterogeneous $\\pi_i^e$")
 )
 # de_plot <- hptn_sa_aug$de_rd_plot
-de_plot <- hptn_sa_not_aug$de_rd_plot
-de_plot <- de_plot + 
+de_plot_not_aug <- hptn_sa_not_aug$de_rd_plot
+de_plot_not_aug <- de_plot_not_aug + 
         scale_x_continuous(breaks = seq(0, max(m_vec_egos), 50),
                            labels = seq(0, max(m_vec_egos), 50)) +
         labs(x = TeX("$m^e$ (Expected number of missing ego-ego edges)"),
@@ -291,12 +291,36 @@ de_plot <- de_plot +
     axis.title = element_text(size = 14),
     strip.text = element_text(size = 14, face="bold")
   )
-print(de_plot)
+print(de_plot_not_aug)
 
 ggsave("HPTN_037/figures/sa_de_not_aug_plot.png",
-       plot = de_plot, width = 10, height = 6,
+       plot = de_plot_not_aug, width = 10, height = 6,
        dpi = 300,
        bg = "white")
+
+de_plot_aug <- hptn_sa_aug$de_rd_plot
+de_plot_aug <- de_plot_aug + 
+        scale_x_continuous(breaks = seq(0, max(m_vec_egos), 50),
+                           labels = seq(0, max(m_vec_egos), 50)) +
+        labs(x = TeX("$m^e$ (Expected number of missing ego-ego edges)"),
+             fill = "Estimated DE",
+             title = "Direct Effect") +
+  facet_wrap(~spec,
+             labeller = labeller(spec = spec_labels)) +
+  theme(
+    axis.text = element_text(size = 12),
+    axis.title = element_text(size = 14),
+    strip.text = element_text(size = 14, face="bold")
+  )
+print(de_plot_aug)
+
+ggsave("HPTN_037/figures/sa_de_aug_plot.png",
+       plot = de_plot_aug, width = 10, height = 6,
+       dpi = 300,
+       bg = "white")
+
+
+
 
 # DE plot given kappa=2
 palette <- c(
@@ -313,7 +337,7 @@ plot_labels <- c(
 
 hptn_sa_not_aug$sa_results$DE[, pi_param := as.numeric(pi_param)]
 hptn_sa_not_aug$null_results$DE[, pi_param := as.numeric(pi_param)]
-de_plot_kappa2 <- sa_de_plot_given_kappa(
+de_plot_kappa2_not_aug <- sa_de_plot_given_kappa(
                                          sa_de_data = hptn_sa_not_aug$sa_results$DE[kappa == 2.0,],
                                          sa_de_naive_data = hptn_sa_not_aug$null_results$DE,
                                          # sa_de_data = hptn_sa_aug$sa_results$DE[kappa == 2.0,],
@@ -322,9 +346,26 @@ de_plot_kappa2 <- sa_de_plot_given_kappa(
                                          palette = palette,
                                          plot_labels = plot_labels, 
                                          m_vec_egos = m_vec_egos)
-print(de_plot_kappa2)
+print(de_plot_kappa2_not_aug)
+ggsave("HPTN_037/figures/sa_de_plot_not_aug_kappa2.png",
+       plot = de_plot_kappa2_not_aug, width = 8, height = 5,
+       dpi = 300,
+       bg = "white")
+
+hptn_sa_aug$sa_results$DE[, pi_param := as.numeric(pi_param)]
+hptn_sa_aug$null_results$DE[, pi_param := as.numeric(pi_param)]
+de_plot_kappa2_aug <- sa_de_plot_given_kappa(
+                                         sa_de_data = hptn_sa_aug$sa_results$DE[kappa == 2.0,],
+                                         sa_de_naive_data = hptn_sa_aug$null_results$DE,
+                                         # sa_de_data = hptn_sa_aug$sa_results$DE[kappa == 2.0,],
+                                         # sa_de_naive_data = hptn_sa_aug$null_results$DE,
+                                         kappa = 2,
+                                         palette = palette,
+                                         plot_labels = plot_labels, 
+                                         m_vec_egos = m_vec_egos)
+print(de_plot_kappa2_aug)
 ggsave("HPTN_037/figures/sa_de_plot_aug_kappa2.png",
-       plot = de_plot_kappa2, width = 8, height = 5,
+       plot = de_plot_kappa2_aug, width = 8, height = 5,
        dpi = 300,
        bg = "white")
 
