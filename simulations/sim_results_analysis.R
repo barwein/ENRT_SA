@@ -48,78 +48,79 @@ sa_ie_homo_summary <- sa_ie_homo[,.(
           bias = mean(ie_rd - true_ie),
           # rel_bias = mean((ie_rd - true_ie)/true_ie),
           coverage = mean((ci_low <= true_ie) & (true_ie <= ci_high)),
-          # bias_sd = sd(ie_rd),
-          # mean_se = mean(sqrt(var_to_use)),
+          bias_sd = sd(ie_rd),
+          mean_se = mean(sqrt(var_to_use)),
           ese_ase = sd(ie_rd) / mean(sqrt(var_to_use)),
           true_ie = mean(true_ie)
         ),
-        by = c("m_a","spec", "bootstrap", "augmented")]
+        by = c("m_a","spec", "augmented")]
         
 
 sa_ie_hetero_summary <- sa_ie_hetero[,.(
                 bias = mean(ie_rd - true_ie),
                 # rel_bias = mean((ie_rd - true_ie)/true_ie),
                 coverage = mean((ci_low <= true_ie) & (true_ie <= ci_high)),
-                # bias_sd = sd(ie_rd),
-                # mean_se = mean(sqrt(var_to_use)),
+                bias_sd = sd(ie_rd),
+                mean_se = mean(sqrt(var_to_use)),
                 ese_ase = sd(ie_rd) / mean(sqrt(var_to_use)),
                 true_ie = mean(true_ie)
               ),
-                by = c("m_a","spec", "bootstrap", "augmented")]
+                by = c("m_a","spec", "augmented")]
 
 
 sa_de_homo_summary <- sa_de_homo[,.(
           bias = mean(de_rd - true_de),
           # rel_bias = mean((de_rd - true_de)/true_de),
           coverage = mean((ci_low <= true_de) & (true_de <= ci_high)),
-          # bias_sd = sd(de_rd),
-          # mean_se = mean(sqrt(var_to_use)),
+          bias_sd = sd(de_rd),
+          mean_se = mean(sqrt(var_to_use)),
           ese_ase = sd(de_rd) / mean(sqrt(var_to_use)),
           true_de = mean(true_de)
         ),
-        by = c("m_e","spec", "bootstrap", "augmented", "kappa_")]
+        by = c("m_e","spec", "augmented", "kappa_")]
         
 
 sa_de_hetero_summary <- sa_de_hetero[,.(
             bias = mean(de_rd - true_de),
             # rel_bias = mean((de_rd - true_de)/true_de),
             coverage = mean((ci_low <= true_de) & (true_de <= ci_high)),
-            # bias_sd = sd(de_rd),
-            # mean_se = mean(sqrt(var_to_use)),
+            bias_sd = sd(de_rd),
+            mean_se = mean(sqrt(var_to_use)),
             ese_ase = sd(de_rd) / mean(sqrt(var_to_use)),
             true_de = mean(true_de)
           ),
-          by = c("m_e","spec", "bootstrap", "augmented", "kappa_")]
+          by = c("m_e","spec", "augmented", "kappa_")]
 
 
 
 # --- Main Results: Heterogeneous true contamination + Augmented estimators ---
 
-ie_hetero_summ_augmented <- sa_ie_hetero_summary[augmented == TRUE,]
+ie_hetero_summ <- sa_ie_hetero_summary[m_a %in% c(100, 200),]
 # remove 'augmented' column
-ie_hetero_summ_augmented[, augmented := NULL]
-ie_hetero_summ_augmented[, Scenario := paste0("$m_a=", m_a, ", IE=", round(true_ie,3),"$")]
-ie_hetero_summ_augmented[, Variance := ifelse(bootstrap, "Bootstrap", "Analytic")]
-ie_hetero_summ_augmented[, spec := ifelse(spec == "homo", "Homogeneous",
+# ie_hetero_summ_augmented[, augmented := NULL]
+# ie_hetero_summ[, Scenario := paste0("$m_a=", m_a, ", IE=", round(true_ie,3),"$")]
+ie_hetero_summ[, Scenario := paste0("$m_a=", m_a,"$")]
+# ie_hetero_summ_augmented[, Variance := ifelse(bootstrap, "Bootstrap", "Analytic")]
+ie_hetero_summ[, spec := ifelse(spec == "homo", "Homogeneous",
                                           ifelse(spec == "hetero",
                                                  "Heterogeneous", spec))]
-setorderv(ie_hetero_summ_augmented, c("m_a","spec","bootstrap"))
+setorderv(ie_hetero_summ, c("m_a","spec","augmented"))
 # change variable order
-ie_hetero_summ_augmented <- ie_hetero_summ_augmented[,
-                                     .(Scenario, spec, Variance, bias, coverage, ese_ase)
+ie_hetero_summ <- ie_hetero_summ[,
+                                     .(Scenario, spec, augmented, bias, coverage, ese_ase)
                                      ]
-kable(ie_hetero_summ_augmented, 
-      caption = "IE Results - Heterogeneous Exposure - Augmented", 
+kable(ie_hetero_summ, 
+      caption = "IE Results - Heterogeneous Exposure", 
       digits = 3) %>%
   kable_styling(full_width = FALSE)
 
 
-kbl(ie_hetero_summ_augmented, 
-    caption = "IE Results - Heterogeneous Exposure - Augmented", 
+kbl(ie_hetero_summ, 
+    caption = "IE Results - Heterogeneous Exposure", 
     digits = 3,
     format = "latex",
     booktabs = TRUE,
-    align = "lccccc",
+    align = "lcccccc",
     linesep = "")  %>%
   collapse_rows(
     columns = 1:2,      
@@ -127,25 +128,25 @@ kbl(ie_hetero_summ_augmented,
   )
 
 
-de_hetero_summ_augmented <- sa_de_hetero_summary[augmented == TRUE,]
-de_hetero_summ_augmented[, augmented := NULL]
-de_hetero_summ_augmented[, Scenario := paste0("$m_e=", m_e, ", DE=", round(true_de,3),"$")]
-de_hetero_summ_augmented[, Variance := ifelse(bootstrap, "Bootstrap", "Analytic")]
-de_hetero_summ_augmented[, spec := ifelse(spec == "homo", "Homogeneous",
+de_hetero_summ <- sa_de_hetero_summary[m_e %in% c(150, 250),]
+# de_hetero_summ[, augmented := NULL]
+de_hetero_summ[, Scenario := paste0("$m_e=", m_e,"$")]
+# de_hetero_summ_augmented[, Variance := ifelse(bootstrap, "Bootstrap", "Analytic")]
+de_hetero_summ[, spec := ifelse(spec == "homo", "Homogeneous",
                                           ifelse(spec == "hetero",
                                                  "Heterogeneous", spec))]
-setorderv(de_hetero_summ_augmented, c("m_e","spec","bootstrap"))
+setorderv(de_hetero_summ, c("m_e","spec","augmented"))
 # change variable order
-de_hetero_summ_augmented <- de_hetero_summ_augmented[,
-                                     .(Scenario, spec, Variance, bias, coverage, ese_ase)
+de_hetero_summ <- de_hetero_summ[,
+                                     .(Scenario, spec, augmented, bias, coverage, ese_ase)
                                      ]
-kable(de_hetero_summ_augmented, 
-      caption = "DE Results - Heterogeneous Exposure - Augmented", 
+kable(de_hetero_summ, 
+      caption = "DE Results - Heterogeneous Exposure", 
       digits = 3) %>%
   kable_styling(full_width = FALSE)
 
 
-kbl(de_hetero_summ_augmented, 
+kbl(de_hetero_summ, 
     caption = "DE Results - Heterogeneous Exposure - Augmented", 
     digits = 3,
     format = "latex",
@@ -158,95 +159,28 @@ kbl(de_hetero_summ_augmented,
   )
 
 # --- Appendix tables ---
-# 1. Heterogeneous true contamination + Unaugmented estimators
 
+#  Homogeneous true contamination 
 
-ie_hetero_summ_not_aug <- sa_ie_hetero_summary[augmented == FALSE,]
-# remove 'not_aug' column
-ie_hetero_summ_not_aug[, augmented := NULL]
-ie_hetero_summ_not_aug[, Scenario := paste0("$m_a=", m_a, ", IE=", round(true_ie,3),"$")]
-ie_hetero_summ_not_aug[, Variance := ifelse(bootstrap, "Bootstrap", "Analytic")]
-ie_hetero_summ_not_aug[, spec := ifelse(spec == "homo", "Homogeneous",
-                                          ifelse(spec == "hetero",
-                                                 "Heterogeneous", spec))]
-setorderv(ie_hetero_summ_not_aug, c("m_a","spec","bootstrap"))
-# change variable order
-ie_hetero_summ_not_aug <- ie_hetero_summ_not_aug[,
-                                                     .(Scenario, spec, Variance, bias, coverage, ese_ase)
-]
-kable(ie_hetero_summ_not_aug, 
-      caption = "IE Results - Heterogeneous Exposure - not_aug", 
-      digits = 3) %>%
-  kable_styling(full_width = FALSE)
-
-
-kbl(ie_hetero_summ_not_aug, 
-    caption = "IE Results - Heterogeneous Exposure - not aug", 
-    digits = 3,
-    format = "latex",
-    booktabs = TRUE,
-    align = "lccccc",
-    linesep = "")  %>%
-  collapse_rows(
-    columns = 1:2,      
-    valign = "middle"   
-  )
-
-
-de_hetero_summ_not_aug <- sa_de_hetero_summary[augmented == FALSE,]
-de_hetero_summ_not_aug[, augmented := NULL]
-de_hetero_summ_not_aug[, Scenario := paste0("$m_e=", m_e, ", DE=", round(true_de,3),"$")]
-de_hetero_summ_not_aug[, Variance := ifelse(bootstrap, "Bootstrap", "Analytic")]
-de_hetero_summ_not_aug[, spec := ifelse(spec == "homo", "Homogeneous",
-                                          ifelse(spec == "hetero",
-                                                 "Heterogeneous", spec))]
-setorderv(de_hetero_summ_not_aug, c("m_e","spec","bootstrap"))
-# change variable order
-de_hetero_summ_not_aug <- de_hetero_summ_not_aug[,
-                                                     .(Scenario, spec, Variance, bias, coverage, ese_ase)
-]
-kable(de_hetero_summ_not_aug, 
-      caption = "DE Results - Heterogeneous Exposure - not_aug", 
-      digits = 3) %>%
-  kable_styling(full_width = FALSE)
-
-
-kbl(de_hetero_summ_not_aug, 
-    caption = "DE Results - Heterogeneous Exposure - not aug", 
-    digits = 3,
-    format = "latex",
-    booktabs = TRUE,
-    align = "lccccc",
-    linesep = "")  %>%
-  collapse_rows(
-    columns = 1:2,      
-    valign = "middle"   
-  )
-
-
-# 2. Homogeneous true contamination + Augmented estimators
-
-ie_homo_summ_augmented <- sa_ie_homo_summary[augmented == TRUE,]
+ie_homo_summ <- sa_ie_homo_summary[m_a %in% c(100, 200),]
 # remove 'augmented' column
-ie_homo_summ_augmented[, augmented := NULL]
-ie_homo_summ_augmented[, Scenario := paste0("$m_a=", m_a, ", IE=", round(true_ie,3),"$")]
-ie_homo_summ_augmented[, Variance := ifelse(bootstrap, "Bootstrap", "Analytic")]
-ie_homo_summ_augmented[, spec := ifelse(spec == "homo", "Homogeneous",
+# ie_homo_summ_augmented[, augmented := NULL]
+ie_homo_summ[, Scenario := paste0("$m_a=", m_a,"$")]
+# ie_homo_summ[, Variance := ifelse(bootstrap, "Bootstrap", "Analytic")]
+ie_homo_summ[, spec := ifelse(spec == "homo", "Homogeneous",
                                           ifelse(spec == "hetero",
                                                  "Heterogeneous", spec))]
-setorderv(ie_homo_summ_augmented, c("m_a","spec","bootstrap"))
+setorderv(ie_homo_summ, c("m_a","spec","augmented"))
 # change variable order
-ie_homo_summ_augmented <- ie_homo_summ_augmented[,
-                                                     .(Scenario, spec, Variance, bias, coverage, ese_ase)
-]
-kable(ie_homo_summ_augmented, 
-      caption = "IE Results - homogeneous Exposure - Augmented", 
+ie_homo_summ <- ie_homo_summ[,.(Scenario, spec, augmented, bias, coverage, ese_ase)]
+kable(ie_homo_summ, 
+      caption = "IE Results - homogeneous Exposure", 
       digits = 3) %>%
   kable_styling(full_width = FALSE)
 
 
-kbl(ie_homo_summ_augmented, 
-    caption = "IE Results - homogeneous Exposure - Augmented", 
+kbl(ie_homo_summ, 
+    caption = "IE Results - homogeneous Exposure", 
     digits = 3,
     format = "latex",
     booktabs = TRUE,
@@ -258,26 +192,24 @@ kbl(ie_homo_summ_augmented,
   )
 
 
-de_homo_summ_augmented <- sa_de_homo_summary[augmented == TRUE,]
-de_homo_summ_augmented[, augmented := NULL]
-de_homo_summ_augmented[, Scenario := paste0("$m_e=", m_e, ", DE=", round(true_de,3),"$")]
-de_homo_summ_augmented[, Variance := ifelse(bootstrap, "Bootstrap", "Analytic")]
-de_homo_summ_augmented[, spec := ifelse(spec == "homo", "Homogeneous",
+de_homo_summ <- sa_de_homo_summary[m_e %in% c(150, 250),]
+# de_homo_summ[, augmented := NULL]
+de_homo_summ[, Scenario := paste0("$m_e=", m_e,"$")]
+# de_homo_summ[, Variance := ifelse(bootstrap, "Bootstrap", "Analytic")]
+de_homo_summ[, spec := ifelse(spec == "homo", "Homogeneous",
                                           ifelse(spec == "hetero",
                                                  "Heterogeneous", spec))]
-setorderv(de_homo_summ_augmented, c("m_e","spec","bootstrap"))
+setorderv(de_homo_summ, c("m_e","spec","augmented"))
 # change variable order
-de_homo_summ_augmented <- de_homo_summ_augmented[,
-                                                     .(Scenario, spec, Variance, bias, coverage, ese_ase)
-]
-kable(de_homo_summ_augmented, 
-      caption = "DE Results - homogeneous Exposure - Augmented", 
+de_homo_summ <- de_homo_summ[,.(Scenario, spec, augmented, bias, coverage, ese_ase)]
+kable(de_homo_summ, 
+      caption = "DE Results - homogeneous Exposure", 
       digits = 3) %>%
   kable_styling(full_width = FALSE)
 
 
-kbl(de_homo_summ_augmented, 
-    caption = "DE Results - homogeneous Exposure - Augmented", 
+kbl(de_homo_summ, 
+    caption = "DE Results - homogeneous Exposure", 
     digits = 3,
     format = "latex",
     booktabs = TRUE,

@@ -87,10 +87,10 @@ sa_ie_plot <- function(sa_ie_data,
     # ) +
     # Add labels (using latex2exp for the x-axis)
     labs(
-      title = "Sensitivity Analysis for Indirect Effect",
+      title = "Indirect Effect",
       subtitle = subtitle_text,
       y = "Estimated IE",
-      x = TeX("$m_a$ (Expected number of missing alter-ego edges)")
+      x = TeX("$m^a$ (Expected number of missing alter-ego edges)")
     ) +
     
     # Adjust x-axis scale
@@ -103,7 +103,8 @@ sa_ie_plot <- function(sa_ie_data,
       legend.position = "bottom",
       legend.box = "vertical",
       legend.key.width = unit(1.5, "cm"),
-      axis.text = element_text(size = 12)
+      legend.text = element_text(size = 13),
+      axis.text = element_text(size = 13)
     )
   
   return(ie_plot)
@@ -193,10 +194,10 @@ sa_de_plot_given_kappa <- function(sa_de_data,
     # ) +
     # Add labels (using latex2exp for the x-axis)
     labs(
-      title = paste0("Sensitivity Analysis for Direct Effect; kappa = ", kappa),
+      title = paste0("Direct Effect; kappa = ", kappa),
       subtitle = subtitle_text,
       y = "Estimated DE",
-      x = TeX("$m_e$ (Expected number of missing ego-ego edges)")
+      x = TeX("$m^e$ (Expected number of missing ego-ego edges)")
     ) +
     
     # Adjust x-axis scale
@@ -211,7 +212,8 @@ sa_de_plot_given_kappa <- function(sa_de_data,
       legend.position = "bottom",
       legend.box = "vertical",
       legend.key.width = unit(1.5, "cm"),
-      axis.text = element_text(size = 12)
+      legend.text = element_text(size = 13),
+      axis.text = element_text(size = 13)
     )
   
   return(de_plot)
@@ -292,11 +294,12 @@ pba_ie_plot <- function(pba_ie_data,
     labs(
       x = "",
       y = "Estimated IE",
-      title = "Probabilistic Bias Analysis for Indirect Effect"
+      title = "Indirect Effect"
     ) +
-    theme_bw(base_size = 14)  +
+    theme_bw(base_size = 15)  +
     theme(legend.position = "bottom",
-          axis.text.x = element_text(size = 15, face = "bold")) 
+          axis.text.x = element_text(size = 15, face = "bold"),
+          legend.text = element_text(size = 16)) 
   
   return(pba_ie_plot_aug)
   
@@ -375,11 +378,12 @@ pba_de_plot <- function(pba_de_data,
     labs(
       x = "",
       y = "Estimated DE",
-      title = "Probabilistic Bias Analysis for Direct Effect"
+      title = "Direct Effect"
     ) +
     theme_bw(base_size = 14)  +
     theme(legend.position = "bottom",
-          axis.text.x = element_text(size = 14, face = "bold")) 
+          axis.text.x = element_text(size = 14, face = "bold"),
+          legend.text = element_text(size = 14)) 
   
   return(pba_de_plot_aug)
   

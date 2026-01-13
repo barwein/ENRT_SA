@@ -135,31 +135,39 @@ create_population <- function(X_e,
     lp_e_01 <- b0_e + Xg_e + b2_e
     lp_e_10 <- b0_e + Xg_e + b1_e
     lp_e_11 <- b0_e + Xg_e + b1_e + b2_e + b3_e
+    ego_epsilon <- rnorm(n_e, mean = 0, sd = 1)
     
     cbind(
-      Y_e_00 = rbinom(n_e, 1, plogis(lp_e_00)),
-      Y_e_01 = rbinom(n_e, 1, plogis(lp_e_01)),
-      Y_e_10 = rbinom(n_e, 1, plogis(lp_e_10)),
-      Y_e_11 = rbinom(n_e, 1, plogis(lp_e_11))
+      Y_e_00 = lp_e_00 + ego_epsilon,
+      Y_e_01 = lp_e_01 + ego_epsilon,
+      Y_e_10 = lp_e_10 + ego_epsilon,
+      Y_e_11 = lp_e_11 + ego_epsilon
+      # Y_e_00 = rbinom(n_e, 1, plogis(lp_e_00)),
+      # Y_e_01 = rbinom(n_e, 1, plogis(lp_e_01)),
+      # Y_e_10 = rbinom(n_e, 1, plogis(lp_e_10)),
+      # Y_e_11 = rbinom(n_e, 1, plogis(lp_e_11))
     )
   })
   
   po_alters <- with(params_po, {
     lp_a_00 <- b0_a + Xg_a
     lp_a_01 <- b0_a + Xg_a + b2_a
+    alter_epsilon <- rnorm(n_a, mean = 0, sd = 1)
     
     cbind(
-      Y_a_00 = rbinom(n_a, 1, plogis(lp_a_00)),
-      Y_a_01 = rbinom(n_a, 1, plogis(lp_a_01))
+      Y_a_00 = lp_a_00 + alter_epsilon,
+      Y_a_01 = lp_a_01 + alter_epsilon
+      # Y_a_00 = rbinom(n_a, 1, plogis(lp_a_00)),
+      # Y_a_01 = rbinom(n_a, 1, plogis(lp_a_01))
     )
   })
   
   # --- 5. Calculate True Causal Estimands (RD) ---
   
-  # IE = E[Y(0, 1) - Y(0, 0)] for alters [cite: 102]
+  # IE = E[Y(0, 1) - Y(0, 0)] for alters 
   IE_RD <- mean(po_alters[, "Y_a_01"] - po_alters[, "Y_a_00"])
   
-  # DE = E[Y(1, 0) - Y(0, 0)] for egos [cite: 107]
+  # DE = E[Y(1, 0) - Y(0, 0)] for egos 
   DE_RD <- mean(po_egos[, "Y_e_10"] - po_egos[, "Y_e_00"])
   
   # --- 6. Return all data ---

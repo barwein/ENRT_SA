@@ -16,8 +16,10 @@ X_e <- covar_$X_e
 X_a <- covar_$X_a
 m_e <- 50
 m_a <- 100
-kappa_ <- 2
+# kappa_ <- 2
+kappa_ <- 1.5
 n_iter <- 5e3
+# n_iter <- 5e2
 B_pba <- 5e3
 B_sa <- 5e3
 N_CORES <- 8
@@ -31,8 +33,7 @@ rho_hetero_ee <- pi_hetero(X_e = X_e,
                            m_vec = m_e,
                            dist = "norm", 
                            p = 2,
-                           pz = pz, 
-                           return_rho_ij = TRUE)$rho$`50`
+                           pz = pz)$`50`$rho
 
 rho_hetero_ae <- pi_hetero(X_e = X_e,
                            X_a = X_a,
@@ -41,8 +42,7 @@ rho_hetero_ae <- pi_hetero(X_e = X_e,
                            dist = "norm",
                            p=2,
                            ego_index = rep(1:n_e, each = 2),
-                           pz=pz,
-                           return_rho_ij = TRUE)$rho$`100`
+                           pz=pz)$`100`$rho
 
 pop_fixed_data <- create_population(
   X_e = X_e,
@@ -53,11 +53,11 @@ pop_fixed_data <- create_population(
   rho_egos = rho_hetero_ee,
   rho_alters = rho_hetero_ae,
   params_po = list(
-    b0_e = -2.0,
+    b0_e = -.5,
     b1_e = 2.0, 
     b2_e = 0.5, 
     b3_e = (kappa_-1)*2.0,
-    b0_a = -2.0,
+    b0_a = -.5,
     b2_a = 2.0
   ),
   params_covar = list(
@@ -140,7 +140,7 @@ pi_de_args_hetero <- list(X_e = pop_fixed_data$X_e,
 all_results <- list()
 for (i in seq(n_iter)){
   
-  iter_res <- sim_estimate_trial(pop_fixed_data = pop_fixed_data,
+    iter_res <- sim_estimate_trial(pop_fixed_data = pop_fixed_data,
                                  pz = pz,
                                  setup_name = "hetero",
                                  m_e = m_e,
@@ -150,8 +150,10 @@ for (i in seq(n_iter)){
                                  seed = 2548 + i,
                                  true_ie = pop_fixed_data$IE_RD,
                                  true_de = pop_fixed_data$DE_RD,
-                                 reg_model_egos = glm,
-                                 reg_model_alters = glm,
+                                 # reg_model_egos = glm,
+                                 reg_model_egos = lm,
+                                 reg_model_alters = lm,
+                                 # reg_model_alters = glm,
                                  formula_egos = as.formula(Y ~ Z + X1 + X2 + X3),
                                  formula_alters = as.formula(Y ~ F + X1 + X2 + X3),
                                  pi_lists_ego_ego = list("hetero" = pi_num_hetero_ee, "homo" = pi_num_homo_ee),
@@ -168,7 +170,7 @@ for (i in seq(n_iter)){
                                  pi_args_de_homo = pi_de_args_homo,
                                  pi_args_de_hetero = pi_de_args_hetero,
                                  pi_param_name_de = "m_vec",
-                                 family = binomial(link = "logit") # Additional arg for glm
+                                 # family = binomial(link = "logit") # Additional arg for glm
   )
   if (length(all_results) == 0){
     all_results <- iter_res
@@ -193,7 +195,5 @@ for (dt in names(all_results)) {
   write.csv(x = all_results[[dt]],
             res_path)
 }
-
-
 
 

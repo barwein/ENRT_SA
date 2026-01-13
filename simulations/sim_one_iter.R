@@ -52,6 +52,7 @@ sim_estimate_trial <- function(pop_fixed_data,
                     Z_e = cur_data$Z_e,
                     F_a = cur_data$F_a,
                     ego_id_a = cur_data$ego_id_a,
+                    augmented = FALSE,
                     reg_model_egos = NULL,
                     reg_model_alters = NULL,
                     formula_egos = NULL,
@@ -66,20 +67,16 @@ sim_estimate_trial <- function(pop_fixed_data,
   sa_res_IE <- sa_res$sa_results$IE
   sa_res_DE <- sa_res$sa_results$DE
   sa_res_IE[, `:=`(setup = setup_name,
-                   bootstrap = FALSE,
                    augmented = FALSE)]
   sa_res_DE[, `:=`(setup = setup_name,
-                   bootstrap = FALSE,
                    augmented = FALSE)]
   
   # null results
   sa_null_IE <- sa_res$null_results$IE
   sa_null_DE <- sa_res$null_results$DE
   sa_null_IE[, `:=`(setup = setup_name,
-                    bootstrap = FALSE,
                     augmented = FALSE)]
   sa_null_DE[, `:=`(setup = setup_name,
-                    bootstrap = FALSE,
                     augmented = FALSE)]
   
   # 2. SA with empirical var; augmented
@@ -90,6 +87,7 @@ sim_estimate_trial <- function(pop_fixed_data,
                         Z_e = cur_data$Z_e,
                         F_a = cur_data$F_a,
                         ego_id_a = cur_data$ego_id_a,
+                        augmented = TRUE,
                         reg_model_egos = reg_model_egos,
                         reg_model_alters = reg_model_alters,
                         formula_egos = formula_egos,
@@ -100,130 +98,35 @@ sim_estimate_trial <- function(pop_fixed_data,
                         verbose = FALSE,
                         pz = pz,
                         n_cores = n_cores,
+                        n_folds = 2,
                         ...)
   sa_res_IE_aug <- sa_res_aug$sa_results$IE
   sa_res_DE_aug <- sa_res_aug$sa_results$DE
   sa_res_IE_aug[, `:=`(setup = setup_name,
-                       bootstrap = FALSE,
                        augmented = TRUE)]
   sa_res_DE_aug[, `:=`(setup = setup_name,
-                       bootstrap = FALSE,
                        augmented = TRUE)]
   # null results
   sa_null_IE_aug <- sa_res_aug$null_results$IE
   sa_null_DE_aug <- sa_res_aug$null_results$DE
   sa_null_IE_aug[, `:=`(setup = setup_name,
-                        bootstrap = FALSE,
                         augmented = TRUE)]
   sa_null_DE_aug[, `:=`(setup = setup_name,
-                        bootstrap = FALSE,
                         augmented = TRUE)]
-  
-  # 3. SA with bootstrap var; not augmented
-  sa_res_boot <- enrt_sa(Y_e = cur_data$Y_e,
-                         Y_a = cur_data$Y_a,
-                         X_e = cur_data$X_e,
-                         X_a = cur_data$X_a,
-                         Z_e = cur_data$Z_e,
-                         F_a = cur_data$F_a,
-                         ego_id_a = cur_data$ego_id_a,
-                         reg_model_egos = NULL,
-                         reg_model_alters = NULL,
-                         formula_egos = NULL,
-                         formula_alters = NULL,
-                         pi_lists_ego_ego = pi_lists_ego_ego,
-                         pi_lists_alter_ego = pi_lists_alter_ego,
-                         kappa_vec = kappa_vec, 
-                         verbose = FALSE,
-                         pz = pz,
-                         n_cores = n_cores,
-                         bootstrap = TRUE,
-                         B = B_sa,
-                         ...)
-  sa_res_IE_boot <- sa_res_boot$sa_results$IE
-  sa_res_DE_boot <- sa_res_boot$sa_results$DE
-  sa_res_IE_boot[, `:=`(setup = setup_name,
-                        bootstrap = TRUE,
-                        augmented = FALSE)]
-  sa_res_IE_boot <- sa_res_IE_boot[,.SD, .SDcols = names(sa_res_IE)]
-  sa_res_DE_boot[, `:=`(setup = setup_name,
-                        bootstrap = TRUE,
-                        augmented = FALSE)]
-  sa_res_DE_boot <- sa_res_DE_boot[,.SD, .SDcols = names(sa_res_DE)]
-  
-  # null results
-  sa_null_IE_boot <- sa_res_boot$null_results$IE
-  sa_null_DE_boot <- sa_res_boot$null_results$DE
-  sa_null_IE_boot[, `:=`(setup = setup_name,
-                         bootstrap = TRUE,
-                         augmented = FALSE)]
-  sa_null_DE_boot[, `:=`(setup = setup_name,
-                         bootstrap = TRUE,
-                         augmented = FALSE)]
-  sa_null_IE_boot <- sa_null_IE_boot[,.SD, .SDcols = names(sa_null_IE)]
-  sa_null_DE_boot <- sa_null_DE_boot[,.SD, .SDcols = names(sa_null_DE)]
-  
-  # 4. SA with bootstrap var; augmented
-  sa_res_boot_aug <- enrt_sa(Y_e = cur_data$Y_e,
-                             Y_a = cur_data$Y_a,
-                             X_e = cur_data$X_e,
-                             X_a = cur_data$X_a,
-                             Z_e = cur_data$Z_e,
-                             F_a = cur_data$F_a,
-                             ego_id_a = cur_data$ego_id_a,
-                             reg_model_egos = reg_model_egos,
-                             reg_model_alters = reg_model_alters,
-                             formula_egos = formula_egos,
-                             formula_alters = formula_alters,
-                             pi_lists_ego_ego = pi_lists_ego_ego,
-                             pi_lists_alter_ego = pi_lists_alter_ego,
-                             kappa_vec = kappa_vec,
-                             verbose = FALSE,
-                             pz = pz,
-                             n_cores = n_cores,
-                             bootstrap = TRUE,
-                             B = B_sa,
-                             ...)
-  sa_res_IE_boot_aug <- sa_res_boot_aug$sa_results$IE
-  sa_res_DE_boot_aug <- sa_res_boot_aug$sa_results$DE
-  sa_res_IE_boot_aug[, `:=`(setup = setup_name,
-                             bootstrap = TRUE,
-                             augmented = TRUE)]
-  sa_res_DE_boot_aug[, `:=`(setup = setup_name,
-                             bootstrap = TRUE,
-                             augmented = TRUE)]
-  sa_res_IE_boot_aug <- sa_res_IE_boot_aug[,.SD, .SDcols = names(sa_res_IE)]
-  sa_res_DE_boot_aug <- sa_res_DE_boot_aug[,.SD, .SDcols = names(sa_res_DE)]
-  
-  # null results
-  sa_null_IE_boot_aug <- sa_res_boot_aug$null_results$IE
-  sa_null_DE_boot_aug <- sa_res_boot_aug$null_results$DE
-  sa_null_IE_boot_aug[, `:=`(setup = setup_name,
-                            bootstrap = TRUE,
-                            augmented = TRUE)]
-  sa_null_DE_boot_aug[, `:=`(setup = setup_name,
-                            bootstrap = TRUE,
-                            augmented = TRUE)]
-  sa_null_IE_boot_aug <- sa_null_IE_boot_aug[,.SD, .SDcols = names(sa_null_IE)]
-  sa_null_DE_boot_aug <- sa_null_DE_boot_aug[,.SD, .SDcols = names(sa_null_DE)]
   
   # Combine SA res
   sa_ie <- rbindlist(list(sa_res_IE,
-                             sa_res_IE_aug,
-                             sa_res_IE_boot,
-                             sa_res_IE_boot_aug))
+                             sa_res_IE_aug
+                             ))
   sa_de <- rbindlist(list(sa_res_DE,
-                             sa_res_DE_aug,
-                             sa_res_DE_boot,
-                             sa_res_DE_boot_aug))
+                             sa_res_DE_aug
+                             ))
   sa_null_ie <- rbindlist(list(sa_null_IE,
-                                  sa_null_IE_aug,
-                                  sa_null_IE_boot,
-                                  sa_null_IE_boot_aug))
+                                  sa_null_IE_aug
+                                  ))
   sa_null_de <- rbindlist(list(sa_null_DE,
-                                  sa_null_DE_aug,
-                                  sa_null_DE_boot,
-                                  sa_null_DE_boot_aug))
+                                  sa_null_DE_aug
+                                  ))
                            
   # return results
   sa_ie <- rbindlist(list(

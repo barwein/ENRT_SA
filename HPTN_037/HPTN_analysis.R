@@ -18,8 +18,8 @@ source("HPTN_037/hptn_plot_functions.R")
 # Global parameters
 
 N_CORES <- 8
-BOOTSTRAP_B <- 1e4
-# BOOTSTRAP_B <- 1e2  # For testing; change to 1e4 for final analysis
+B <- 1e4
+# B <- 1e2  # For testing; change to 1e4 for final analysis
 
 # --- Read data ---
 hptn_df <- fread("HPTN_037/hptn_clean_df.csv")
@@ -131,117 +131,67 @@ pi_ae_hetero <- pi_hetero(X_e = X_e_ind,
 
 # --- Run Sensitivity Analysis ---
 
-set.seed(142)
-hptn_sa_bootstrap_aug <- enrt_sa(Y_e = Y_e,
-                                 Y_a = Y_a,
-                                 X_e = X_e,
-                                 X_a = X_a,
-                                 Z_e = Z_e,
-                                 F_a = F_a_tilde, 
-                                 ego_id_a = ego_id_a_vec,
-                                 reg_model_egos = glm,
-                                 reg_model_alters = glm, 
-                                 formula_egos = as.formula(Y ~ Z + .),
-                                 formula_alters = as.formula(Y ~ F + .),
-                                 pi_lists_ego_ego = list("hetero" = pi_ee_hetero,
-                                                         "homo" = pi_ee_homo),
-                                 pi_lists_alter_ego = list("hetero" = pi_ae_hetero,
-                                                           "homo" = pi_ae_homo),
-                                 kappa_vec = kappa_vec, 
-                                 n_cores = N_CORES,
-                                 pz = pz,
-                                 bootstrap = TRUE,
-                                 B = BOOTSTRAP_B, 
-                                 plot = TRUE,
-                                 family = binomial(link = "logit") # Additional arg for glm
-)
-
-set.seed(242)
-hptn_sa_bootstrap_not_aug <- enrt_sa(Y_e = Y_e,
-                                 Y_a = Y_a,
-                                 X_e = X_e,
-                                 X_a = X_a,
-                                 Z_e = Z_e,
-                                 F_a = F_a_tilde, 
-                                 ego_id_a = ego_id_a_vec,
-                                 # reg_model_egos = glm,
-                                 # reg_model_alters = glm, 
-                                 # formula_egos = as.formula(Y ~ Z + .),
-                                 # formula_alters = as.formula(Y ~ F + .),
-                                 pi_lists_ego_ego = list("hetero" = pi_ee_hetero,
-                                                         "homo" = pi_ee_homo),
-                                 pi_lists_alter_ego = list("hetero" = pi_ae_hetero,
-                                                           "homo" = pi_ae_homo),
-                                 kappa_vec = kappa_vec, 
-                                 n_cores = N_CORES,
-                                 pz = pz,
-                                 bootstrap = TRUE,
-                                 B = BOOTSTRAP_B, 
-                                 plot = TRUE)
-
-
-
 set.seed(342)
 hptn_sa_aug <- enrt_sa(Y_e = Y_e,
-                                 Y_a = Y_a,
-                                 X_e = X_e,
-                                 X_a = X_a,
-                                 Z_e = Z_e,
-                                 F_a = F_a_tilde, 
-                                 ego_id_a = ego_id_a_vec,
-                                 reg_model_egos = glm,
-                                 reg_model_alters = glm, 
-                                 formula_egos = as.formula(Y ~ Z + .),
-                                 formula_alters = as.formula(Y ~ F + .),
-                                 pi_lists_ego_ego = list("hetero" = pi_ee_hetero,
-                                                         "homo" = pi_ee_homo),
-                                 pi_lists_alter_ego = list("hetero" = pi_ae_hetero,
-                                                           "homo" = pi_ae_homo),
-                                 kappa_vec = kappa_vec, 
-                                 n_cores = N_CORES,
-                                 pz = pz,
-                                 bootstrap = FALSE,
-                                 # B = BOOTSTRAP_B, 
-                                 plot = TRUE,
-                                 family = binomial(link = "logit") # Additional arg for glm
+                       Y_a = Y_a,
+                       X_e = X_e,
+                       X_a = X_a,
+                       Z_e = Z_e,
+                       F_a = F_a_tilde, 
+                       ego_id_a = ego_id_a_vec,
+                       augmented = TRUE,
+                       reg_model_egos = glm,
+                       reg_model_alters = glm, 
+                       formula_egos = as.formula(Y ~ Z + .),
+                       formula_alters = as.formula(Y ~ F + .),
+                       pi_lists_ego_ego = list("hetero" = pi_ee_hetero,
+                                               "homo" = pi_ee_homo),
+                       pi_lists_alter_ego = list("hetero" = pi_ae_hetero,
+                                                 "homo" = pi_ae_homo),
+                       kappa_vec = kappa_vec, 
+                       n_cores = N_CORES,
+                       n_folds = 2,
+                       pz = pz,
+                       plot = TRUE,
+                       family = binomial(link = "logit") # Additional arg for glm
 )
 
 set.seed(442)
 hptn_sa_not_aug <- enrt_sa(Y_e = Y_e,
-                                 Y_a = Y_a,
-                                 X_e = X_e,
-                                 X_a = X_a,
-                                 Z_e = Z_e,
-                                 F_a = F_a_tilde, 
-                                 ego_id_a = ego_id_a_vec,
-                                 # reg_model_egos = glm,
-                                 # reg_model_alters = glm, 
-                                 # formula_egos = as.formula(Y ~ Z + .),
-                                 # formula_alters = as.formula(Y ~ F + .),
-                                 pi_lists_ego_ego = list("hetero" = pi_ee_hetero,
-                                                         "homo" = pi_ee_homo),
-                                 pi_lists_alter_ego = list("hetero" = pi_ae_hetero,
-                                                           "homo" = pi_ae_homo),
-                                 kappa_vec = kappa_vec, 
-                                 n_cores = N_CORES,
-                                 pz = pz,
-                                 bootstrap = FALSE,
-                                 # B = BOOTSTRAP_B, 
-                                 plot = TRUE)
+                           Y_a = Y_a,
+                           X_e = X_e,
+                           X_a = X_a,
+                           Z_e = Z_e,
+                           F_a = F_a_tilde, 
+                           ego_id_a = ego_id_a_vec,
+                           augmented = FALSE,
+                           # reg_model_egos = glm,
+                           # reg_model_alters = glm, 
+                           # formula_egos = as.formula(Y ~ Z + .),
+                           # formula_alters = as.formula(Y ~ F + .),
+                           pi_lists_ego_ego = list("hetero" = pi_ee_hetero,
+                                                   "homo" = pi_ee_homo),
+                           pi_lists_alter_ego = list("hetero" = pi_ae_hetero,
+                                                     "homo" = pi_ae_homo),
+                           kappa_vec = kappa_vec, 
+                           n_cores = N_CORES,
+                           n_folds = 2,
+                           pz = pz,
+                           plot = TRUE)
 
 
 
 # Combine IE results (bootstrap var; with/w.o. outcome model augmentation)
-sa_ie_aug <- hptn_sa_bootstrap_aug$sa_results$IE
+sa_ie_aug <- hptn_sa_aug$sa_results$IE
 sa_ie_aug[, aug := TRUE]
 
-sa_ie_no_aug <- hptn_sa_bootstrap_not_aug$sa_results$IE
+sa_ie_no_aug <- hptn_sa_not_aug$sa_results$IE
 sa_ie_no_aug[, aug := FALSE]
 
-sa_ie_aug_null <- hptn_sa_bootstrap_aug$null_results$IE
+sa_ie_aug_null <- hptn_sa_aug$null_results$IE
 sa_ie_aug_null[, aug := TRUE]
 
-sa_ie_no_aug_null <- hptn_sa_bootstrap_not_aug$null_results$IE
+sa_ie_no_aug_null <- hptn_sa_not_aug$null_results$IE
 sa_ie_no_aug_null[, aug := FALSE]
 
 sa_ie_res <- rbindlist(list(
@@ -259,6 +209,8 @@ sa_ie_res[, spec_name := ifelse(spec == "homo", "Homo",
 sa_ie_naive_data <- sa_ie_res[spec == "Naive"]
 sa_ie_data <- sa_ie_res[spec != "Naive"]
 
+sa_ie_naive_data[,pi_param := as.numeric(pi_param)]
+
 # Create a new interaction variable for the 4 SA models
 sa_ie_data[, model_type := paste0(spec_name," & ", ifelse(aug, "Aug", "Not-Aug"))]
 
@@ -268,7 +220,7 @@ model_levels <- c("Homo & Not-Aug",
                   "Hetero & Not-Aug", 
                   "Hetero & Aug")
 sa_ie_data[, model_type := factor(model_type, levels = model_levels)]
-
+sa_ie_data[,pi_param := as.numeric(pi_param)]
 # --- 2. Define Colors and Labels ---
 
 # A logical color palette: 
@@ -324,14 +276,14 @@ spec_labels <- c(
   # "homo" = TeX("Homogeneous $\\pi_i^e$"),
   # "hetero" = TeX("Heterogeneous $\\pi_i^e$")
 )
-# de_plot <- hptn_sa_bootstrap_aug$de_rd_plot
-de_plot <- hptn_sa_bootstrap_not_aug$de_rd_plot
+# de_plot <- hptn_sa_aug$de_rd_plot
+de_plot <- hptn_sa_not_aug$de_rd_plot
 de_plot <- de_plot + 
         scale_x_continuous(breaks = seq(0, max(m_vec_egos), 50),
                            labels = seq(0, max(m_vec_egos), 50)) +
-        labs(x = TeX("$m_e$ (Expected number of missing ego-ego edges)"),
+        labs(x = TeX("$m^e$ (Expected number of missing ego-ego edges)"),
              fill = "Estimated DE",
-             title = "Sensitivity Analysis for Direct Effect") +
+             title = "Direct Effect") +
   facet_wrap(~spec,
              labeller = labeller(spec = spec_labels)) +
   theme(
@@ -341,7 +293,7 @@ de_plot <- de_plot +
   )
 print(de_plot)
 
-ggsave("HPTN_037/figures/sa_de_plot.png",
+ggsave("HPTN_037/figures/sa_de_not_aug_plot.png",
        plot = de_plot, width = 10, height = 6,
        dpi = 300,
        bg = "white")
@@ -358,11 +310,14 @@ plot_labels <- c(
   "hetero"= "Hetero"
 )
 
+
+hptn_sa_not_aug$sa_results$DE[, pi_param := as.numeric(pi_param)]
+hptn_sa_not_aug$null_results$DE[, pi_param := as.numeric(pi_param)]
 de_plot_kappa2 <- sa_de_plot_given_kappa(
-                                         sa_de_data = hptn_sa_bootstrap_not_aug$sa_results$DE[kappa == 2.0,],
-                                         sa_de_naive_data = hptn_sa_bootstrap_not_aug$null_results$DE,
-                                         # sa_de_data = hptn_sa_bootstrap_aug$sa_results$DE[kappa == 2.0,],
-                                         # sa_de_naive_data = hptn_sa_bootstrap_aug$null_results$DE,
+                                         sa_de_data = hptn_sa_not_aug$sa_results$DE[kappa == 2.0,],
+                                         sa_de_naive_data = hptn_sa_not_aug$null_results$DE,
+                                         # sa_de_data = hptn_sa_aug$sa_results$DE[kappa == 2.0,],
+                                         # sa_de_naive_data = hptn_sa_aug$null_results$DE,
                                          kappa = 2,
                                          palette = palette,
                                          plot_labels = plot_labels, 
@@ -437,7 +392,7 @@ pi_de_hetero_args <- list(X_e = X_e,
                           pz = pz)
 
 # --- Run PBA ---
-# We run with/without augmented model + bootstrap for each prior spec
+# We run with/without augmented model 
 
 set.seed(142)
 pba_homo_unif_aug <-  enrt_pba(Y_e = Y_e, 
@@ -447,13 +402,14 @@ pba_homo_unif_aug <-  enrt_pba(Y_e = Y_e,
                                Z_e = Z_e,
                                F_a = F_a_tilde,
                                ego_id_a = ego_id_a_vec,
+                               augmented = TRUE,
                                reg_model_egos = glm,
                                reg_model_alters = glm, 
                                formula_egos = as.formula(Y ~ Z + .),
                                formula_alters = as.formula(Y ~ F + .),
-                               bootstrap = TRUE,
-                               B = BOOTSTRAP_B,
+                               B = B,
                                n_cores = N_CORES,
+                               n_folds = 2,
                                pz = pz,
                                verbose = TRUE,
                                prior_func_ie = prior_ie_uniform,
@@ -482,26 +438,26 @@ pba_homo_unif_aug$DE_results[, `:=`(
 
 set.seed(242)
 pba_homo_unif <-  enrt_pba(Y_e = Y_e, 
-                               Y_a = Y_a, 
-                               X_e = X_e,
-                               X_a = X_a,
-                               Z_e = Z_e,
-                               F_a = F_a_tilde,
-                               ego_id_a = ego_id_a_vec,
-                               bootstrap = TRUE,
-                               B = BOOTSTRAP_B,
-                               n_cores = N_CORES,
-                               pz = pz,
-                               verbose = TRUE,
-                               prior_func_ie = prior_ie_uniform,
-                               pi_func_ie = pi_homo,
-                               pi_args_ie = pi_ie_homo_args,
-                               pi_param_name_ie = "m_vec",
-                               prior_func_de = prior_de_uniform,
-                               pi_func_de = pi_homo,
-                               pi_args_de = pi_de_homo_args,
-                               pi_param_name_de = "m_vec", 
-                               family = binomial(link = "logit") # Additional arg for glm
+                           Y_a = Y_a, 
+                           X_e = X_e,
+                           X_a = X_a,
+                           Z_e = Z_e,
+                           F_a = F_a_tilde,
+                           ego_id_a = ego_id_a_vec,
+                           augmented = FALSE,
+                           B = B,
+                           n_cores = N_CORES,
+                           pz = pz,
+                           verbose = TRUE,
+                           prior_func_ie = prior_ie_uniform,
+                           pi_func_ie = pi_homo,
+                           pi_args_ie = pi_ie_homo_args,
+                           pi_param_name_ie = "m_vec",
+                           prior_func_de = prior_de_uniform,
+                           pi_func_de = pi_homo,
+                           pi_args_de = pi_de_homo_args,
+                           pi_param_name_de = "m_vec", 
+                           family = binomial(link = "logit") # Additional arg for glm
 )
 
 
@@ -526,13 +482,14 @@ pba_homo_pois_aug <-  enrt_pba(Y_e = Y_e,
                                Z_e = Z_e,
                                F_a = F_a_tilde,
                                ego_id_a = ego_id_a_vec,
+                               augmented = TRUE,
                                reg_model_egos = glm,
                                reg_model_alters = glm, 
                                formula_egos = as.formula(Y ~ Z + .),
                                formula_alters = as.formula(Y ~ F + .),
-                               bootstrap = TRUE,
-                               B = BOOTSTRAP_B,
+                               B = B,
                                n_cores = N_CORES,
+                               n_folds = 2,
                                pz = pz,
                                verbose = TRUE,
                                prior_func_ie = prior_ie_poisson,
@@ -561,26 +518,26 @@ pba_homo_pois_aug$DE_results[, `:=`(
 
 set.seed(442)
 pba_homo_pois <-  enrt_pba(Y_e = Y_e, 
-                               Y_a = Y_a, 
-                               X_e = X_e,
-                               X_a = X_a,
-                               Z_e = Z_e,
-                               F_a = F_a_tilde,
-                               ego_id_a = ego_id_a_vec,
-                               bootstrap = TRUE,
-                               B = BOOTSTRAP_B,
-                               n_cores = N_CORES,
-                               pz = pz,
-                               verbose = TRUE,
-                               prior_func_ie = prior_ie_poisson,
-                               pi_func_ie = pi_homo,
-                               pi_args_ie = pi_ie_homo_args,
-                               pi_param_name_ie = "m_vec",
-                               prior_func_de = prior_de_poisson_uniform,
-                               pi_func_de = pi_homo,
-                               pi_args_de = pi_de_homo_args,
-                               pi_param_name_de = "m_vec", 
-                               family = binomial(link = "logit") # Additional arg for glm
+                           Y_a = Y_a, 
+                           X_e = X_e,
+                           X_a = X_a,
+                           Z_e = Z_e,
+                           F_a = F_a_tilde,
+                           ego_id_a = ego_id_a_vec,
+                           augmented = FALSE,
+                           B = B,
+                           n_cores = N_CORES,
+                           pz = pz,
+                           verbose = TRUE,
+                           prior_func_ie = prior_ie_poisson,
+                           pi_func_ie = pi_homo,
+                           pi_args_ie = pi_ie_homo_args,
+                           pi_param_name_ie = "m_vec",
+                           prior_func_de = prior_de_poisson_uniform,
+                           pi_func_de = pi_homo,
+                           pi_args_de = pi_de_homo_args,
+                           pi_param_name_de = "m_vec", 
+                           family = binomial(link = "logit") # Additional arg for glm
 )
 
 pba_homo_pois$IE_results[, `:=`(
@@ -604,13 +561,14 @@ pba_homo_nb_aug <-  enrt_pba(Y_e = Y_e,
                                Z_e = Z_e,
                                F_a = F_a_tilde,
                                ego_id_a = ego_id_a_vec,
+                               augmented = TRUE,
                                reg_model_egos = glm,
                                reg_model_alters = glm, 
                                formula_egos = as.formula(Y ~ Z + .),
                                formula_alters = as.formula(Y ~ F + .),
-                               bootstrap = TRUE,
-                               B = BOOTSTRAP_B,
+                               B = B,
                                n_cores = N_CORES,
+                               n_folds = 2,
                                pz = pz,
                                verbose = TRUE,
                                prior_func_ie = prior_ie_neg_binom,
@@ -644,8 +602,8 @@ pba_homo_nb <-  enrt_pba(Y_e = Y_e,
                                Z_e = Z_e,
                                F_a = F_a_tilde,
                                ego_id_a = ego_id_a_vec,
-                               bootstrap = TRUE,
-                               B = BOOTSTRAP_B,
+                               augmented = FALSE,
+                               B = B,
                                n_cores = N_CORES,
                                pz = pz,
                                verbose = TRUE,
@@ -681,13 +639,14 @@ pba_hetero_unif_aug <-  enrt_pba(Y_e = Y_e,
                                Z_e = Z_e,
                                F_a = F_a_tilde,
                                ego_id_a = ego_id_a_vec,
+                               augmented = TRUE,
                                reg_model_egos = glm,
                                reg_model_alters = glm, 
                                formula_egos = as.formula(Y ~ Z + .),
                                formula_alters = as.formula(Y ~ F + .),
-                               bootstrap = TRUE,
-                               B = BOOTSTRAP_B,
+                               B = B,
                                n_cores = N_CORES,
+                               n_folds = 2,
                                pz = pz,
                                verbose = TRUE,
                                prior_func_ie = prior_ie_uniform,
@@ -722,8 +681,8 @@ pba_hetero_unif <-  enrt_pba(Y_e = Y_e,
                                Z_e = Z_e,
                                F_a = F_a_tilde,
                                ego_id_a = ego_id_a_vec,
-                               bootstrap = TRUE,
-                               B = BOOTSTRAP_B,
+                               augmented = FALSE,
+                               B = B,
                                n_cores = N_CORES,
                                pz = pz,
                                verbose = TRUE,
@@ -760,13 +719,14 @@ pba_hetero_pois_aug <-  enrt_pba(Y_e = Y_e,
                                Z_e = Z_e,
                                F_a = F_a_tilde,
                                ego_id_a = ego_id_a_vec,
+                               augmented = TRUE,
                                reg_model_egos = glm,
                                reg_model_alters = glm, 
                                formula_egos = as.formula(Y ~ Z + .),
                                formula_alters = as.formula(Y ~ F + .),
-                               bootstrap = TRUE,
-                               B = BOOTSTRAP_B,
+                               B = B,
                                n_cores = N_CORES,
+                               n_folds = 2,
                                pz = pz,
                                verbose = TRUE,
                                prior_func_ie = prior_ie_poisson,
@@ -802,8 +762,8 @@ pba_hetero_pois <-  enrt_pba(Y_e = Y_e,
                                Z_e = Z_e,
                                F_a = F_a_tilde,
                                ego_id_a = ego_id_a_vec,
-                               bootstrap = TRUE,
-                               B = BOOTSTRAP_B,
+                               augmented = FALSE,
+                               B = B,
                                n_cores = N_CORES,
                                pz = pz,
                                verbose = TRUE,
@@ -838,13 +798,14 @@ pba_hetero_nb_aug <-  enrt_pba(Y_e = Y_e,
                                Z_e = Z_e,
                                F_a = F_a_tilde,
                                ego_id_a = ego_id_a_vec,
+                               augmented = TRUE,
                                reg_model_egos = glm,
                                reg_model_alters = glm, 
                                formula_egos = as.formula(Y ~ Z + .),
                                formula_alters = as.formula(Y ~ F + .),
-                               bootstrap = TRUE,
-                               B = BOOTSTRAP_B,
+                               B = B,
                                n_cores = N_CORES,
+                               n_folds = 2,
                                pz = pz,
                                verbose = TRUE,
                                prior_func_ie = prior_ie_neg_binom,
@@ -879,8 +840,8 @@ pba_hetero_nb <-  enrt_pba(Y_e = Y_e,
                                Z_e = Z_e,
                                F_a = F_a_tilde,
                                ego_id_a = ego_id_a_vec,
-                               bootstrap = TRUE,
-                               B = BOOTSTRAP_B,
+                               augmented = FALSE,
+                               B = B,
                                n_cores = N_CORES,
                                pz = pz,
                                verbose = TRUE,
@@ -966,7 +927,7 @@ model_shapes <- c(
 
 pba_ie_aug_figure <- pba_ie_plot(
   pba_ie_data = pba_ie_results[augmented == TRUE & uncertainty_type == "total",],
-  null_results = hptn_sa_bootstrap_aug$null_results$IE,
+  null_results = hptn_sa_aug$null_results$IE,
   prior_levels = prior_levels,
   prior_colors = prior_colors,
   model_labels = model_labels,
@@ -983,7 +944,7 @@ ggsave("HPTN_037/figures/pba_ie_augmented.png",
 
 pba_ie_not_aug_figure <- pba_ie_plot(
   pba_ie_data = pba_ie_results[augmented == FALSE & uncertainty_type == "total",],
-  null_results = hptn_sa_bootstrap_not_aug$null_results$IE,
+  null_results = hptn_sa_not_aug$null_results$IE,
   prior_levels = prior_levels,
   prior_colors = prior_colors,
   model_labels = model_labels,
@@ -1007,7 +968,7 @@ prior_colors_de <- c(
 )
 pba_de_aug_figure <- pba_de_plot(
   pba_de_data = pba_de_results[augmented == TRUE & uncertainty_type == "total",],
-  null_results = hptn_sa_bootstrap_aug$null_results$DE,
+  null_results = hptn_sa_aug$null_results$DE,
   prior_levels = prior_levels_de,
   prior_colors = prior_colors_de,
   model_labels = model_labels,
@@ -1022,7 +983,7 @@ ggsave("HPTN_037/figures/pba_de_augmented.png",
 
 pba_de_not_aug_figure <- pba_de_plot(
   pba_de_data = pba_de_results[augmented == FALSE & uncertainty_type == "total",],
-  null_results = hptn_sa_bootstrap_not_aug$null_results$DE,
+  null_results = hptn_sa_not_aug$null_results$DE,
   prior_levels = prior_levels_de,
   prior_colors = prior_colors_de,
   model_labels = model_labels,
