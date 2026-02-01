@@ -648,7 +648,7 @@ de_plot_kappa2_not_aug_g2 <- sa_de_plot_given_kappa(
   m_vec_egos = m_vec_egos)
 print(de_plot_kappa2_not_aug_g2)
 ggsave("HPTN_037/figures/sa_de_plot_not_aug_kappa2_with_gamma2.png",
-       plot = de_plot_kappa2_not_aug_g2, width = 8, height = 5,
+       plot = de_plot_kappa2_not_aug_g2, width = 10, height = 5,
        dpi = 300,
        bg = "white")
 
@@ -665,7 +665,7 @@ de_plot_kappa2_aug_g2 <- sa_de_plot_given_kappa(
   m_vec_egos = m_vec_egos)
 print(de_plot_kappa2_aug_g2)
 ggsave("HPTN_037/figures/sa_de_plot_aug_kappa2_with_gamma2.png",
-       plot = de_plot_kappa2_aug_g2, width = 8, height = 5,
+       plot = de_plot_kappa2_aug_g2, width = 10, height = 5,
        dpi = 300,
        bg = "white")
 
