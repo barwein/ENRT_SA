@@ -3,12 +3,17 @@
 # Auxiliary function that generate the figures of the results
 library(ggplot2)
 library(latex2exp)
+library(scales)
 
 sa_ie_plot <- function(sa_ie_data, 
                        sa_ie_naive_data,
                        palette,
                        plot_labels,
                        m_vec_alters){
+  
+  min_y <- round(min(sa_ie_data$ci_low),1)
+  max_y <- round(max(sa_ie_data$ci_high),1)
+  
   subtitle_text <- paste0("Naive Estimate [95% CI]: ",
                           round(sa_ie_naive_data$ie_rd[1],3),
                           " [",
@@ -97,7 +102,9 @@ sa_ie_plot <- function(sa_ie_data,
     scale_x_continuous(breaks = seq(0, max(m_vec_alters), 50),
                        labels = seq(0, max(m_vec_alters), 50)) +
     # scale_y_continuous(breaks = c(-0.45, -0.35, -0.25, -0.15, -0.05,0,0.05,0.15)) +
-    scale_y_continuous(breaks = seq(-0.5,0.2,0.1)) +
+    # scale_y_continuous(breaks = seq(-0.5,0.2,0.1)) +
+    scale_y_continuous(breaks = seq(min_y,max_y,0.2), 
+                       labels = number_format(accuracy = 0.1)) +
     theme_bw(base_size = 14) +
     theme(
       legend.position = "bottom",
@@ -288,6 +295,8 @@ pba_ie_plot <- function(pba_ie_data,
       values = model_shapes,
       labels = model_labels
     ) +
+    scale_y_continuous(breaks = seq(-0.5,0.1,0.1),
+                       limits = c(-0.59,0.1)) +
     guides(
       color = "none" # Hide the color (prior) legend
     ) +
@@ -374,6 +383,9 @@ pba_de_plot <- function(pba_de_data,
       values = model_shapes,
       labels = model_labels
     ) +
+    scale_y_continuous(breaks = seq(-0.5,0.1,0.1),
+                       limits = c(-0.59,0.1)) +
+
     guides(
       color = "none" # Hide the color (prior) legend
     ) +

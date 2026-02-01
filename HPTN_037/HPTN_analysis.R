@@ -87,17 +87,34 @@ net_level_covar <- c("net_avg_age",
                      "net_prev_cocaine_base",
                      "net_prev_heroin_and_cocaine")
 
-X_e_ind <- as.matrix(ego_dt[, ..unit_level_covar])
-X_e_net <- as.matrix(ego_dt[, ..net_level_covar])
+# Egos covariates
+X_e_ind <- ego_dt[, ..unit_level_covar]
+X_e_net <- ego_dt[, ..net_level_covar]
+# Standarize Age variable 
+X_e_ind$age <- scale(X_e_ind$age)
+X_e_net$net_avg_age <- scale(X_e_net$net_avg_age)
+# As matrix
+X_e_ind <- as.matrix(X_e_ind)
+X_e_net <- as.matrix(X_e_net)
 X_e <- cbind(X_e_ind, X_e_net)
-X_a_ind <- as.matrix(alter_dt[, ..unit_level_covar])
-X_a_net <- as.matrix(alter_dt[, ..net_level_covar])
+
+# Alters covariates
+X_a_ind <- alter_dt[, ..unit_level_covar]
+X_a_net <- alter_dt[, ..net_level_covar]
+# Standarize Age variable
+X_a_ind$age <- scale(X_a_ind$age)
+X_a_net$net_avg_age <- scale(X_a_net$net_avg_age)
+# As matrix
+X_a_ind <- as.matrix(X_a_ind)
+X_a_net <- as.matrix(X_a_net)
 X_a <- cbind(X_a_ind, X_a_net)
 
 
 # --- Sensitivity parameters ---
-m_vec_egos <- seq(10, 300, by=10)
-m_vec_alters <- seq(10, 400, by=10)
+# m_vec_egos <- seq(10, 300, by=10)
+m_vec_egos <- seq(10, 150, by=10)
+# m_vec_alters <- seq(10, 400, by=10)
+m_vec_alters <- seq(10, 500, by=10)
 
 kappa_vec <- seq(1.1, 3.0, by=0.1)
 
@@ -111,6 +128,15 @@ pi_ee_hetero <- pi_hetero(X_e = X_e_ind,
                           gamma = -1,
                           dist = "norm",
                           p = 2,
+                          # p = 1,
+                          pz = pz)
+
+pi_ee_hetero_gamma2 <- pi_hetero(X_e = X_e_ind,
+                          m_vec = m_vec_egos,
+                          gamma = -2,
+                          dist = "norm",
+                          p = 2,
+                          # p = 1,
                           pz = pz)
 
 pi_ae_homo <- pi_homo(m_vec = m_vec_alters,
@@ -124,7 +150,18 @@ pi_ae_hetero <- pi_hetero(X_e = X_e_ind,
                           m_vec = m_vec_alters, 
                           gamma = -1,
                           dist = "norm",
-                          p = 2,
+                          # p = 2,
+                          p = 1,
+                          ego_index = ego_id_a_vec, 
+                          pz = pz)
+
+pi_ae_hetero_gamma2 <- pi_hetero(X_e = X_e_ind, 
+                          X_a = X_a_ind, 
+                          m_vec = m_vec_alters, 
+                          gamma = -2,
+                          dist = "norm",
+                          # p = 2,
+                          p = 1,
                           ego_index = ego_id_a_vec, 
                           pz = pz)
 
@@ -145,8 +182,10 @@ hptn_sa_aug <- enrt_sa(Y_e = Y_e,
                        formula_egos = as.formula(Y ~ Z + .),
                        formula_alters = as.formula(Y ~ F + .),
                        pi_lists_ego_ego = list("hetero" = pi_ee_hetero,
+                                               # "hetero_gamma2" = pi_ee_hetero_gamma2,
                                                "homo" = pi_ee_homo),
                        pi_lists_alter_ego = list("hetero" = pi_ae_hetero,
+                                                 # "hetero_gamma2" = pi_ae_hetero_gamma2,
                                                  "homo" = pi_ae_homo),
                        kappa_vec = kappa_vec, 
                        n_cores = N_CORES,
@@ -170,8 +209,10 @@ hptn_sa_not_aug <- enrt_sa(Y_e = Y_e,
                            # formula_egos = as.formula(Y ~ Z + .),
                            # formula_alters = as.formula(Y ~ F + .),
                            pi_lists_ego_ego = list("hetero" = pi_ee_hetero,
+                                                     # "hetero_gamma2" = pi_ee_hetero_gamma2,
                                                    "homo" = pi_ee_homo),
                            pi_lists_alter_ego = list("hetero" = pi_ae_hetero,
+                                                     # "hetero_gamma2" = pi_ae_hetero_gamma2,
                                                      "homo" = pi_ae_homo),
                            kappa_vec = kappa_vec, 
                            n_cores = N_CORES,
@@ -239,10 +280,10 @@ palette <- c(
 
 # Labels for the legend
 plot_labels <- c(
-  "Homo & Not-Aug" = "Homo", 
-  "Homo & Aug"     = "Homo",
-  "Hetero & Not-Aug" = "Hetero",
-  "Hetero & Aug"   = "Hetero"
+  "Homo & Not-Aug" = "Homogeneous", 
+  "Homo & Aug"     = "Homogeneous",
+  "Hetero & Not-Aug" = "Heterogeneous",
+  "Hetero & Aug"   = "Heterogeneous"
 )
 
 # --- 3. Create the Plot ---
@@ -269,7 +310,7 @@ ggsave("HPTN_037/figures/sa_ie_plot_not_augmented.png",
        dpi = 300,
        bg = "white")
 
-# DE plot (bootstrap & augmented scenario)
+# DE plot 
 spec_labels <- c(
   "homo" = "Homogeneous model",
   "hetero" = "Heterogeneous model"
@@ -330,8 +371,8 @@ palette <- c(
 
 # Labels for the legend
 plot_labels <- c(
-  "homo" = "Homo", 
-  "hetero"= "Hetero"
+  "homo" = "Homogeneous", 
+  "hetero"= "Heterogeneous"
 )
 
 
@@ -369,6 +410,265 @@ ggsave("HPTN_037/figures/sa_de_plot_aug_kappa2.png",
        dpi = 300,
        bg = "white")
 
+# Run analysis with gamma=3
+
+
+set.seed(342)
+hptn_sa_aug_gamma2 <- enrt_sa(Y_e = Y_e,
+                       Y_a = Y_a,
+                       X_e = X_e,
+                       X_a = X_a,
+                       Z_e = Z_e,
+                       F_a = F_a_tilde, 
+                       ego_id_a = ego_id_a_vec,
+                       augmented = TRUE,
+                       reg_model_egos = glm,
+                       reg_model_alters = glm, 
+                       formula_egos = as.formula(Y ~ Z + .),
+                       formula_alters = as.formula(Y ~ F + .),
+                       pi_lists_ego_ego = list(
+                         "hetero_gamma1" = pi_ee_hetero,
+                         "hetero_gamma2" = pi_ee_hetero_gamma2,
+                         "homo" = pi_ee_homo),
+                       pi_lists_alter_ego = list(
+                         "hetero_gamma1" = pi_ae_hetero,
+                         "hetero_gamma2" = pi_ae_hetero_gamma2,
+                         "homo" = pi_ae_homo),
+                       kappa_vec = kappa_vec, 
+                       n_cores = N_CORES,
+                       n_folds = 2,
+                       pz = pz,
+                       plot = TRUE,
+                       family = binomial(link = "logit") # Additional arg for glm
+)
+
+set.seed(442)
+hptn_sa_not_aug_gamma2<- enrt_sa(Y_e = Y_e,
+                           Y_a = Y_a,
+                           X_e = X_e,
+                           X_a = X_a,
+                           Z_e = Z_e,
+                           F_a = F_a_tilde, 
+                           ego_id_a = ego_id_a_vec,
+                           augmented = FALSE,
+                           # reg_model_egos = glm,
+                           # reg_model_alters = glm, 
+                           # formula_egos = as.formula(Y ~ Z + .),
+                           # formula_alters = as.formula(Y ~ F + .),
+                           pi_lists_ego_ego = list("hetero_gamma1" = pi_ee_hetero,
+                                                   "hetero_gamma2" = pi_ee_hetero_gamma2,
+                                                   "homo" = pi_ee_homo),
+                           pi_lists_alter_ego = list("hetero_gamma1" = pi_ae_hetero,
+                                                     "hetero_gamma2" = pi_ae_hetero_gamma2,
+                                                     "homo" = pi_ae_homo),
+                           kappa_vec = kappa_vec, 
+                           n_cores = N_CORES,
+                           n_folds = 2,
+                           pz = pz,
+                           plot = TRUE)
+
+
+
+# Combine IE results (bootstrap var; with/w.o. outcome model augmentation)
+sa_ie_aug_g2 <- hptn_sa_aug_gamma2$sa_results$IE
+sa_ie_aug_g2[, aug := TRUE]
+
+sa_ie_no_aug_g2 <- hptn_sa_not_aug_gamma2$sa_results$IE
+sa_ie_no_aug_g2[, aug := FALSE]
+
+sa_ie_aug_null_g2 <- hptn_sa_aug_gamma2$null_results$IE
+sa_ie_aug_null_g2[, aug := TRUE]
+
+sa_ie_no_aug_null_g2 <- hptn_sa_not_aug_gamma2$null_results$IE
+sa_ie_no_aug_null_g2[, aug := FALSE]
+
+sa_ie_res_g2 <- rbindlist(list(
+  sa_ie_aug_g2,
+  sa_ie_no_aug_g2,
+  sa_ie_aug_null_g2,
+  sa_ie_no_aug_null_g2
+))
+
+sa_ie_res_g2[, spec_name := ifelse(spec == "homo", "Homo",
+                                ifelse(spec == "hetero_gamma1",
+                                       "Hetero_g1", 
+                                       ifelse(spec == "hetero_gamma2",
+                                              "Hetero_g2", spec)))]
+
+sa_ie_naive_data_g2 <- sa_ie_res_g2[spec == "Naive"]
+sa_ie_data_g2 <- sa_ie_res_g2[spec != "Naive"]
+
+sa_ie_naive_data_g2[,pi_param := as.numeric(pi_param)]
+
+
+
+# Create a new interaction variable for the 6 SA models
+sa_ie_data_g2[, model_type := paste0(spec_name," & ", ifelse(aug, "Aug", "Not-Aug"))]
+
+# Define the order for the legend and colors
+model_levels_g2 <- c("Homo & Not-Aug", 
+                  "Homo & Aug", 
+                  "Hetero_g1 & Not-Aug", 
+                  "Hetero_g1 & Aug",
+                  "Hetero_g2 & Not-Aug", 
+                  "Hetero_g2 & Aug")
+sa_ie_data_g2[, model_type := factor(model_type, levels = model_levels_g2)]
+sa_ie_data_g2[,pi_param := as.numeric(pi_param)]
+
+# A logical color palette: 
+# Blues for "homo", Oranges for "hetero"
+# Light shade for Unaugmented, Dark shade for Augmented
+palette_g2 <- c(
+  "Homo & Not-Aug"   = "#085380", # Light Blue
+  # "Homo & Not-Aug"   = "#7DAFD1", # Light Blue
+  # "Homo & Aug"     = "#1F78B4", # Dark Blue
+  "Homo & Aug"     = "#085380", # Dark Blue
+  # "Hetero & Not-Aug" = "#FDBF6F", # Light Orange
+  "Hetero_g1 & Not-Aug" = "#BA7013", # Light Orange
+  # "Hetero & Aug"   = "#FF7F00"  # Dark Orange
+  "Hetero_g1 & Aug"   = "#BA7013",  # Dark Orange,
+  "Hetero_g2 & Not-Aug" = "#941D07", 
+  "Hetero_g2 & Aug"   = "#941D07"  
+)
+
+# Labels for the legend
+plot_labels_g2 <- c(
+  "Homo & Not-Aug" = "Homogeneous", 
+  "Homo & Aug"     = "Homogeneous",
+  "Hetero_g1 & Not-Aug" = "Heterogeneous (gamma=1)",
+  "Hetero_g1 & Aug"   = "Heterogeneous (gamma=1)",
+  "Hetero_g2 & Not-Aug" = "Heterogeneous (gamma=3)",
+  "Hetero_g2 & Aug"   = "Heterogeneous (gamma=3)"
+)
+
+# --- 3. Create the Plot ---
+
+ie_plot_aug_g2 <- sa_ie_plot(sa_ie_data = sa_ie_data_g2[aug == TRUE,],
+                          sa_ie_naive_data = sa_ie_naive_data_g2[aug == TRUE,],
+                          palette = palette_g2,
+                          plot_labels = plot_labels_g2,
+                          m_vec_alters = m_vec_alters)
+print(ie_plot_aug_g2)
+ggsave("HPTN_037/figures/sa_ie_plot_augmented_with_gamma2.png",
+       plot = ie_plot_aug_g2, width = 10, height = 5,
+       dpi = 300,
+       bg = "white")
+
+ie_plot_not_aug_g2 <- sa_ie_plot(sa_ie_data = sa_ie_data_g2[aug == FALSE,],
+                              sa_ie_naive_data = sa_ie_naive_data_g2[aug == FALSE,],
+                              palette = palette_g2,
+                              plot_labels = plot_labels_g2,
+                              m_vec_alters = m_vec_alters)
+print(ie_plot_not_aug_g2)
+ggsave("HPTN_037/figures/sa_ie_plot_not_augmented_with_gamma2.png",
+       plot = ie_plot_not_aug_g2, width = 10, height = 5,
+       dpi = 300,
+       bg = "white")
+
+
+# DE plot 
+spec_labels_g2 <- c(
+  "homo" = "Homogeneous",
+  "hetero_gamma1" = "Heterogeneous (gamma=1)",
+  "hetero_gamma2" = "Heterogeneous (gamma=2)"
+  # "homo" = TeX("Homogeneous $\\pi_i^e$"),
+  # "hetero" = TeX("Heterogeneous $\\pi_i^e$")
+)
+# de_plot <- hptn_sa_aug$de_rd_plot
+de_plot_not_aug_g2 <- hptn_sa_not_aug_gamma2$de_rd_plot
+de_plot_not_aug_g2 <- de_plot_not_aug_g2 + 
+  scale_x_continuous(breaks = seq(0, max(m_vec_egos), 50),
+                     labels = seq(0, max(m_vec_egos), 50)) +
+  labs(x = TeX("$m^e$ (Expected number of missing ego-ego edges)"),
+       fill = "Estimated DE",
+       title = "Direct Effect") +
+  facet_wrap(~spec,
+             labeller = labeller(spec = spec_labels_g2)) +
+  theme(
+    axis.text = element_text(size = 12),
+    axis.title = element_text(size = 14),
+    strip.text = element_text(size = 14, face="bold")
+  )
+print(de_plot_not_aug_g2)
+
+ggsave("HPTN_037/figures/sa_de_not_aug_plot_with_gamma2.png",
+       plot = de_plot_not_aug_g2, width = 10, height = 6,
+       dpi = 300,
+       bg = "white")
+
+de_plot_aug_g2 <- hptn_sa_aug_gamma2$de_rd_plot
+de_plot_aug_g2 <- de_plot_aug_g2 + 
+  scale_x_continuous(breaks = seq(0, max(m_vec_egos), 50),
+                     labels = seq(0, max(m_vec_egos), 50)) +
+  labs(x = TeX("$m^e$ (Expected number of missing ego-ego edges)"),
+       fill = "Estimated DE",
+       title = "Direct Effect") +
+  facet_wrap(~spec,
+             labeller = labeller(spec = spec_labels_g2)) +
+  theme(
+    axis.text = element_text(size = 12),
+    axis.title = element_text(size = 14),
+    strip.text = element_text(size = 14, face="bold")
+  )
+print(de_plot_aug_g2)
+
+ggsave("HPTN_037/figures/sa_de_aug_plot_with_gamma2.png",
+       plot = de_plot_aug_g2, width = 10, height = 6,
+       dpi = 300,
+       bg = "white")
+
+
+
+
+# DE plot given kappa=2
+palette_g2 <- c(
+  "homo"   = "#085380", # Light Blue
+  "hetero_gamma1"   = "#BA7013",  # Dark Orange
+  "hetero_gamma2"   = "#941D07"
+)
+
+# Labels for the legend
+plot_labels_g2 <- c(
+  "homo" = "Homogeneous", 
+  "hetero_gamma1"= "Heterogeneous (gamma=1)",
+  "hetero_gamma2"= "Heterogeneous (gamma=2)"
+)
+
+
+hptn_sa_not_aug_gamma2$sa_results$DE[, pi_param := as.numeric(pi_param)]
+hptn_sa_not_aug_gamma2$null_results$DE[, pi_param := as.numeric(pi_param)]
+de_plot_kappa2_not_aug_g2 <- sa_de_plot_given_kappa(
+  sa_de_data = hptn_sa_not_aug_gamma2$sa_results$DE[kappa == 2.0,],
+  sa_de_naive_data = hptn_sa_not_aug_gamma2$null_results$DE,
+  # sa_de_data = hptn_sa_aug$sa_results$DE[kappa == 2.0,],
+  # sa_de_naive_data = hptn_sa_aug$null_results$DE,
+  kappa = 2,
+  palette = palette_g2,
+  plot_labels = plot_labels_g2, 
+  m_vec_egos = m_vec_egos)
+print(de_plot_kappa2_not_aug_g2)
+ggsave("HPTN_037/figures/sa_de_plot_not_aug_kappa2_with_gamma2.png",
+       plot = de_plot_kappa2_not_aug_g2, width = 8, height = 5,
+       dpi = 300,
+       bg = "white")
+
+hptn_sa_aug_gamma2$sa_results$DE[, pi_param := as.numeric(pi_param)]
+hptn_sa_aug_gamma2$null_results$DE[, pi_param := as.numeric(pi_param)]
+de_plot_kappa2_aug_g2 <- sa_de_plot_given_kappa(
+  sa_de_data = hptn_sa_aug_gamma2$sa_results$DE[kappa == 2.0,],
+  sa_de_naive_data = hptn_sa_aug_gamma2$null_results$DE,
+  # sa_de_data = hptn_sa_aug$sa_results$DE[kappa == 2.0,],
+  # sa_de_naive_data = hptn_sa_aug$null_results$DE,
+  kappa = 2,
+  palette = palette_g2,
+  plot_labels = plot_labels_g2, 
+  m_vec_egos = m_vec_egos)
+print(de_plot_kappa2_aug_g2)
+ggsave("HPTN_037/figures/sa_de_plot_aug_kappa2_with_gamma2.png",
+       plot = de_plot_kappa2_aug_g2, width = 8, height = 5,
+       dpi = 300,
+       bg = "white")
+
 # --- PBA results ---
 
 # Set priors.
@@ -380,11 +680,11 @@ prior_ie_uniform <- function() {
 }
 
 prior_ie_poisson <- function() {
-  rpois(1, lambda = 200)
+  rpois(1, lambda = max(m_vec_alters)/2)
 }
 
 prior_ie_neg_binom <- function() {
-  rnbinom(1, size = 10, mu = 200)
+  rnbinom(1, size = 10, mu = max(m_vec_alters)/2)
 }
 
 # Priors for DE (for m_a and kappa)
@@ -398,14 +698,14 @@ prior_de_uniform <- function() {
 
 prior_de_nb_lognormal <- function() {
   list(
-    pi_param = rnbinom(1, size = 10, mu = 150),
+    pi_param = rnbinom(1, size = 10, mu = max(m_vec_egos)/2),
     kappa = rlnorm(1, meanlog = log(2), sdlog = 0.2)
   )
 }
 
 prior_de_poisson_uniform <- function() {
   list(
-    pi_param = rpois(1, lambda = 150),
+    pi_param = rpois(1, lambda = max(m_vec_egos)/2),
     kappa = runif(1, min = 1, max = 3)
   )
 }
@@ -956,8 +1256,8 @@ prior_colors <- c(
 )
 
 model_labels <- c(
-  "homo"   = "Homo",
-  "hetero" = "Hetero"
+  "homo"   = "Homogeneous",
+  "hetero" = "Heterogeneous"
 )
 
 model_shapes <- c(
