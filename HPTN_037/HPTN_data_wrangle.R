@@ -63,6 +63,7 @@ ra_pen_12m <- ra_pen[
 ]
 
 
+
 # Restrict other tables to those with 12-month follow-up outcomes
 uid_12m <- unique(ra_pen_12m$uid)
 ra_pen_sub <- ra_pen[uid %in% uid_12m]
@@ -243,8 +244,6 @@ if (is.null(arm_by_uid)) {
 arm_by_uid[, ego_treat := fifelse(is.na(treat), NA_integer_, as.integer(treat == 1))]
 arm_by_uid[, treat := NULL]
 
-
-
 # Build final analysis table (one row per uid with 6m outcome) -------------------------------------------------------------------------
 
  
@@ -287,4 +286,68 @@ data.frame(apply(analysis_dt, 2, function(x){sum(is.na(x))}))
 
 # Save as csv
 write.csv(analysis_dt, "HPTN_037/hptn_clean_df.csv", row.names = FALSE)
+
+
+
+# Follow up recall for contamination assessment  --------------------------
+
+ex_pen <- ex[site_id == PEN_SITE]
+ex_pen[, `:=`(
+  visnum = as.numeric(visnum),
+  studyday = as.numeric(studyday),
+  visit = as.character(visit),
+  uid = as.character(uid)
+)]
+ex_pen_6m <- ex_pen[
+  visnum == 6 & !is.na(studyday),
+  .SD[which.min(studyday)],
+  by = uid
+]
+test_terms <- c("EXspeakk", "EXirladd", "EXribbon", "EXsrladd", "EXfast")
+
+pos_terms <- c("EXharmrd")
+
+neg_terms <- c("EXexplor", "EXmatrix", "EXscharp")
+
+# Change "X" answer to binary for all test_terms, pos_terms, and neg_terms
+for (term in c(test_terms, pos_terms, neg_terms)) {
+  ex_pen_6m[, (term) := as.integer(get(term) == "X")]
+}
+
+# Get network-level treatment assignment and ego/alter status
+
+ex_pen_6m <- merge(ex_pen_6m, dm_base[, .(uid, NKID, is_ego)], by = "uid", all.x = TRUE)
+ex_pen_6m <- merge(ex_pen_6m, arm_by_uid[, .(uid, ego_treat)], by = "uid", all.x = TRUE)
+
+# Get sum of positive and negative contamination indicators per participant
+ex_pen_6m[, pos_contam_sum := rowSums(.SD, na.rm = TRUE), .SDcols = pos_terms]
+ex_pen_6m[, neg_contam_sum := rowSums(.SD, na.rm = TRUE), .SDcols = neg_terms]
+
+# Get indicator if any of the test terms are recalled (equal to 1)
+ex_pen_6m[, any_test_recall := as.integer(rowSums(.SD, na.rm = TRUE) > 0), .SDcols = test_terms]
+
+# Get Pr(F_i=1 | \tilde{F}_i = 0) for alters
+# Without positive and negative terms exclusion
+
+pr_f1_given_ftild0_no_exc <- ex_pen_6m[is_ego == 0 & ego_treat == 0, 
+                              mean(any_test_recall == 1, na.rm = TRUE)]
+
+print(paste0("Pr(F_i=1 | F_tild_i=0, i is alter) without exclusion: ",
+             round(pr_f1_given_ftild0_no_exc, 3),
+             " ; from a total of ", nrow(ex_pen_6m[is_ego == 0 & ego_treat == 0]), " alters."))
+
+# With inclusion of only those with pos_contam_sum == 1 and neg_contam_sum == 0
+pr_f1_given_ftild0_exc <- ex_pen_6m[is_ego == 0 & ego_treat == 0 & pos_contam_sum == 1 & neg_contam_sum == 0, 
+                              mean(any_test_recall == 1, na.rm = TRUE)]
+
+print(paste0("Pr(F_i=1 | F_tild_i=0, i is alter) with pos_contam_sum==1 and neg_contam_sum==0: ",
+             round(pr_f1_given_ftild0_exc, 3),
+             " ; from a total of ", nrow(ex_pen_6m[is_ego == 0 & ego_treat == 0 & 
+                                     pos_contam_sum == 1 & neg_contam_sum == 0]), " alters."))
+
+
+
+
+
+
 

@@ -38,6 +38,8 @@ create_population <- function(X_e,
                               rho_alters = NULL,
                               params_po,
                               params_covar,
+                              param_covar_expos_inter = 0,
+                              binary_po = FALSE, 
                               seed = NULL) {
   
   if (!is.null(seed)) {
@@ -129,12 +131,29 @@ create_population <- function(X_e,
   Xg_e <- if(is.null(params_covar$g_e)) 0 else as.numeric(X_e %*% params_covar$g_e)
   Xg_a <- if(is.null(params_covar$g_a)) 0 else as.numeric(X_a %*% params_covar$g_a)
   
+  X_expos_inter_e <- X_e[,1] * param_covar_expos_inter
+
   # Generate POs using baseline parameters and covariate effects
   po_egos <- with(params_po, {
     lp_e_00 <- b0_e + Xg_e
     lp_e_01 <- b0_e + Xg_e + b2_e
     lp_e_10 <- b0_e + Xg_e + b1_e
-    lp_e_11 <- b0_e + Xg_e + b1_e + b2_e + b3_e
+    lp_e_11 <- b0_e + Xg_e + b1_e + b2_e + b3_e + X_expos_inter_e
+    if(binary_po) {
+      # U_e <- runif(nrow(X_e))
+      cbind(
+        # 3. Generate Potential Outcomes
+        # Y_e_00 = as.numeric(U_e <= lp_e_00),
+        # Y_e_01 = as.numeric(U_e <= lp_e_01),
+        # Y_e_10 = as.numeric(U_e <= lp_e_10),
+        # Y_e_11 = as.numeric(U_e <= lp_e_11)
+        Y_e_00 = rbinom(n_e, 1, plogis(lp_e_00)),
+        Y_e_01 = rbinom(n_e, 1, plogis(lp_e_01)),
+        Y_e_10 = rbinom(n_e, 1, plogis(lp_e_10)),
+        Y_e_11 = rbinom(n_e, 1, plogis(lp_e_11))
+      )
+    }
+    else{
     ego_epsilon <- rnorm(n_e, mean = 0, sd = 1)
     
     cbind(
@@ -142,24 +161,28 @@ create_population <- function(X_e,
       Y_e_01 = lp_e_01 + ego_epsilon,
       Y_e_10 = lp_e_10 + ego_epsilon,
       Y_e_11 = lp_e_11 + ego_epsilon
-      # Y_e_00 = rbinom(n_e, 1, plogis(lp_e_00)),
-      # Y_e_01 = rbinom(n_e, 1, plogis(lp_e_01)),
-      # Y_e_10 = rbinom(n_e, 1, plogis(lp_e_10)),
-      # Y_e_11 = rbinom(n_e, 1, plogis(lp_e_11))
     )
+    }
   })
   
   po_alters <- with(params_po, {
     lp_a_00 <- b0_a + Xg_a
-    lp_a_01 <- b0_a + Xg_a + b2_a
+    lp_a_01 <- b0_a + Xg_a + b2_a 
     alter_epsilon <- rnorm(n_a, mean = 0, sd = 1)
     
-    cbind(
-      Y_a_00 = lp_a_00 + alter_epsilon,
-      Y_a_01 = lp_a_01 + alter_epsilon
-      # Y_a_00 = rbinom(n_a, 1, plogis(lp_a_00)),
-      # Y_a_01 = rbinom(n_a, 1, plogis(lp_a_01))
-    )
+    if(binary_po){
+      cbind(
+        Y_a_00 = rbinom(n_a, 1, plogis(lp_a_00)),
+        Y_a_01 = rbinom(n_a, 1, plogis(lp_a_01))
+      )
+    }else{
+      cbind(
+        Y_a_00 = lp_a_00 + alter_epsilon,
+        Y_a_01 = lp_a_01 + alter_epsilon
+        # Y_a_00 = rbinom(n_a, 1, plogis(lp_a_00)),
+        # Y_a_01 = rbinom(n_a, 1, plogis(lp_a_01))
+      )
+    }
   })
   
   # --- 5. Calculate True Causal Estimands (RD) ---

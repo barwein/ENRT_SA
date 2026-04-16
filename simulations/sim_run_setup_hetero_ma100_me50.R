@@ -9,12 +9,15 @@ library(data.table)
 
 # Params setup
 n_e <- 200
+# n_e <- 1e4
 n_a <- 400
+# n_a <- 2e4
 pz <- 0.5
 covar_ <- create_covariates(n_e=n_e, n_a=n_a, seed = 938312)
 X_e <- covar_$X_e
 X_a <- covar_$X_a
 m_e <- 50
+# m_e <- 150
 m_a <- 100
 # kappa_ <- 2
 kappa_ <- 1.5
@@ -34,6 +37,7 @@ rho_hetero_ee <- pi_hetero(X_e = X_e,
                            dist = "norm", 
                            p = 2,
                            pz = pz)$`50`$rho
+                           # pz = pz)$`150`$rho
 
 rho_hetero_ae <- pi_hetero(X_e = X_e,
                            X_a = X_a,
@@ -64,14 +68,28 @@ pop_fixed_data <- create_population(
     g_e = c(-0.5, -0.3, 0.2),
     g_a = c(-0.4, -0.2, 0.1)
   ),
+  param_covar_expos_inter = 0,
+  binary_po = FALSE,
   seed = 258411
 )
+
+# Verify Ego PO
+y_11_e <- pop_fixed_data$po_egos[,"Y_e_11"]
+y_10_e <- pop_fixed_data$po_egos[,"Y_e_10"]
+y_00_e <- pop_fixed_data$po_egos[,"Y_e_00"]
+y_01_e <- pop_fixed_data$po_egos[,"Y_e_01"]
+
+delta_1_e <- y_11_e - y_01_e
+delta_0_e <- y_10_e - y_00_e
+
+kappa_val <- mean(delta_1_e) / mean(delta_0_e)
 
 
 # SA params
 m_vec_ee <- m_e
 m_vec_ae <- m_a
-kappa_vec <- kappa_
+# kappa_vec <- kappa_
+kappa_vec <- kappa_val
 
 # EGO-EGO
 pi_num_homo_ee <- pi_homo(m_vec = m_vec_ee,
@@ -85,6 +103,12 @@ pi_num_hetero_ee <- pi_hetero(X_e = pop_fixed_data$X_e,
                               dist = "norm", 
                               p = 2,
                               pz = pz)
+
+# Check cov(pi, delta)
+pi_used_ee <- pi_num_hetero_ee$`50`$pi
+# pi_used_ee <- pi_num_hetero_ee$`150`$pi
+print(paste("Cov(pi, delta(1) =", cov(pi_used_ee, delta_1_e),
+            "; Cov(pi, delta(0) =", cov(pi_used_ee, delta_0_e)))
 
 
 # ALTER-EGO
@@ -145,7 +169,8 @@ for (i in seq(n_iter)){
                                  setup_name = "hetero",
                                  m_e = m_e,
                                  m_a = m_a,
-                                 kappa_ = kappa_, 
+                                 # kappa_ = kappa_, 
+                                 kappa_ = kappa_val, 
                                  iter = i,
                                  seed = 2548 + i,
                                  true_ie = pop_fixed_data$IE_RD,
