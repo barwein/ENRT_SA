@@ -345,9 +345,63 @@ print(paste0("Pr(F_i=1 | F_tild_i=0, i is alter) with pos_contam_sum==1 and neg_
              " ; from a total of ", nrow(ex_pen_6m[is_ego == 0 & ego_treat == 0 & 
                                      pos_contam_sum == 1 & neg_contam_sum == 0]), " alters."))
 
+# Convert to pi^a estimate
+pi_a_homogeneous <- pr_f1_given_ftild0_exc*0.5 + 0.5
+print(paste0("Estimated pi^a with exclusion: ", pi_a_homogeneous))
+
+# Convert to rho^a (homogeneous)
+
+n_e <- sum(analysis_dt$is_ego)
+n_a <- sum(!analysis_dt$is_ego)
+
+rho_a_homogeneous <- (1 - (1 - pr_f1_given_ftild0_exc)^{1 / (n_e- 1)})/0.5
+print(paste0("Estimated rho^a (homogeneous) with exclusion: ", round(rho_a_homogeneous, 5)))
+
+# Convert to m^a (homogeneous)
+
+m_a_homogeneous <- rho_a_homogeneous*n_a*(n_e-1)
+print(paste0("Estimated m^a (homogeneous) with exclusion: ",
+             round(m_a_homogeneous, 3)))
+
+# Convert to c^a (homogeneous) -> number egos each alter is connected to 
+
+c_a_homogeneous <- m_a_homogeneous / n_a
+
+print(paste0("Estimated c^a (homogeneous) with exclusion: ",
+             round(c_a_homogeneous, 3)))
 
 
+# Estimate pi^e (homogeneous) for egos
 
+pr_f1_given_z0_egos_no_exc <-  ex_pen_6m[is_ego == 1 & ego_treat == 0, 
+                                         mean(any_test_recall == 1, na.rm = TRUE)]
 
+print(paste0("Pr(F_i=1 | Z=0, i is ego) without exclusion: ",
+             round(pr_f1_given_z0_egos_no_exc, 3),
+             " ; from a total of ", nrow(ex_pen_6m[is_ego == 1 & ego_treat == 0]), " egos"))
 
+# With inclusion of only those with pos_contam_sum == 1 and neg_contam_sum == 0
+pr_f1_given_z0_egos_exc <- ex_pen_6m[is_ego == 1 & ego_treat == 0 & pos_contam_sum == 1 & neg_contam_sum == 0, 
+                                    mean(any_test_recall == 1, na.rm = TRUE)]
+
+print(paste0("Pr(F_i=1 | Z=0, i is ego) with pos_contam_sum==1 and neg_contam_sum==0: ",
+             round(pr_f1_given_z0_egos_exc, 3),
+             " ; from a total of ", nrow(ex_pen_6m[is_ego == 1 & ego_treat == 0 & 
+                                                     pos_contam_sum == 1 & neg_contam_sum == 0]), " egos"))
+
+# convert to rho^e (homogeneous)
+rho_e_homogeneous <- (1 - (1-pr_f1_given_z0_egos_exc)^{1 / (n_e-1)}) / 0.5
+print(paste0("Estimated rho^e (homogeneous) with exclusion: ", round(rho_e_homogeneous, 5)))
+
+# convert to m^e 
+
+m_e_homogeneous <- rho_e_homogeneous * choose(n_e, 2)
+print(paste0("Estimated m^e (homogeneous) with exclusion: ",
+             round(m_e_homogeneous, 3)))
+
+# convert to c^e 
+
+c_e_homogeneous <- m_e_homogeneous * 2 / n_e
+print(paste0("Estimated c^e (homogeneous) with exclusion: ",
+             round(c_e_homogeneous, 3)))
 

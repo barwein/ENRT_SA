@@ -116,7 +116,8 @@ m_vec_egos <- seq(10, 150, by=10)
 # m_vec_alters <- seq(10, 400, by=10)
 m_vec_alters <- seq(10, 500, by=10)
 
-kappa_vec <- seq(1.1, 3.0, by=0.1)
+# kappa_vec <- seq(1.1, 3.0, by=0.1)
+kappa_vec <- seq(0.5, 2.0, by=0.05)
 
 pi_ee_homo <- pi_homo(m_vec = m_vec_egos,
                       n_e = n_e,
@@ -410,7 +411,7 @@ ggsave("HPTN_037/figures/sa_de_plot_aug_kappa2.png",
        dpi = 300,
        bg = "white")
 
-# Run analysis with gamma=3
+# Run analysis with gamma=2
 
 
 set.seed(342)
@@ -692,21 +693,24 @@ prior_ie_neg_binom <- function() {
 prior_de_uniform <- function() {
   list(
     pi_param = sample(seq(1, max(m_vec_egos), by=1), 1),
-    kappa = runif(1, min = 1, max = 3)
+    # kappa = runif(1, min = 1, max = 3)
+    kappa = runif(1, min = 0.5, max = 2)
   )
 }
 
 prior_de_nb_lognormal <- function() {
   list(
     pi_param = rnbinom(1, size = 10, mu = max(m_vec_egos)/2),
-    kappa = rlnorm(1, meanlog = log(2), sdlog = 0.2)
+    # kappa = rlnorm(1, meanlog = log(2), sdlog = 0.2)
+    kappa = rlnorm(1, meanlog = log(1.25), sdlog = 0.2)
   )
 }
 
 prior_de_poisson_uniform <- function() {
   list(
     pi_param = rpois(1, lambda = max(m_vec_egos)/2),
-    kappa = runif(1, min = 1, max = 3)
+    # kappa = runif(1, min = 1, max = 3)
+    kappa = runif(1, min = 0.5, max = 2)
   )
 }
 
