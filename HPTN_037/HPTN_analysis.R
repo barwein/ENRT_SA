@@ -111,13 +111,14 @@ X_a <- cbind(X_a_ind, X_a_net)
 
 
 # --- Sensitivity parameters ---
-# m_vec_egos <- seq(10, 300, by=10)
-m_vec_egos <- seq(10, 150, by=10)
-# m_vec_alters <- seq(10, 400, by=10)
+m_vec_egos <- seq(10, 150, by=5)
 m_vec_alters <- seq(10, 500, by=10)
+# m_vec_egos <- seq(10, 150, by=10)
+# m_vec_alters <- seq(10, 500, by=10)
 
 # kappa_vec <- seq(1.1, 3.0, by=0.1)
-kappa_vec <- seq(0.5, 2.0, by=0.05)
+# kappa_vec <- seq(0.5, 2.0, by=0.05)
+kappa_vec <- seq(1.0, 2.0, by=0.05)
 
 pi_ee_homo <- pi_homo(m_vec = m_vec_egos,
                       n_e = n_e,
@@ -294,6 +295,8 @@ ie_plot_aug <- sa_ie_plot(sa_ie_data = sa_ie_data[aug == TRUE,],
                           palette = palette,
                           plot_labels = plot_labels,
                           m_vec_alters = m_vec_alters)
+ie_plot_aug <- ie_plot_aug + geom_vline(xintercept = 105.5, linetype = 3, 
+                         color = "grey48")
 print(ie_plot_aug)
 ggsave("HPTN_037/figures/sa_ie_plot_augmented.png",
        plot = ie_plot_aug, width = 8, height = 5,
@@ -305,6 +308,8 @@ ie_plot_not_aug <- sa_ie_plot(sa_ie_data = sa_ie_data[aug == FALSE,],
                           palette = palette,
                           plot_labels = plot_labels,
                           m_vec_alters = m_vec_alters)
+ie_plot_not_aug <- ie_plot_not_aug + geom_vline(xintercept = 105.5, linetype = 3, 
+                                        color = "grey48")
 print(ie_plot_not_aug)
 ggsave("HPTN_037/figures/sa_ie_plot_not_augmented.png",
        plot = ie_plot_not_aug, width = 8, height = 5,
@@ -321,11 +326,13 @@ spec_labels <- c(
 # de_plot <- hptn_sa_aug$de_rd_plot
 de_plot_not_aug <- hptn_sa_not_aug$de_rd_plot
 de_plot_not_aug <- de_plot_not_aug + 
-        scale_x_continuous(breaks = seq(0, max(m_vec_egos), 50),
-                           labels = seq(0, max(m_vec_egos), 50)) +
+        scale_x_continuous(breaks = seq(0, max(m_vec_egos), 25),
+                           labels = seq(0, max(m_vec_egos), 25)) +
         labs(x = TeX("$m^e$ (Expected number of missing ego-ego edges)"),
              fill = "Estimated DE",
              title = "Direct Effect") +
+    geom_vline(xintercept = 33.4, linetype = 3, 
+             color = "grey48") +
   facet_wrap(~spec,
              labeller = labeller(spec = spec_labels)) +
   theme(
@@ -342,11 +349,13 @@ ggsave("HPTN_037/figures/sa_de_not_aug_plot.png",
 
 de_plot_aug <- hptn_sa_aug$de_rd_plot
 de_plot_aug <- de_plot_aug + 
-        scale_x_continuous(breaks = seq(0, max(m_vec_egos), 50),
-                           labels = seq(0, max(m_vec_egos), 50)) +
+        scale_x_continuous(breaks = seq(0, max(m_vec_egos), 25),
+                           labels = seq(0, max(m_vec_egos), 25)) +
         labs(x = TeX("$m^e$ (Expected number of missing ego-ego edges)"),
              fill = "Estimated DE",
              title = "Direct Effect") +
+  geom_vline(xintercept = 33.4, linetype = 3, 
+             color = "grey48") +
   facet_wrap(~spec,
              labeller = labeller(spec = spec_labels)) +
   theme(
@@ -364,7 +373,7 @@ ggsave("HPTN_037/figures/sa_de_aug_plot.png",
 
 
 
-# DE plot given kappa=2
+# DE plot given kappa=1.5
 palette <- c(
   "homo"   = "#085380", # Light Blue
   "hetero"   = "#BA7013"  # Dark Orange
@@ -379,40 +388,45 @@ plot_labels <- c(
 
 hptn_sa_not_aug$sa_results$DE[, pi_param := as.numeric(pi_param)]
 hptn_sa_not_aug$null_results$DE[, pi_param := as.numeric(pi_param)]
-de_plot_kappa2_not_aug <- sa_de_plot_given_kappa(
-                                         sa_de_data = hptn_sa_not_aug$sa_results$DE[kappa == 2.0,],
+de_plot_kappa1.5_not_aug <- sa_de_plot_given_kappa(
+                                         sa_de_data = hptn_sa_not_aug$sa_results$DE[kappa == 1.5,],
                                          sa_de_naive_data = hptn_sa_not_aug$null_results$DE,
-                                         # sa_de_data = hptn_sa_aug$sa_results$DE[kappa == 2.0,],
+                                         # sa_de_data = hptn_sa_aug$sa_results$DE[kappa == 1.5,],
                                          # sa_de_naive_data = hptn_sa_aug$null_results$DE,
-                                         kappa = 2,
+                                         kappa = 1.5,
                                          palette = palette,
                                          plot_labels = plot_labels, 
                                          m_vec_egos = m_vec_egos)
-print(de_plot_kappa2_not_aug)
-ggsave("HPTN_037/figures/sa_de_plot_not_aug_kappa2.png",
-       plot = de_plot_kappa2_not_aug, width = 8, height = 5,
+de_plot_kappa1.5_not_aug <- de_plot_kappa1.5_not_aug + 
+        geom_vline(xintercept = 33.4, linetype = 3, 
+               color = "grey48") 
+print(de_plot_kappa1.5_not_aug)
+ggsave("HPTN_037/figures/sa_de_plot_not_aug_kappa1.5.png",
+       plot = de_plot_kappa1.5_not_aug, width = 8, height = 5,
        dpi = 300,
        bg = "white")
 
 hptn_sa_aug$sa_results$DE[, pi_param := as.numeric(pi_param)]
 hptn_sa_aug$null_results$DE[, pi_param := as.numeric(pi_param)]
-de_plot_kappa2_aug <- sa_de_plot_given_kappa(
-                                         sa_de_data = hptn_sa_aug$sa_results$DE[kappa == 2.0,],
+de_plot_kappa1.5_aug <- sa_de_plot_given_kappa(
+                                         sa_de_data = hptn_sa_aug$sa_results$DE[kappa == 1.5,],
                                          sa_de_naive_data = hptn_sa_aug$null_results$DE,
-                                         # sa_de_data = hptn_sa_aug$sa_results$DE[kappa == 2.0,],
+                                         # sa_de_data = hptn_sa_aug$sa_results$DE[kappa == 1.5,],
                                          # sa_de_naive_data = hptn_sa_aug$null_results$DE,
-                                         kappa = 2,
+                                         kappa = 1.5,
                                          palette = palette,
                                          plot_labels = plot_labels, 
                                          m_vec_egos = m_vec_egos)
-print(de_plot_kappa2_aug)
-ggsave("HPTN_037/figures/sa_de_plot_aug_kappa2.png",
-       plot = de_plot_kappa2_aug, width = 8, height = 5,
+de_plot_kappa1.5_aug <- de_plot_kappa1.5_aug + 
+  geom_vline(xintercept = 33.4, linetype = 3, 
+             color = "grey48") 
+print(de_plot_kappa1.5_aug) 
+ggsave("HPTN_037/figures/sa_de_plot_aug_kappa1.5.png",
+       plot = de_plot_kappa1.5_aug, width = 8, height = 5,
        dpi = 300,
        bg = "white")
 
 # Run analysis with gamma=2
-
 
 set.seed(342)
 hptn_sa_aug_gamma2 <- enrt_sa(Y_e = Y_e,
@@ -549,6 +563,8 @@ ie_plot_aug_g2 <- sa_ie_plot(sa_ie_data = sa_ie_data_g2[aug == TRUE,],
                           palette = palette_g2,
                           plot_labels = plot_labels_g2,
                           m_vec_alters = m_vec_alters)
+ie_plot_aug_g2 <- ie_plot_aug_g2 + geom_vline(xintercept = 105.5, linetype = 3, 
+                                                color = "grey48")
 print(ie_plot_aug_g2)
 ggsave("HPTN_037/figures/sa_ie_plot_augmented_with_gamma2.png",
        plot = ie_plot_aug_g2, width = 10, height = 5,
@@ -560,6 +576,8 @@ ie_plot_not_aug_g2 <- sa_ie_plot(sa_ie_data = sa_ie_data_g2[aug == FALSE,],
                               palette = palette_g2,
                               plot_labels = plot_labels_g2,
                               m_vec_alters = m_vec_alters)
+ie_plot_not_aug_g2 <- ie_plot_not_aug_g2 + geom_vline(xintercept = 105.5, linetype = 3, 
+                                              color = "grey48")
 print(ie_plot_not_aug_g2)
 ggsave("HPTN_037/figures/sa_ie_plot_not_augmented_with_gamma2.png",
        plot = ie_plot_not_aug_g2, width = 10, height = 5,
@@ -578,11 +596,14 @@ spec_labels_g2 <- c(
 # de_plot <- hptn_sa_aug$de_rd_plot
 de_plot_not_aug_g2 <- hptn_sa_not_aug_gamma2$de_rd_plot
 de_plot_not_aug_g2 <- de_plot_not_aug_g2 + 
-  scale_x_continuous(breaks = seq(0, max(m_vec_egos), 50),
-                     labels = seq(0, max(m_vec_egos), 50)) +
+  scale_x_continuous(breaks = seq(0, max(m_vec_egos), 25),
+                     labels = seq(0, max(m_vec_egos), 25)) +
+  geom_vline(xintercept = 33.4, linetype = 3, 
+             color = "grey48") +
   labs(x = TeX("$m^e$ (Expected number of missing ego-ego edges)"),
        fill = "Estimated DE",
        title = "Direct Effect") +
+  
   facet_wrap(~spec,
              labeller = labeller(spec = spec_labels_g2)) +
   theme(
@@ -599,8 +620,10 @@ ggsave("HPTN_037/figures/sa_de_not_aug_plot_with_gamma2.png",
 
 de_plot_aug_g2 <- hptn_sa_aug_gamma2$de_rd_plot
 de_plot_aug_g2 <- de_plot_aug_g2 + 
-  scale_x_continuous(breaks = seq(0, max(m_vec_egos), 50),
-                     labels = seq(0, max(m_vec_egos), 50)) +
+  scale_x_continuous(breaks = seq(0, max(m_vec_egos), 25),
+                     labels = seq(0, max(m_vec_egos), 25)) +
+  geom_vline(xintercept = 33.4, linetype = 3, 
+             color = "grey48") +
   labs(x = TeX("$m^e$ (Expected number of missing ego-ego edges)"),
        fill = "Estimated DE",
        title = "Direct Effect") +
@@ -620,8 +643,7 @@ ggsave("HPTN_037/figures/sa_de_aug_plot_with_gamma2.png",
 
 
 
-
-# DE plot given kappa=2
+# DE plot given kappa=1.5
 palette_g2 <- c(
   "homo"   = "#085380", # Light Blue
   "hetero_gamma1"   = "#BA7013",  # Dark Orange
@@ -638,35 +660,54 @@ plot_labels_g2 <- c(
 
 hptn_sa_not_aug_gamma2$sa_results$DE[, pi_param := as.numeric(pi_param)]
 hptn_sa_not_aug_gamma2$null_results$DE[, pi_param := as.numeric(pi_param)]
-de_plot_kappa2_not_aug_g2 <- sa_de_plot_given_kappa(
-  sa_de_data = hptn_sa_not_aug_gamma2$sa_results$DE[kappa == 2.0,],
+de_plot_kappa1.5_not_aug_g2 <- sa_de_plot_given_kappa(
+  sa_de_data = hptn_sa_not_aug_gamma2$sa_results$DE[kappa == 1.5,],
   sa_de_naive_data = hptn_sa_not_aug_gamma2$null_results$DE,
-  # sa_de_data = hptn_sa_aug$sa_results$DE[kappa == 2.0,],
+  # sa_de_data = hptn_sa_aug$sa_results$DE[kappa == 1.5,],
   # sa_de_naive_data = hptn_sa_aug$null_results$DE,
-  kappa = 2,
+  kappa = 1.5,
   palette = palette_g2,
   plot_labels = plot_labels_g2, 
   m_vec_egos = m_vec_egos)
-print(de_plot_kappa2_not_aug_g2)
-ggsave("HPTN_037/figures/sa_de_plot_not_aug_kappa2_with_gamma2.png",
-       plot = de_plot_kappa2_not_aug_g2, width = 10, height = 5,
+de_plot_kappa1.5_not_aug_g2 <- de_plot_kappa1.5_not_aug_g2 + 
+  geom_vline(xintercept = 33.4, linetype = 3, 
+             color = "grey48")
+print(de_plot_kappa1.5_not_aug_g2)
+ggsave("HPTN_037/figures/sa_de_plot_not_aug_kappa1.5_with_gamma2.png",
+       plot = de_plot_kappa1.5_not_aug_g2, width = 10, height = 5,
        dpi = 300,
        bg = "white")
 
 hptn_sa_aug_gamma2$sa_results$DE[, pi_param := as.numeric(pi_param)]
 hptn_sa_aug_gamma2$null_results$DE[, pi_param := as.numeric(pi_param)]
-de_plot_kappa2_aug_g2 <- sa_de_plot_given_kappa(
-  sa_de_data = hptn_sa_aug_gamma2$sa_results$DE[kappa == 2.0,],
+de_plot_kappa1.5_aug_g2 <- sa_de_plot_given_kappa(
+  sa_de_data = hptn_sa_aug_gamma2$sa_results$DE[kappa == 1.5,],
   sa_de_naive_data = hptn_sa_aug_gamma2$null_results$DE,
-  # sa_de_data = hptn_sa_aug$sa_results$DE[kappa == 2.0,],
+  # sa_de_data = hptn_sa_aug$sa_results$DE[kappa == 1.5,],
   # sa_de_naive_data = hptn_sa_aug$null_results$DE,
-  kappa = 2,
+  kappa = 1.5,
   palette = palette_g2,
   plot_labels = plot_labels_g2, 
   m_vec_egos = m_vec_egos)
-print(de_plot_kappa2_aug_g2)
-ggsave("HPTN_037/figures/sa_de_plot_aug_kappa2_with_gamma2.png",
-       plot = de_plot_kappa2_aug_g2, width = 10, height = 5,
+de_plot_kappa1.5_aug_g2 <- de_plot_kappa1.5_aug_g2 + 
+  geom_vline(xintercept = 33.4, linetype = 3, 
+             color = "grey48")
+print(de_plot_kappa1.5_aug_g2)
+ggsave("HPTN_037/figures/sa_de_plot_aug_kappa1.5_with_gamma2.png",
+       plot = de_plot_kappa1.5_aug_g2, width = 10, height = 5,
+       dpi = 300,
+       bg = "white")
+
+# Plot given m^e = 35 (approximately the estimate from the validation data)
+de_plot_m_e_valid_aug <- sa_de_plot_given_m_e(
+  sa_de_data = hptn_sa_aug_gamma2$sa_results$DE[pi_param == 35,],
+  sa_de_naive_data = hptn_sa_aug_gamma2$null_results$DE,
+  m_e = 35,
+  palette = palette_g2,
+  plot_labels = plot_labels_g2)
+print(de_plot_m_e_valid_aug)
+ggsave("HPTN_037/figures/sa_de_plot_aug_m_e_valid_with_gamma2.png",
+       plot = de_plot_m_e_valid_aug, width = 10, height = 5,
        dpi = 300,
        bg = "white")
 
@@ -689,12 +730,15 @@ prior_ie_neg_binom <- function() {
 }
 
 # Priors for DE (for m_a and kappa)
+min_kappa <- min(kappa_vec)
+max_kappa <- max(kappa_vec)
+mean_kappa <- mean(kappa_vec)
 
 prior_de_uniform <- function() {
   list(
     pi_param = sample(seq(1, max(m_vec_egos), by=1), 1),
     # kappa = runif(1, min = 1, max = 3)
-    kappa = runif(1, min = 0.5, max = 2)
+    kappa = runif(1, min = min_kappa, max = max_kappa)
   )
 }
 
@@ -702,7 +746,7 @@ prior_de_nb_lognormal <- function() {
   list(
     pi_param = rnbinom(1, size = 10, mu = max(m_vec_egos)/2),
     # kappa = rlnorm(1, meanlog = log(2), sdlog = 0.2)
-    kappa = rlnorm(1, meanlog = log(1.25), sdlog = 0.2)
+    kappa = rlnorm(1, meanlog = log(mean_kappa), sdlog = 0.2)
   )
 }
 
@@ -710,7 +754,7 @@ prior_de_poisson_uniform <- function() {
   list(
     pi_param = rpois(1, lambda = max(m_vec_egos)/2),
     # kappa = runif(1, min = 1, max = 3)
-    kappa = runif(1, min = 0.5, max = 2)
+    kappa = runif(1, min = min_kappa, max = max_kappa)
   )
 }
 

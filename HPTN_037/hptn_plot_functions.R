@@ -226,6 +226,109 @@ sa_de_plot_given_kappa <- function(sa_de_data,
   return(de_plot)
 }
 
+sa_de_plot_given_m_e <- function(sa_de_data, 
+                                 sa_de_naive_data,
+                                 m_e,
+                                 palette,
+                                 plot_labels){
+  subtitle_text <- paste0("Naive Estimate [95% CI]: ",
+                          round(sa_de_naive_data$de_rd[1],3),
+                          " [",
+                          round(sa_de_naive_data$ci_low[1],3),
+                          ", ",
+                          round(sa_de_naive_data$ci_high[1],3),
+                          "]")
+  de_plot <- ggplot() + 
+    geom_ribbon(data = sa_de_data,
+                aes(
+                  x = kappa,
+                  ymin = ci_low,
+                  ymax = ci_high,
+                  fill = spec
+                ),
+                alpha = 0.3 
+    ) +
+    geom_line(
+      data = sa_de_data,
+      aes(
+        x = kappa,
+        y = de_rd,
+        color = spec
+      ),
+      linewidth = 1.8
+    ) +
+    # Add the Naive point estimates
+    geom_point(
+      data = sa_de_naive_data,
+      aes(
+        x = kappa,
+        y = de_rd
+        # shape = aug,
+        # group = aug
+      ),
+      color = "black",
+      size = 4,
+      # position = position_dodge(12)
+    ) +
+    # Add the Naive error bars
+    geom_errorbar(
+      data = sa_de_naive_data,
+      aes(
+        x = kappa,
+        ymin = ci_low,
+        ymax = ci_high
+        # group = aug
+      ),
+      color = "black",
+      width = 0.05,
+      linewidth = 0.7,
+      # position = position_dodge(12)
+    ) +
+    # Horizontal line at y=0 (no effect)
+    geom_hline(
+      yintercept = 0,
+      linetype = "dashed",
+      color = "grey48"
+    ) +
+    # Use the custom color palette for lines and fills
+    scale_color_manual(
+      name = "SA Model:",
+      values = palette,
+      labels = plot_labels
+    ) +
+    scale_fill_manual(
+      name = "SA Model:",
+      values = palette,
+      labels = plot_labels
+    ) +
+    # Customize the shape legend
+    # scale_shape_manual(
+    #   name = "Naive Model:",
+    #   values = c("TRUE" = 17, "FALSE" = 16), # Triangle and Circle
+    #   labels = c("TRUE" = "Augmented", "FALSE" = "Unaugmented")
+    # ) +
+    # Add labels (using latex2exp)
+    labs(
+      title = TeX(paste0("Direct Effect; ", "$m^e$ = ", m_e)),
+      subtitle = subtitle_text,
+      y = "Estimated DE",
+      x = TeX("$\\kappa$")
+    ) +
+    
+    scale_x_continuous(breaks = seq(min(sa_de_data$kappa), max(sa_de_data$kappa), 0.25)) +
+    
+    theme_bw(base_size = 14) +
+    theme(
+      legend.position = "bottom",
+      legend.box = "vertical",
+      legend.key.width = unit(1.5, "cm"),
+      legend.text = element_text(size = 13),
+      axis.text = element_text(size = 13)
+    )
+  
+  return(de_plot)
+}
+
 
 
 pba_ie_plot <- function(pba_ie_data,
