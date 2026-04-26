@@ -552,8 +552,8 @@ plot_labels_g2 <- c(
   "Homo & Aug"     = "Homogeneous",
   "Hetero_g1 & Not-Aug" = "Heterogeneous (gamma=1)",
   "Hetero_g1 & Aug"   = "Heterogeneous (gamma=1)",
-  "Hetero_g2 & Not-Aug" = "Heterogeneous (gamma=3)",
-  "Hetero_g2 & Aug"   = "Heterogeneous (gamma=3)"
+  "Hetero_g2 & Not-Aug" = "Heterogeneous (gamma=2)",
+  "Hetero_g2 & Aug"   = "Heterogeneous (gamma=2)"
 )
 
 # --- 3. Create the Plot ---
