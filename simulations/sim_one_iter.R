@@ -63,8 +63,7 @@ sim_estimate_trial <- function(pop_fixed_data,
                     verbose = FALSE,
                     pz = pz,
                     n_cores = n_cores
-                    # ,
-                    #     ...
+                    # ...
                     )
   sa_res_IE <- sa_res$sa_results$IE
   sa_res_DE <- sa_res$sa_results$DE
