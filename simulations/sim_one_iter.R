@@ -62,7 +62,8 @@ sim_estimate_trial <- function(pop_fixed_data,
                     kappa_vec = kappa_vec, 
                     verbose = FALSE,
                     pz = pz,
-                    n_cores = n_cores
+                    n_cores = n_cores,
+                    n_folds = 1,
                     # ...
                     )
   sa_res_IE <- sa_res$sa_results$IE
