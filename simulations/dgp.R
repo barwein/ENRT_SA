@@ -132,7 +132,7 @@ create_population <- function(X_e,
   Xg_a <- if(is.null(params_covar$g_a)) 0 else as.numeric(X_a %*% params_covar$g_a)
   
   X_expos_inter_e <- X_e[,1] * param_covar_expos_inter
-
+  
   # Generate POs using baseline parameters and covariate effects
   po_egos <- with(params_po, {
     lp_e_00 <- b0_e + Xg_e
@@ -154,14 +154,14 @@ create_population <- function(X_e,
       )
     }
     else{
-    ego_epsilon <- rnorm(n_e, mean = 0, sd = 1)
-    
-    cbind(
-      Y_e_00 = lp_e_00 + ego_epsilon,
-      Y_e_01 = lp_e_01 + ego_epsilon,
-      Y_e_10 = lp_e_10 + ego_epsilon,
-      Y_e_11 = lp_e_11 + ego_epsilon
-    )
+      ego_epsilon <- rnorm(n_e, mean = 0, sd = 1)
+      
+      cbind(
+        Y_e_00 = lp_e_00 + ego_epsilon,
+        Y_e_01 = lp_e_01 + ego_epsilon,
+        Y_e_10 = lp_e_10 + ego_epsilon,
+        Y_e_11 = lp_e_11 + ego_epsilon
+      )
     }
   })
   
@@ -309,5 +309,3 @@ create_covariates <- function(n_e,
   
   return(list(X_e = X_e, X_a = X_a))
 }
-
-

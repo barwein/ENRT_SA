@@ -18,8 +18,6 @@ m_e <- 150
 m_a <- 100
 kappa_ <- 1.5
 n_iter <- 5e3
-B_pba <- 5e3
-B_sa <- 5e3
 N_CORES <- 8
 
 # Results path
@@ -178,16 +176,6 @@ for (i in seq(n_iter)){
                                  pi_lists_alter_ego = list("hetero" = pi_num_hetero_ae, "homo" = pi_num_homo_ae),
                                  kappa_vec = kappa_vec, 
                                  n_cores = N_CORES,
-                                 B_sa = B_sa,
-                                 B_pba = B_pba, 
-                                 prior_func_ie = prior_ie_norm,
-                                 pi_args_ie_homo =  pi_ie_args_homo,
-                                 pi_args_ie_hetero = pi_ie_args_hetero,
-                                 pi_param_name_ie = "m_vec", 
-                                 prior_func_de = prior_de_norm,
-                                 pi_args_de_homo = pi_de_args_homo,
-                                 pi_args_de_hetero = pi_de_args_hetero,
-                                 pi_param_name_de = "m_vec",
                                  family = binomial(link = "logit") # Additional arg for glm
   )
   if (length(all_results) == 0){
